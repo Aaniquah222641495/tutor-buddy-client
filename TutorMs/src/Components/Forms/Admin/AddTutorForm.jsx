@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
-const AddTutorForm = ({ closeModal }) => {
+const AddTutorForm = ({ closeModal, onAddTutor }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [subject, setSubject] = useState(''); // Added state for subject
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        console.log({ firstName, lastName, phoneNumber, email, password });
-        closeModal();
+        const newTutor = { firstName, lastName, phoneNumber, email, password, subject };
+        onAddTutor(newTutor); // Call the callback to add the tutor
     };
 
     return (
@@ -63,6 +63,16 @@ const AddTutorForm = ({ closeModal }) => {
                     type='password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+            </div>
+
+            <div className='form-group'>
+                <label>Subject</label> {/* Added subject label */}
+                <input
+                    type='text'
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
                     required
                 />
             </div>

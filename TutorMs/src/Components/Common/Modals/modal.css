@@ -1,0 +1,33 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff; /* Solid white background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* Adds some space around the modal */
+}
+
+.modal-content {
+    background: white; /* Solid white background for the modal content */
+    padding: 2rem; /* More padding for a spacious look */
+    border-radius: 8px;
+    width: 90%; /* Slightly smaller than the screen width */
+    max-width: 500px; /* Optional: to limit maximum width */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Soft shadow for better focus */
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    color: #007bff; /* Matches the button color theme */
+}

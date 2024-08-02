@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './AdminDashboard.css'; // Import the new CSS file
-import LoginNavbar from '../../Common/Navbar/LoginNavbar';
+
 
 const AdminDashboard = () => {
     const navigate = useNavigate();

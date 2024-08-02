@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import './manageTutors.css';
+import Modal from '../../../Common/Modals/Modal';
+import AddTutorForm from '../../../Forms/Admin/AddTutorForm';
 
 const ManageTutors = () => {
     const [tutors, setTutors] = useState([
         { id: 1, firstName: 'John', lastName: 'Doe', phoneNumber: '1234567891', email: 'john.doe@example.com', subject: 'Applications Development 2' },
         { id: 2, firstName: 'Jane', lastName: 'Doe', phoneNumber: '1234567899', email: 'jane.smith@example.com', subject: 'Applications Development Fundamentals 2' },
     ]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleAddTutor = () => {
-        // Logic to add tutor; might involve opening a form/modal
+    const handleAddTutor = (newTutor) => {
+        setTutors([...tutors, { ...newTutor, id: tutors.length + 1 }]);
+        setIsModalOpen(false);
     };
 
-    const handleTutorChange = (id) => {
-        // Logic to edit tutor; might involve opening a form/modal with current tutor details
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
 
     const handleDeleteTutor = (id) => {
@@ -52,8 +56,16 @@ const ManageTutors = () => {
                         ))}
                     </tbody>
                 </table>
-                <button className='btn btn-primary' onClick={handleAddTutor}>Add Tutor</button>
+                <div className='button-container'>
+                    <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Tutor</button>
+                </div>
             </div>
+            <Modal 
+                show={isModalOpen} 
+                onClose={handleCloseModal} 
+                FormComponent={AddTutorForm} 
+                formProps={{ onAddTutor: handleAddTutor }} // Pass the callback to the form
+            />
         </div>
     );
 };

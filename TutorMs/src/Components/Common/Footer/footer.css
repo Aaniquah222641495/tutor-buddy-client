@@ -1,54 +1,45 @@
 .footer {
-
-    background-color: #4793b6;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
     position: fixed;
-    width: 100%;
     bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #007bff; /* Matches the color theme of your app */
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1);
 }
-
 
 .footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
-
-.footer p {
+.footer-content p {
     margin: 0;
+    font-size: 0.875rem;
+}
+
+.footer-content a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
 }
 
 .social-media {
-    display: flex;
-    gap: 10px;
-    margin: 10px 0;
-
+    margin: 1rem 0;
 }
 
 .social-media a {
-    color: #fff;
-    font: size 20px;
-    text-decoration: none;
+    color: white;
+    margin: 0 0.5rem;
+    font-size: 1.25rem;
 }
 
 .social-media a:hover {
-    color: #ddd;
-}
-
-.footer-links {
-    margin-top: 10px;
-}
-
-.footer-links a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.footer-links a:hover {
-    text-decoration: underline;
+    color: #cce5ff; /* Lighten color on hover for better visibility */
 }
