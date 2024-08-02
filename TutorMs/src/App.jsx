@@ -6,6 +6,7 @@ import BookingForm from './Components/Views/Student/BookingForm';
 import Footer from './Components/Common/Footer/Footer';
 import ManageTutors from './Components/Views/Admin/ManageTutors/ManageTutors';
 import ManageStudents from './Components/Views/Admin/ManageStudents/ManageStudents';
+import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
 
 
 
@@ -18,7 +19,8 @@ const App = () => {
           <Route path='/' element={<Login/>}/>
           <Route path='/adminDashboard' element={<AdminDashboard/>}/>
           <Route path='/adminDashboard/manageTutors' element={<ManageTutors/>}/>
-          <Route path='/adminDashboard/manageStudents' element={<ManageStudents/>}/>        
+          <Route path='/adminDashboard/manageStudents' element={<ManageStudents/>}/>
+          <Route path='/adminDashboard/manageVenues' element={<ManageVenues/>}/>                
         </Routes>
         <Footer/>
       </div>

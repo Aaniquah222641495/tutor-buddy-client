@@ -60,8 +60,8 @@ const ManageStudents = () => {
                                 <td>{student.phoneNumber}</td>
                                 <td>{student.email}</td>
                                 <td>
-                                <button className='btn btn-warning' onClick={() => handleTutorChange(tutor.id)}>Edit</button>
-                                <button className='btn btn-danger' onClick={() => handleDeleteTutor(tutor.id)}>Delete</button>
+                                <button className='btn btn-warning' onClick={() => handleEditStudent(student.id)}>Edit</button>
+                                <button className='btn btn-danger' onClick={() => handleDeleteStudent(student.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
