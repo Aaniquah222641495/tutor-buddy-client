@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-//still have to add modal
-const AddStudentForm = ({ closeModal }) => {
+const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selectedStudent }) => {
     const [studentId, setStudentId] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        if (selectedStudent) {
+            setStudentId(selectedStudent.studentId);
+            setFirstName(selectedStudent.firstName);
+            setLastName(selectedStudent.lastName);
+            setPhoneNumber(selectedStudent.phoneNumber);
+            setEmail(selectedStudent.email);
+        } else {
+            // Reset form if no student is selected
+            setStudentId('');
+            setFirstName('');
+            setLastName('');
+            setPhoneNumber('');
+            setEmail('');
+        }
+    }, [selectedStudent]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Handle form submission logic here
-        console.log({ studentId, firstName, lastName, phoneNumber, email, password });
+        const student = { studentId, firstName, lastName, phoneNumber, email };
+        if (selectedStudent) {
+            handleEditStudent(student);
+        } else {
+            handleAddStudent(student);
+        }
         closeModal();
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Add New Student</h2>
+            <h2>{selectedStudent ? 'Edit Student' : 'Add New Student'}</h2>
             <div className='form-group'>
                 <label>Student Number</label>
                 <input
@@ -27,6 +45,7 @@ const AddStudentForm = ({ closeModal }) => {
                     value={studentId}
                     onChange={(e) => setStudentId(e.target.value)}
                     required
+                    disabled={!!selectedStudent} // Disable if editing
                 />
             </div>
             <div className='form-group'>
@@ -65,7 +84,9 @@ const AddStudentForm = ({ closeModal }) => {
                     required
                 />
             </div>
-            <button type="submit" className='btn btn-primary'>Add Student</button>
+            <button type="submit" className='btn btn-primary'>
+                {selectedStudent ? 'Update Student' : 'Add Student'}
+            </button>
         </form>
     );
 };
