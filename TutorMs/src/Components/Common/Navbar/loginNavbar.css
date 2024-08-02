@@ -1,0 +1,78 @@
+/* Navbar styles */
+.login-navbar {
+    background-color: #007bff;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    width: 100%; /* Span the full width of the page */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem; /* Add some padding to the sides */
+}
+
+.navbar-logo img {
+    height: 40px;
+}
+
+.navbar-links .nav-link {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+.navbar-links .nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Login page styles */
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    padding-top: 70px; /* Add padding to account for the fixed navbar */
+}
+
+.loginForm {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
