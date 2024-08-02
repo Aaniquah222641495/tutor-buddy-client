@@ -1,9 +1,7 @@
-
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 //still have to add modal
-const AddStudentForm = ({closeModal}) => {
-
+const AddStudentForm = ({ closeModal }) => {
     const [studentId, setStudentId] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -14,13 +12,10 @@ const AddStudentForm = ({closeModal}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        //Handle form submission logic here
-
+        // Handle form submission logic here
         console.log({ studentId, firstName, lastName, phoneNumber, email, password });
         closeModal();
-    }
-
-
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -29,57 +24,50 @@ const AddStudentForm = ({closeModal}) => {
                 <label>Student Number</label>
                 <input
                     type='text'
-                    value={studentId}>
+                    value={studentId}
                     onChange={(e) => setStudentId(e.target.value)}
                     required
-                </input>
-
+                />
             </div>
             <div className='form-group'>
                 <label>First Name</label>
                 <input
                     type='text'
-                    value={firstName}>
+                    value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
-                </input>
+                />
             </div>
-
             <div className='form-group'>
                 <label>Last Name</label>
                 <input
                     type='text'
-                    value={lastName}>
+                    value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
-                </input>
+                />
             </div>
-
-
             <div className='form-group'>
                 <label>Phone Number</label>
                 <input
                     type='tel'
-                    value={phoneNumber}>
+                    value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     required
-                </input>
+                />
             </div>
-
-            
             <div className='form-group'>
                 <label>Email</label>
                 <input
                     type='email'
-                    value={email}>
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                </input>
+                />
             </div>
-            <button type ="submit">Add Student</button>
+            <button type="submit" className='btn btn-primary'>Add Student</button>
         </form>
+    );
+};
 
-    )
-}
-
-export default AddStudentForm
+export default AddStudentForm;

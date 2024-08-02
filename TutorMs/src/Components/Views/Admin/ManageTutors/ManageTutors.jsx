@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './manageTutors.css';
+import '../manage.css';
 import Modal from '../../../Common/Modals/Modal';
 import AddTutorForm from '../../../Forms/Admin/AddTutorForm';
 
