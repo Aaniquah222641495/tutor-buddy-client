@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const AddTutorForm = ({ closeModal, onAddTutor }) => {
+const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [subject, setSubject] = useState(''); // Added state for subject
+    const [subject, setSubject] = useState('');
+
+    useEffect(() => {
+        if (selectedTutor) {
+            setFirstName(selectedTutor.firstName);
+            setLastName(selectedTutor.lastName);
+            setPhoneNumber(selectedTutor.phoneNumber);
+            setEmail(selectedTutor.email);
+            setPassword(selectedTutor.password);
+            setSubject(selectedTutor.subject);
+        } else {
+            setFirstName('');
+            setLastName('');
+            setPhoneNumber('');
+            setEmail('');
+            setPassword('');
+            setSubject('');
+        }
+    }, [selectedTutor]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const newTutor = { firstName, lastName, phoneNumber, email, password, subject };
-        onAddTutor(newTutor); // Call the callback to add the tutor
+        onAddTutor(newTutor);
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Add New Tutor</h2>
+            <h2>{selectedTutor ? 'Edit Tutor' : 'Add New Tutor'}</h2>
             <div className='form-group'>
                 <label>First Name</label>
                 <input
@@ -68,7 +86,7 @@ const AddTutorForm = ({ closeModal, onAddTutor }) => {
             </div>
 
             <div className='form-group'>
-                <label>Subject</label> {/* Added subject label */}
+                <label>Subject</label>
                 <input
                     type='text'
                     value={subject}
@@ -77,7 +95,7 @@ const AddTutorForm = ({ closeModal, onAddTutor }) => {
                 />
             </div>
 
-            <button type="submit">Add Tutor</button>
+            <button type="submit">{selectedTutor ? 'Save Changes' : 'Add Tutor'}</button>
         </form>
     );
 };

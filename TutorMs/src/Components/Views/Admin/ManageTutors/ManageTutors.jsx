@@ -9,18 +9,31 @@ const ManageTutors = () => {
         { id: 2, firstName: 'Jane', lastName: 'Doe', phoneNumber: '1234567899', email: 'jane.smith@example.com', subject: 'Applications Development Fundamentals 2' },
     ]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTutor, setSelectedTutor] = useState(null);
 
     const handleAddTutor = (newTutor) => {
-        setTutors([...tutors, { ...newTutor, id: tutors.length + 1 }]);
+        if (selectedTutor) {
+            setTutors(tutors.map(tutor => (tutor.id === selectedTutor.id ? { ...newTutor, id: selectedTutor.id } : tutor)));
+        } else {
+            setTutors([...tutors, { ...newTutor, id: tutors.length + 1 }]);
+        }
         setIsModalOpen(false);
+        setSelectedTutor(null);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
+        setSelectedTutor(null);
     };
 
     const handleDeleteTutor = (id) => {
         setTutors(tutors.filter(tutor => tutor.id !== id));
+    };
+
+    const handleTutorChange = (id) => {
+        const tutor = tutors.find(tutor => tutor.id === id);
+        setSelectedTutor(tutor);
+        setIsModalOpen(true);
     };
 
     return (
@@ -60,12 +73,17 @@ const ManageTutors = () => {
                     <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Tutor</button>
                 </div>
             </div>
-            <Modal 
-                show={isModalOpen} 
-                onClose={handleCloseModal} 
-                FormComponent={AddTutorForm} 
-                formProps={{ onAddTutor: handleAddTutor }} // Pass the callback to the form
-            />
+            {isModalOpen && (
+                <Modal 
+                    show={isModalOpen} 
+                    onClose={handleCloseModal} 
+                    FormComponent={AddTutorForm} 
+                    formProps={{ 
+                        onAddTutor: handleAddTutor,
+                        selectedTutor 
+                    }} 
+                />
+            )}
         </div>
     );
 };

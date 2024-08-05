@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
-const AddAdminForm = ({ closeModal, handleAddAdmin, selectedAdmin }) => {
-    const [admin, setAdmin] = useState(selectedAdmin || { firstName: '', lastName: '', email: '', phoneNumber: '', password: '' });
+const AddAdminForm = ({ closeModal, handleAddAdmin, handleEditAdmin, selectedAdmin }) => {
+    const [admin, setAdmin] = useState({ firstName: '', lastName: '', email: '', phoneNumber: '', password: '' });
+
+    useEffect(() => {
+        if (selectedAdmin) {
+            setAdmin(selectedAdmin);
+        }
+    }, [selectedAdmin]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,7 +30,7 @@ const AddAdminForm = ({ closeModal, handleAddAdmin, selectedAdmin }) => {
             <h2 className="sub-header">{selectedAdmin ? 'Edit Admin' : 'Add Admin'}</h2>
             <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
-                <input 
+                <input
                     type="text"
                     id="firstName"
                     name="firstName"
@@ -36,7 +42,7 @@ const AddAdminForm = ({ closeModal, handleAddAdmin, selectedAdmin }) => {
 
             <div className="form-group">
                 <label htmlFor="lastName">Last Name</label>
-                <input 
+                <input
                     type="text"
                     id="lastName"
                     name="lastName"
@@ -48,7 +54,7 @@ const AddAdminForm = ({ closeModal, handleAddAdmin, selectedAdmin }) => {
 
             <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input 
+                <input
                     type="email"
                     id="email"
                     name="email"
@@ -60,7 +66,7 @@ const AddAdminForm = ({ closeModal, handleAddAdmin, selectedAdmin }) => {
 
             <div className="form-group">
                 <label htmlFor="phoneNumber">Phone Number</label>
-                <input 
+                <input
                     type="tel"
                     id="phoneNumber"
                     name="phoneNumber"
@@ -72,7 +78,7 @@ const AddAdminForm = ({ closeModal, handleAddAdmin, selectedAdmin }) => {
 
             <div className="form-group">
                 <label htmlFor="password">Password</label>
-                <input 
+                <input
                     type="password"
                     id="password"
                     name="password"

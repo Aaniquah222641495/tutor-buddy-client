@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const AddVenueForm = ({ handleAddVenue, closeModal }) => {
+const AddVenueForm = ({ handleAddVenue, closeModal, selectedVenue }) => {
     const [venueId, setVenueId] = useState('');
     const [room, setRoom] = useState('');
     const [building, setBuilding] = useState('');
 
+    useEffect(() => {
+        if (selectedVenue) {
+            // If selectedVenue is passed, populate the form fields with its data
+            setVenueId(selectedVenue.venueId);
+            setRoom(selectedVenue.room);
+            setBuilding(selectedVenue.building);
+        } else {
+            // Reset the form if no selectedVenue is provided
+            setVenueId('');
+            setRoom('');
+            setBuilding('');
+        }
+    }, [selectedVenue]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        // Handle form submission
         handleAddVenue({ venueId, room, building });
         closeModal();
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>Add New Venue</h2>
+            <h2>{selectedVenue ? 'Edit Venue' : 'Add New Venue'}</h2>
             <div className='form-group'>
                 <label>Venue ID</label>
                 <input
@@ -41,7 +56,7 @@ const AddVenueForm = ({ handleAddVenue, closeModal }) => {
                     required
                 />
             </div>
-            <button type='submit'>Add Venue</button>
+            <button type='submit'>{selectedVenue ? 'Save Changes' : 'Add Venue'}</button>
         </form>
     );
 };

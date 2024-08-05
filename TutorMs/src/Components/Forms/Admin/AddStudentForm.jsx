@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selectedStudent }) => {
     const [studentId, setStudentId] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -15,7 +16,6 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
             setPhoneNumber(selectedStudent.phoneNumber);
             setEmail(selectedStudent.email);
         } else {
-            // Reset form if no student is selected
             setStudentId('');
             setFirstName('');
             setLastName('');
@@ -36,12 +36,13 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>{selectedStudent ? 'Edit Student' : 'Add New Student'}</h2>
+        <form onSubmit={handleSubmit} className="form">
+            <h2 className="sub-header">{selectedStudent ? 'Edit Student' : 'Add New Student'}</h2>
             <div className='form-group'>
-                <label>Student Number</label>
+                <label htmlFor="studentId">Student Number</label>
                 <input
                     type='text'
+                    id="studentId"
                     value={studentId}
                     onChange={(e) => setStudentId(e.target.value)}
                     required
@@ -49,36 +50,40 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
                 />
             </div>
             <div className='form-group'>
-                <label>First Name</label>
+                <label htmlFor="firstName">First Name</label>
                 <input
                     type='text'
+                    id="firstName"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                 />
             </div>
             <div className='form-group'>
-                <label>Last Name</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input
                     type='text'
+                    id="lastName"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
                 />
             </div>
             <div className='form-group'>
-                <label>Phone Number</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input
                     type='tel'
+                    id="phoneNumber"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     required
                 />
             </div>
             <div className='form-group'>
-                <label>Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                     type='email'
+                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required

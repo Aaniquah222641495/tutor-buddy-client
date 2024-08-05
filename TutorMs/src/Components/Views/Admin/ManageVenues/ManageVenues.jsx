@@ -10,9 +10,16 @@ const ManageVenues = () => {
     ]);
 
     const [showModal, setShowModal] = useState(false);
+    const [selectedVenue, setSelectedVenue] = useState(null);
 
     const handleAddVenue = (venue) => {
-        setVenues([...venues, venue]);
+        if (selectedVenue) {
+            setVenues(venues.map(v => (v.venueId === selectedVenue.venueId ? venue : v)));
+        } else {
+            setVenues([...venues, venue]);
+        }
+        setShowModal(false);
+        setSelectedVenue(null);
     };
 
     const handleDeleteVenue = (venueId) => {
@@ -20,8 +27,9 @@ const ManageVenues = () => {
     };
 
     const handleEditVenue = (venueId) => {
-        // Logic for editing venue
-        console.log(`Edit venue with ID: ${venueId}`);
+        const venue = venues.find(v => v.venueId === venueId);
+        setSelectedVenue(venue);
+        setShowModal(true);
     };
 
     return (
@@ -31,7 +39,7 @@ const ManageVenues = () => {
                 <table className='table'>
                     <thead>
                         <tr>
-                            <th>VenueID</th>
+                            <th>Venue ID</th>
                             <th>Room</th>
                             <th>Building</th>
                             <th>Actions</th>
@@ -65,7 +73,10 @@ const ManageVenues = () => {
             <div className='button-container'>
                 <button
                     className='btn btn-primary'
-                    onClick={() => setShowModal(true)}
+                    onClick={() => {
+                        setSelectedVenue(null); // Clear selection for adding new venue
+                        setShowModal(true);
+                    }}
                 >
                     Add Venue
                 </button>
@@ -75,7 +86,11 @@ const ManageVenues = () => {
                     show={showModal}
                     onClose={() => setShowModal(false)}
                     FormComponent={AddVenueForm}
-                    formProps={{ handleAddVenue, closeModal: () => setShowModal(false) }}
+                    formProps={{ 
+                        handleAddVenue, 
+                        closeModal: () => setShowModal(false), 
+                        selectedVenue 
+                    }}
                 />
             )}
         </div>
