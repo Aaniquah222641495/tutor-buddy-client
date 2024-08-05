@@ -7,6 +7,7 @@ import Footer from './Components/Common/Footer/Footer';
 import ManageTutors from './Components/Views/Admin/ManageTutors/ManageTutors';
 import ManageStudents from './Components/Views/Admin/ManageStudents/ManageStudents';
 import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
+import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
 
 
 
@@ -20,9 +21,12 @@ const App = () => {
           
           <Route path='/' element={<Login/>}/>
           <Route path='/adminDashboard' element={<AdminDashboard/>}/>
+          <Route path='/adminDashboard/manageAdmins' element={<ManageAdmins/>}/>
           <Route path='/adminDashboard/manageTutors' element={<ManageTutors/>}/>
           <Route path='/adminDashboard/manageStudents' element={<ManageStudents/>}/>
-          <Route path='/adminDashboard/manageVenues' element={<ManageVenues/>}/>                
+          <Route path='/adminDashboard/manageVenues' element={<ManageVenues/>}/>
+          
+
         </Routes>
         <Footer/>
       </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './AdminDashboard.css'; // Import the new CSS file
 
-
 const AdminDashboard = () => {
     const navigate = useNavigate();
 
@@ -25,6 +24,12 @@ const AdminDashboard = () => {
                         <Link to="/adminDashboard" className='nav-link text-white px-0 align-middle'>
                             <i className="fs-4 bi bi-speedometer2"></i>
                             <span className='ms-2 d-none d-sm-inline'>Dashboard</span>
+                        </Link>
+                    </li>
+                    <li className="w-100">
+                        <Link to="/adminDashboard/manageAdmins" className="nav-link px-0 align-middle text-white">
+                            <i className='fs-4 bi bi-shield-lock'></i>
+                            <span className='ms-2 d-none d-sm-inline'>Manage Admins</span>
                         </Link>
                     </li>
                     <li className="w-100">
@@ -54,10 +59,45 @@ const AdminDashboard = () => {
                 </ul>
             </div>
 
-
             <div className="main-content">
                 <div className='main-header'>
                     <h4>Admin Dashboard</h4>
+                </div>
+
+                <div className='management-section'>
+                    <h4 className='sub-header'>Manage Admins</h4>
+                    <div className='table-container'>
+                        <table className='table'>
+                            <thead>
+                                <tr>
+                                    <th>Admin ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Admin1</td>
+                                    <td>Last1</td>
+                                    <td>admin1@example.com</td>
+                                    <td>1234567890</td>
+                                    <td><button className='btn btn-primary'>Delete</button></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Admin2</td>
+                                    <td>Last2</td>
+                                    <td>admin2@example.com</td>
+                                    <td>0987654321</td>
+                                    <td><button className='btn btn-primary'>Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div className='management-section'>
@@ -73,13 +113,12 @@ const AdminDashboard = () => {
                                     <th>Email</th>
                                     <th>Subject</th>
                                     <th>Actions</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>John </td>
+                                    <td>John</td>
                                     <td>Doe</td>
                                     <td>1234567891</td>
                                     <td>john.doe@example.com</td>
@@ -88,7 +127,7 @@ const AdminDashboard = () => {
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>Jane </td>
+                                    <td>Jane</td>
                                     <td>Doe</td>
                                     <td>11234567899</td>
                                     <td>jane.smith@example.com</td>
@@ -101,7 +140,7 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className='management-section'>
-                    <h4 className='subheader'>Manage Students</h4>
+                    <h4 className='sub-header'>Manage Students</h4>
                     <div className='table-container'>
                         <table className='table'>
                             <thead>
@@ -121,7 +160,6 @@ const AdminDashboard = () => {
                                     <td>Johnson</td>
                                     <td>emily.johnson@example.com</td>
                                     <td><button className='btn btn-primary'>Delete</button></td>
-                                    
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -129,7 +167,6 @@ const AdminDashboard = () => {
                                     <td>Brown</td>
                                     <td>michael.brown@example.com</td>
                                     <td><button className='btn btn-primary'>Delete</button></td>
-                                   
                                 </tr>
                             </tbody>
                         </table>
@@ -142,7 +179,7 @@ const AdminDashboard = () => {
                         <table className='table'>
                             <thead>
                                 <tr>
-                                    <th>VenueID</th>
+                                    <th>Venue ID</th>
                                     <th>Room</th>
                                     <th>Building</th>
                                     <th>Actions</th>
@@ -155,14 +192,12 @@ const AdminDashboard = () => {
                                     <td>2.22</td>
                                     <td>Library</td>
                                     <td><button className='btn btn-primary'>Delete</button></td>
-                                    
                                 </tr>
                                 <tr>
                                     <td>2</td>
                                     <td>Lab 1.1</td>
-                                    <td> Engineering Building </td>
+                                    <td>Engineering Building</td>
                                     <td><button className='btn btn-primary'>Delete</button></td>
-                                   
                                 </tr>
                             </tbody>
                         </table>
