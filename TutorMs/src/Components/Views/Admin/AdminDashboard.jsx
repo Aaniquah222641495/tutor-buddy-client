@@ -1,6 +1,8 @@
 // AdminDashboard.jsx
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import './AdminDashboard.css'; // Import the CSS file for specific component styles
 
 const AdminDashboard = () => {
