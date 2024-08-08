@@ -132,7 +132,7 @@ const AdminDashboard = () => {
                 <div className='table-container'>
                     <table className='table'>
                        
-                    <thead>
+<thead>
                             <tr>
                                 <th>Venue ID</th>
                                 <th>Room</th>
