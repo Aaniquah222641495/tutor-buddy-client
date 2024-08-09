@@ -52,7 +52,7 @@ const Dashboard = () => {
           </tbody>
         </table>
 
-        <button className="subject-button">View Subjects</button>
+        <button className="subject-button" onClick={() => window.location.href='/subjects'}>View Subjects</button>
 
       </section>
 

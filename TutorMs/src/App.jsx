@@ -11,6 +11,9 @@ import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
 import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
 import AdminLayout from './Components/Views/Admin/AdminLayout';
 
+import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard'; // just here for testing purposes
+import Subjects from './Components/Views/Student/ViewSubjects/ViewSubjects'; // here for testing purposes
+
 const App = () => {
     return (
         <Router>
@@ -25,6 +28,10 @@ const App = () => {
                         <Route path='manageVenues' element={<ManageVenues />} />
                     </Route>
                     <Route path='/bookingForm' element={<BookingForm />} />
+
+                    <Route path='/studentDashboard' element={<StudentDashboard />} /> 
+                    <Route path='/subjects' element={<Subjects />} />
+
                 </Routes>
                 <Footer />
             </div>
