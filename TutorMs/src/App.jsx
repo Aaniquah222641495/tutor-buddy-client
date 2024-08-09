@@ -9,6 +9,7 @@ import ManageStudents from './Components/Views/Admin/ManageStudents/ManageStuden
 import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
 import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
 
+import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard';
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route path='/adminDashboard/manageStudents' element={<ManageStudents/>}/>
           <Route path='/adminDashboard/manageVenues' element={<ManageVenues/>}/>
           
+          <Route path='/studentDashboard' element={<StudentDashboard />} />
 
         </Routes>
         <Footer/>
