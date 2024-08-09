@@ -1,6 +1,7 @@
 import React from 'react';
 import './footer.css'; 
 
+
 const Footer = () => {
     return (
         <footer className='footer'>
@@ -18,9 +19,11 @@ const Footer = () => {
                     </a>
                     <a href='https://www.linkedin.com/school/cput/' target='_blank' rel='noopener noreferrer'>
                         <i className='bi bi-linkedin'></i>
-                    </a>
+                    </a>npm link
+
                 </div>
-            </div>
+            </div>npm install /Users/serajdicks/Desktop/PROJECT\ 2/typescript-axios-client-generated
+
         </footer>
     );
 };

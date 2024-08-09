@@ -1,209 +1,159 @@
+// AdminDashboard.jsx
 import React from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import './AdminDashboard.css'; // Import the new CSS file
+import { useOutletContext } from 'react-router-dom';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import './AdminDashboard.css'; // Import the CSS file for specific component styles
 
 const AdminDashboard = () => {
-    const navigate = useNavigate();
+    const { searchQuery } = useOutletContext();
 
-    const handleLogout = () => {
-        console.log("Logging out...");
-        // Clear any authentication tokens or user data here if needed
-
-        // Navigate to the login page
-        navigate('/');
+    const filterData = (data, query) => {
+        return data.filter(item => 
+            Object.values(item).some(value =>
+                value.toLowerCase().includes(query.toLowerCase())
+            )
+        );
     };
 
+    // Sample data for demonstration
+    const admins = [
+        { id: '1', firstName: 'Admin1', lastName: 'Last1', email: 'admin1@example.com', phone: '1234567890' },
+        { id: '2', firstName: 'Admin2', lastName: 'Last2', email: 'admin2@example.com', phone: '0987654321' }
+    ];
+
+    const tutors = [
+        { id: '1', firstName: 'John', lastName: 'Doe', phone: '1234567891', email: 'john.doe@example.com', subject: 'Applications Development 2' },
+        { id: '2', firstName: 'Jane', lastName: 'Doe', phone: '11234567899', email: 'jane.smith@example.com', subject: 'Applications Development Fundamentals 2' }
+    ];
+
+    const students = [
+        { id: '1', firstName: 'Emily', lastName: 'Johnson', email: 'emily.johnson@example.com' },
+        { id: '2', firstName: 'Michael', lastName: 'Brown', email: 'michael.brown@example.com' }
+    ];
+
+    const venues = [
+        { id: '1', room: '2.22', building: 'Library' },
+        { id: '2', room: 'Lab 1.1', building: 'Engineering Building' }
+    ];
+
     return (
-        <div className='dashboard-container'>
-            <div className='sidebar'>
-                <Link to="/adminDashboard" className='d-flex align-items-center pb-3 mb-1 mt-md-3 me-md-auto text-white text-decoration-none'>
-                    <span className='fs-5 fw-bolder d-none d-sm-inline'>Welcome!</span>
-                </Link>
-                <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li className="w-100">
-                        <Link to="/adminDashboard" className='nav-link text-white px-0 align-middle'>
-                            <i className="fs-4 bi bi-speedometer2"></i>
-                            <span className='ms-2 d-none d-sm-inline'>Dashboard</span>
-                        </Link>
-                    </li>
-                    <li className="w-100">
-                        <Link to="/adminDashboard/manageAdmins" className="nav-link px-0 align-middle text-white">
-                            <i className='fs-4 bi bi-shield-lock'></i>
-                            <span className='ms-2 d-none d-sm-inline'>Manage Admins</span>
-                        </Link>
-                    </li>
-                    <li className="w-100">
-                        <Link to="/adminDashboard/manageTutors" className="nav-link px-0 align-middle text-white">
-                            <i className='fs-4 bi bi-people'></i>
-                            <span className='ms-2 d-none d-sm-inline'>Manage Tutors</span>
-                        </Link>
-                    </li>
-                    <li className="w-100">
-                        <Link to="/adminDashboard/manageStudents" className="nav-link px-0 align-middle text-white">
-                            <i className='fs-4 bi bi-person'></i>
-                            <span className='ms-2 d-none d-sm-inline'>Manage Students</span>
-                        </Link>
-                    </li>
-                    <li className="w-100">
-                        <Link to="/adminDashboard/manageVenues" className="nav-link px-0 align-middle text-white">
-                            <i className='fs-4 bi bi-geo-alt'></i>
-                            <span className='ms-2 d-none d-sm-inline'>Manage Venues</span>
-                        </Link>
-                    </li>
-                    <li className="w-100" onClick={handleLogout}>
-                        <Link className="nav-link px-0 align-middle text-white" to="#">
-                            <i className='fs-4 bi bi-power'></i>
-                            <span className='ms-2 d-none d-sm-inline'>Logout</span>
-                        </Link>
-                    </li>
-                </ul>
+        <div className='dashboard-content'>
+            <div className='management-section'>
+                <h4 className='sub-header'>Manage Admins</h4>
+                <div className='table-container'>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filterData(admins, searchQuery).map(admin => (
+                                <tr key={admin.id}>
+                                    <td>{admin.id}</td>
+                                    <td>{admin.firstName}</td>
+                                    <td>{admin.lastName}</td>
+                                    <td>{admin.email}</td>
+                                    <td>{admin.phone}</td>
+                                    <td><button className='btn btn-primary'>Delete</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div className="main-content">
-                <div className='main-header'>
-                    <h4>Admin Dashboard</h4>
+            <div className='management-section'>
+                <h4 className='sub-header'>Manage Tutors</h4>
+                <div className='table-container'>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>Tutor ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filterData(tutors, searchQuery).map(tutor => (
+                                <tr key={tutor.id}>
+                                    <td>{tutor.id}</td>
+                                    <td>{tutor.firstName}</td>
+                                    <td>{tutor.lastName}</td>
+                                    <td>{tutor.phone}</td>
+                                    <td>{tutor.email}</td>
+                                    <td>{tutor.subject}</td>
+                                    <td><button className='btn btn-primary'>Delete</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div className='management-section'>
-                    <h4 className='sub-header'>Manage Admins</h4>
-                    <div className='table-container'>
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th>Admin ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Phone Number</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Admin1</td>
-                                    <td>Last1</td>
-                                    <td>admin1@example.com</td>
-                                    <td>1234567890</td>
+            <div className='management-section'>
+                <h4 className='sub-header'>Manage Students</h4>
+                <div className='table-container'>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filterData(students, searchQuery).map(student => (
+                                <tr key={student.id}>
+                                    <td>{student.id}</td>
+                                    <td>{student.firstName}</td>
+                                    <td>{student.lastName}</td>
+                                    <td>{student.email}</td>
                                     <td><button className='btn btn-primary'>Delete</button></td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Admin2</td>
-                                    <td>Last2</td>
-                                    <td>admin2@example.com</td>
-                                    <td>0987654321</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div className='management-section'>
-                    <h4 className='sub-header'>Manage Tutors</h4>
-                    <div className='table-container'>
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th>Tutor ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Email</th>
-                                    <th>Subject</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>1234567891</td>
-                                    <td>john.doe@example.com</td>
-                                    <td>Applications Development 2</td>
+            <div className='management-section'>
+                <h4 className='sub-header'>Manage Venues</h4>
+                <div className='table-container'>
+                    <table className='table'>
+                       
+<thead>
+                            <tr>
+                                <th>Venue ID</th>
+                                <th>Room</th>
+                                <th>Building</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filterData(venues, searchQuery).map(venue => (
+                                <tr key={venue.id}>
+                                    <td>{venue.id}</td>
+                                    <td>{venue.room}</td>
+                                    <td>{venue.building}</td>
                                     <td><button className='btn btn-primary'>Delete</button></td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jane</td>
-                                    <td>Doe</td>
-                                    <td>11234567899</td>
-                                    <td>jane.smith@example.com</td>
-                                    <td>Applications Development Fundamentals 2</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-
-                <div className='management-section'>
-                    <h4 className='sub-header'>Manage Students</h4>
-                    <div className='table-container'>
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* Example rows; replace with dynamic data */}
-                                <tr>
-                                    <td>1</td>
-                                    <td>Emily</td>
-                                    <td>Johnson</td>
-                                    <td>emily.johnson@example.com</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Michael</td>
-                                    <td>Brown</td>
-                                    <td>michael.brown@example.com</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div className='management-section'>
-                    <h4 className='sub-header'>Manage Venues</h4>
-                    <div className='table-container'>
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th>Venue ID</th>
-                                    <th>Room</th>
-                                    <th>Building</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* Example rows; replace with dynamic data */}
-                                <tr>
-                                    <td>1</td>
-                                    <td>2.22</td>
-                                    <td>Library</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Lab 1.1</td>
-                                    <td>Engineering Building</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <Outlet />
             </div>
         </div>
     );
