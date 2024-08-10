@@ -1,54 +1,78 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import MakeBooking from '../MakeBooking/MakeBooking';
 import './ViewTutors.css';
 
 const Tutors = () => {
-    const navigate = useNavigate();
-  
-    const handleBookingClick = () => {
-      navigate('/bookingForm'); // Navigate to the BookingForm page
-    };
-  
-    return (
-      <div className="tutors-page">
-        <header className="tutors-header">
-          <input
-            type="text"
-            placeholder="Search tutors by name, subject, or location"
-            className="search-bar"
-          />
-          <button className="search-button">Search</button>
-        </header>
-  
-        <section className="tutor-list">
-          <div className="tutor-card">
-            <h2>Tutor 1</h2>
-            <p>Subject: Math</p>
-            <p>Location: New York</p>
-            <p>Availability: Available</p>
-            <p>Rating: 4.5 Stars</p>
-            <button onClick={handleBookingClick}>Book Now</button>
-          </div>
-          <div className="tutor-card">
-            <h2>Tutor 2</h2>
-            <p>Subject: Science</p>
-            <p>Location: Los Angeles</p>
-            <p>Availability: Available</p>
-            <p>Rating: 4.2 Stars</p>
-            <button onClick={handleBookingClick}>Book Now</button>
-          </div>
-          <div className="tutor-card">
-            <h2>Tutor 3</h2>
-            <p>Subject: English</p>
-            <p>Location: Chicago</p>
-            <p>Availability: Unavailable</p>
-            <p>Rating: 4.8 Stars</p>
-            <button onClick={handleBookingClick}>Book Now</button>
-          </div>
-        </section>
-      </div>
-    );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTutor, setSelectedTutor] = useState(null);
+
+  const handleBookingClick = (tutor) => {
+    setSelectedTutor(tutor);
+    setIsModalOpen(true);
   };
-  
-  export default Tutors;
-  
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const tutors = [
+    {
+      name: 'Tutor 1',
+      subject: 'Math',
+      location: 'New York',
+      availability: 'Available',
+      rating: '4.5 Stars',
+      qualifications: 'BSc in Mathematics',
+    },
+    {
+      name: 'Tutor 2',
+      subject: 'Science',
+      location: 'Los Angeles',
+      availability: 'Available',
+      rating: '4.2 Stars',
+      qualifications: 'BSc in Science',
+    },
+    {
+      name: 'Tutor 3',
+      subject: 'English',
+      location: 'Chicago',
+      availability: 'Unavailable',
+      rating: '4.8 Stars',
+      qualifications: 'BA in English',
+    },
+  ];
+
+  return (
+    <div className="tutors-page">
+      <header className="tutors-header">
+        <input
+          type="text"
+          placeholder="Search tutors by name, subject, or location"
+          className="search-bar"
+        />
+        <button className="search-button">Search</button>
+      </header>
+
+      <section className="tutor-list">
+        {tutors.map((tutor) => (
+          <div className="tutor-card" key={tutor.name}>
+            <h2>{tutor.name}</h2>
+            <p>Subject: {tutor.subject}</p>
+            <p>Location: {tutor.location}</p>
+            <p>Availability: {tutor.availability}</p>
+            <p>Rating: {tutor.rating}</p>
+            <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
+          </div>
+        ))}
+      </section>
+
+      <MakeBooking
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        tutor={selectedTutor}
+      />
+    </div>
+  );
+};
+
+export default Tutors;
