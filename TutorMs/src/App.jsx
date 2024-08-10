@@ -13,6 +13,7 @@ import AdminLayout from './Components/Views/Admin/AdminLayout';
 
 import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard'; // just here for testing purposes
 import Subjects from './Components/Views/Student/ViewSubjects/ViewSubjects'; // here for testing purposes
+import Tutors from './Components/Views/Student/ViewTutors/ViewTutors'; // here for testing purposes
 
 const App = () => {
     return (
@@ -31,6 +32,7 @@ const App = () => {
 
                     <Route path='/studentDashboard' element={<StudentDashboard />} /> 
                     <Route path='/subjects' element={<Subjects />} />
+                    <Route path='/tutors' element={<Tutors />} />
 
                 </Routes>
                 <Footer />
