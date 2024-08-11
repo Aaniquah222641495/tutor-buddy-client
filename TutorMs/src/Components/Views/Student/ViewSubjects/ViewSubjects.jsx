@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ViewSubjects.css';
+import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Subjects = () => {
   const navigate = useNavigate();
@@ -12,6 +13,9 @@ const Subjects = () => {
 
   return (
     <div className="subjects-page">
+
+      <StudentNavbar />
+
       <header className="subjects-header">
         <h1>Subjects</h1>
         <div className="search-bar">
