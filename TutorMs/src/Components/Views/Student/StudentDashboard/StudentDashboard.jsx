@@ -1,9 +1,13 @@
 import React from 'react';
 import './Dashboard.css';
+import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
+
+      <StudentNavbar />
+      
       <header className="dashboard-header">
         <h1>Student Dashboard</h1>
         <div className="search-bar">
@@ -11,7 +15,7 @@ const Dashboard = () => {
           <button>Search</button>
         </div>
       </header>
-
+      
       <section className="profile-section">
         <div className="profile-card">
           <div className="profile-image">
