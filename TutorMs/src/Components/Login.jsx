@@ -1,13 +1,14 @@
 import './style.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
+import {AdminApi} from 'student_tutor_booking_management_system';
 const Login = () => {
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    var adminApi = new AdminApi();
+
 
     const handleRoleChange = (event) => {
         setRole(event.target.value);
@@ -37,18 +38,22 @@ const Login = () => {
         // Mock authentication logic
         if (email && password && role) {
             // Mock response data
-            const response = {
-                data: {
-                    role: role // Assuming the role is returned based on the login
-                }
-            };
 
             // Navigate to the appropriate dashboard based on role
-            if (response.data.role === 'admin') {
+            if (role === 'admin') {
+               const response = adminApi.authenticateAdmin(email, password, (error, data, response) =>{
+                    if(error) {
+                        console.log(error)
+                    }
+                    else{
+                        console.log(response+ " " + data)
+                    }
+                    }
+                );
                 navigate('/adminDashboard');
-            } else if (response.data.role === 'tutor') {
+            } else if (role === 'tutor') {
                 navigate('/tutorDashboard');
-            } else if (response.data.role === 'student') {
+            } else if (role === 'student') {
                 navigate('/studentDashboard');
             }
         } else {
