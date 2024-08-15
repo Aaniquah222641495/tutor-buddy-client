@@ -19,10 +19,10 @@ const Footer = () => {
                     </a>
                     <a href='https://www.linkedin.com/school/cput/' target='_blank' rel='noopener noreferrer'>
                         <i className='bi bi-linkedin'></i>
-                    </a>npm link
+                    </a>
 
                 </div>
-            </div>npm install /Users/serajdicks/Desktop/PROJECT\ 2/typescript-axios-client-generated
+            </div>
 
         </footer>
     );
