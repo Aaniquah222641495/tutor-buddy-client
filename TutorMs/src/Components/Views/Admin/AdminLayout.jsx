@@ -20,7 +20,7 @@ const AdminLayout = () => {
         <div className='dashboard-container'>
             <div className='sidebar'>
                 <Link to="/adminDashboard" className='d-flex align-items-center pb-3 mb-1 mt-md-3 me-md-auto text-white text-decoration-none'>
-                    <span className='fs-5 fw-bolder d-none d-sm-inline'>Welcome!</span>
+                    <span className='fs-5 fw-bolder d-none d-sm-inline'>Welcome! </span>
                 </Link>
                 <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li className="w-100">
