@@ -1,13 +1,18 @@
 import './style.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
+import {AdminApi} from 'student_tutor_booking_management_system';
+import {TutorApi} from 'student_tutor_booking_management_system';
+import {StudentApi} from 'student_tutor_booking_management_system';
 const Login = () => {
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    var adminApi = new AdminApi();
+    var studentApi = new StudentApi();
+    var tutorApi = new TutorApi();
+
 
     const handleRoleChange = (event) => {
         setRole(event.target.value);
@@ -37,55 +42,46 @@ const Login = () => {
         // Mock authentication logic
         if (email && password && role) {
             // Mock response data
-            const response = {
-                data: {
-                    role: role // Assuming the role is returned based on the login
-                }
-            };
 
             // Navigate to the appropriate dashboard based on role
-            if (response.data.role === 'admin') {
-                navigate('/adminDashboard');
-            } else if (response.data.role === 'tutor') {
-                navigate('/tutorDashboard');
-            } else if (response.data.role === 'student') {
-                navigate('/studentDashboard');
+            if (role === 'admin') {
+                adminApi.authenticateAdmin(email, password, (error, data, response) =>{
+                        if(error) {
+                            console.log(error)
+                        }
+                        else{
+                            navigate('/adminDashboard');
+                            console.log(response + " " + data["name"])
+                        }
+                    }
+                );
+            } else if (role === 'tutor') {
+                tutorApi.authenticateTutor(email, password, (error, data, response) =>{
+                        if (error) {
+                            console.log(response + " " + data);
+
+                        } else {
+                            navigate('/tutorDashboard');
+                            console.log(response + " " + data);
+                        }
+                    }
+                );
+            } else if (role === 'student') {
+                studentApi.authenticateTutor(email, password, (error, data, response) =>{
+                        if (error) {
+                            console.log(response + " " + data);
+
+                        } else {
+                            navigate('/studentDashboard');
+                            console.log(response + " " + data);
+                        }
+                    }
+                );
             }
         } else {
             alert('Please fill in all fields.');
         }
     };
-
-    /*
-    const handleLogin = async (event) => {
-        event.preventDefault();
-        
-        const loginData = {
-            email,
-            password,
-            role
-        };
-
-        try {
-            const response = await axios.post('http://localhost:8080/auth/login', loginData);
-            console.log('Login successful:', response.data);
-            
-            // Navigate to the appropriate dashboard based on role
-            if (response.data.role === 'admin') {
-                navigate('/adminDashboard');
-            } else if (response.data.role === 'tutor') {
-                navigate('/tutorDashboard');
-            } else if (response.data.role === 'student') {
-                navigate('/studentDashboard');
-            }
-
-        } catch (error) {
-            console.error('Error during login:', error);
-            // Handle error (e.g., show an error message)
-            alert('Login failed. Please check your credentials.');
-        }
-    };
-    */
 
     return (
         <div className='loginPage'>
