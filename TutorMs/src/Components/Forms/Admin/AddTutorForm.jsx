@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
-    const [firstName, setFirstName] = useState('');
+    const [name, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
 
     useEffect(() => {
         if (selectedTutor) {
-            setFirstName(selectedTutor.firstName);
+            setFirstName(selectedTutor.name);
             setLastName(selectedTutor.lastName);
             setPhoneNumber(selectedTutor.phoneNumber);
             setEmail(selectedTutor.email);
@@ -28,7 +28,7 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newTutor = { firstName, lastName, phoneNumber, email, password, subject };
+        const newTutor = { name, lastName, phoneNumber, email, password, subject };
         onAddTutor(newTutor);
     };
 
@@ -39,7 +39,7 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
                 <label>First Name</label>
                 <input
                     type='text'
-                    value={firstName}
+                    value={name}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                 />

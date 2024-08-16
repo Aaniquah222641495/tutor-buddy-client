@@ -50,8 +50,11 @@ const Login = () => {
                             console.log(error)
                         }
                         else{
+                            //Store admin information in local storage
+                            localStorage.setItem('admin', JSON.stringify ({name: data.name
+                            }));
                             navigate('/adminDashboard');
-                            console.log(response + " " + data["name"])
+                            console.log(response + " " + data.name);
                         }
                     }
                 );
