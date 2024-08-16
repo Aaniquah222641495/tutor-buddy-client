@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MakeBooking from '../MakeBooking/MakeBooking';
 import './ViewTutors.css';
+import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Tutors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,6 +45,9 @@ const Tutors = () => {
 
   return (
     <div className="tutors-page">
+
+      <StudentNavbar />
+
       <header className="tutors-header">
         <input
           type="text"
