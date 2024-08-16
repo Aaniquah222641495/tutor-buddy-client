@@ -78,7 +78,7 @@ html, body {
   
   .dashboard {
     flex-grow: 1;
-    padding-bottom: 60px; /* More bottom padding to ensure the button is visible */
+    padding-bottom: 60px; 
   }
   
   footer {
@@ -86,9 +86,9 @@ html, body {
     padding: 10px;
     text-align: center;
     color: white;
-    position: relative; /* Ensure it's not absolutely positioned, which might cause overlap */
+    position: relative; 
     margin-top: auto;
-    height: 100px; /* Adjust height as necessary */
+    height: 100px; 
   }
   
   
@@ -98,7 +98,7 @@ html, body {
     background-color: var(--color-primary);
     border-radius: 10px;
     text-align: center;
-    margin-bottom: 40px; /* Increase this value to ensure enough space */
+    margin-bottom: 40px; 
   }
   
   
