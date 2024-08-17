@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-
 const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selectedStudent }) => {
     const [studentId, setStudentId] = useState('');
-    const [firstName, setFirstName] = useState('');
+    const [name, setFirstName] = useState('');  
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
@@ -11,7 +10,7 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
     useEffect(() => {
         if (selectedStudent) {
             setStudentId(selectedStudent.studentId);
-            setFirstName(selectedStudent.firstName);
+            setFirstName(selectedStudent.name);  
             setLastName(selectedStudent.lastName);
             setPhoneNumber(selectedStudent.phoneNumber);
             setEmail(selectedStudent.email);
@@ -26,7 +25,7 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const student = { studentId, firstName, lastName, phoneNumber, email };
+        const student = { studentId, name, lastName, phoneNumber, email };  
         if (selectedStudent) {
             handleEditStudent(student);
         } else {
@@ -43,18 +42,18 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
                 <input
                     type='text'
                     id="studentId"
-                    value={studentId}
+                    value={studentId}  // Updated to use studentId
                     onChange={(e) => setStudentId(e.target.value)}
                     required
                     disabled={!!selectedStudent} // Disable if editing
                 />
             </div>
             <div className='form-group'>
-                <label htmlFor="firstName">First Name</label>
+                <label htmlFor="name">First Name</label>
                 <input
                     type='text'
-                    id="firstName"
-                    value={firstName}
+                    id="name"
+                    value={name}  
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                 />

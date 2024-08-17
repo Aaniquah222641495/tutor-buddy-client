@@ -1,62 +1,68 @@
 import React, { useState, useEffect } from 'react';
 
 const AddVenueForm = ({ handleAddVenue, closeModal, selectedVenue }) => {
-    const [venueId, setVenueId] = useState('');
-    const [room, setRoom] = useState('');
-    const [building, setBuilding] = useState('');
+    const [venue, setVenue] = useState({
+        room: '',
+        building: ''
+    });
 
     useEffect(() => {
+        // If editing a venue, populate the form with the existing data
         if (selectedVenue) {
-            // If selectedVenue is passed, populate the form fields with its data
-            setVenueId(selectedVenue.venueId);
-            setRoom(selectedVenue.room);
-            setBuilding(selectedVenue.building);
-        } else {
-            // Reset the form if no selectedVenue is provided
-            setVenueId('');
-            setRoom('');
-            setBuilding('');
+            setVenue({
+                room: selectedVenue.room,
+                building: selectedVenue.building
+            });
         }
     }, [selectedVenue]);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setVenue({
+            ...venue,
+            [name]: value
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission
-        handleAddVenue({ venueId, room, building });
-        closeModal();
+        handleAddVenue(venue);
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>{selectedVenue ? 'Edit Venue' : 'Add New Venue'}</h2>
-            <div className='form-group'>
-                <label>Venue ID</label>
+            <div className="form-group">
+                <label htmlFor="room">Room</label>
                 <input
-                    type='text'
-                    value={venueId}
-                    onChange={(e) => setVenueId(e.target.value)}
+                    type="text"
+                    id="room"
+                    name="room"
+                    className="form-control"
+                    value={venue.room}
+                    onChange={handleChange}
                     required
                 />
             </div>
-            <div className='form-group'>
-                <label>Room</label>
+            <div className="form-group">
+                <label htmlFor="building">Building</label>
                 <input
-                    type='text'
-                    value={room}
-                    onChange={(e) => setRoom(e.target.value)}
+                    type="text"
+                    id="building"
+                    name="building"
+                    className="form-control"
+                    value={venue.building}
+                    onChange={handleChange}
                     required
                 />
             </div>
-            <div className='form-group'>
-                <label>Building</label>
-                <input
-                    type='text'
-                    value={building}
-                    onChange={(e) => setBuilding(e.target.value)}
-                    required
-                />
+            <div className="button-container">
+                <button type="submit" className="btn btn-primary">
+                    {selectedVenue ? 'Update Venue' : 'Add Venue'}
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                    Cancel
+                </button>
             </div>
-            <button type='submit'>{selectedVenue ? 'Save Changes' : 'Add Venue'}</button>
         </form>
     );
 };

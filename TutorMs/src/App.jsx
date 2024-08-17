@@ -9,6 +9,7 @@ import ManageTutors from './Components/Views/Admin/ManageTutors/ManageTutors';
 import ManageStudents from './Components/Views/Admin/ManageStudents/ManageStudents';
 import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
 import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
+import ManageSubjects from './Components/Views/Admin/ManageSubjects/ManageSubjects';
 import AdminLayout from './Components/Views/Admin/AdminLayout';
 
 import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard'; 
@@ -27,6 +28,7 @@ const App = () => {
                         <Route path='manageTutors' element={<ManageTutors />} />
                         <Route path='manageStudents' element={<ManageStudents />} />
                         <Route path='manageVenues' element={<ManageVenues />} />
+                        <Route path='manageSubjects' element={<ManageSubjects/>}/>
                     </Route>
                     <Route path='/bookingForm' element={<BookingForm />} />
 
