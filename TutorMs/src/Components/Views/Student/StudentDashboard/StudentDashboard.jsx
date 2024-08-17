@@ -1,11 +1,10 @@
 import React from 'react';
-import './Dashboard.css';
+import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
-
       <StudentNavbar />
       
       <header className="dashboard-header">
@@ -16,49 +15,50 @@ const Dashboard = () => {
         </div>
       </header>
       
-      <section className="profile-section">
-        <div className="profile-card">
-          <div className="profile-image">
-            <img src="https://via.placeholder.com/150" alt="User" />
+      <div className="dashboard-content">
+        <section className="profile-section">
+          <div className="profile-card">
+            <div className="profile-image">
+              <img src="https://via.placeholder.com/150" alt="User" />
+            </div>
+            <div className="profile-details">
+              <h2>User Name</h2>
+              <p>Contact Information</p>
+              <button>Edit Profile</button>
+            </div>
           </div>
-          <div className="profile-details">
-            <h2>User Name</h2>
-            <p>Contact Information</p>
-            <button>Edit Profile</button>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="tutors-section">
-        <h2>Available Tutors</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Tutor Name</th>
-              <th>Subject</th>
-              <th>Availability</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Tutor 1</td>
-              <td>Subject 1</td>
-              <td>Availability 1</td>
-              <td>Rating 1</td>
-            </tr>
-            <tr>
-              <td>Tutor 2</td>
-              <td>Subject 2</td>
-              <td>Availability 2</td>
-              <td>Rating 2</td>
-            </tr>
-          </tbody>
-        </table>
+        <section className="tutors-section">
+          <h2>Available Tutors</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Tutor Name</th>
+                <th>Subject</th>
+                <th>Availability</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tutor 1</td>
+                <td>Subject 1</td>
+                <td>Availability 1</td>
+                <td>Rating 1</td>
+              </tr>
+              <tr>
+                <td>Tutor 2</td>
+                <td>Subject 2</td>
+                <td>Availability 2</td>
+                <td>Rating 2</td>
+              </tr>
+            </tbody>
+          </table>
 
-        <button className="subject-button" onClick={() => window.location.href='/subjects'}>View Subjects</button>
-
-      </section>
+          <button className="subject-button" onClick={() => window.location.href='/subjects'}>View Subjects</button>
+        </section>
+      </div>
 
       <section className="sessions-section">
         <h2>Upcoming Sessions</h2>

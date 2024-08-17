@@ -1,5 +1,5 @@
 import React from 'react';
-import './MakeBooking.css';
+import '../StudentDashboard.css';
 
 const MakeBooking = ({ isOpen, onClose, tutor }) => {
   if (!isOpen) return null;

@@ -1,7 +1,7 @@
 // src/Components/Views/Student/ViewSubjects/ViewSubjects.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ViewSubjects.css';
+import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Subjects = () => {

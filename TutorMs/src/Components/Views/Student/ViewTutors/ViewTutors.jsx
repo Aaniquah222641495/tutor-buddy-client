@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MakeBooking from '../MakeBooking/MakeBooking';
-import './ViewTutors.css';
+import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Tutors = () => {
@@ -49,6 +49,7 @@ const Tutors = () => {
       <StudentNavbar />
 
       <header className="tutors-header">
+      <h1>Tutors</h1>
         <input
           type="text"
           placeholder="Search tutors by name, subject, or location"
