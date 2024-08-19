@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import MakeBooking from '../MakeBooking/MakeBooking';
 import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
-import TutorApi from '../../../../web/javascript-client-generated/src/api/TutorApi'; // Import TutorApi
+import { TutorApi } from 'student_tutor_booking_management_system'; // Import TutorApi
 
 const Tutors = () => {
   const { searchQuery } = useOutletContext();

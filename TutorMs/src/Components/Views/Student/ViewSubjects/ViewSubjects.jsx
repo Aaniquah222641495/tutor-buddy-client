@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
-import SubjectApi from '../../../../web/javascript-client-generated/src/api/StudentApi'; // Importing SubjectApi
+import { SubjectApi } from 'student_tutor_booking_management_system'; // Importing SubjectApi
 
 const Subjects = () => {
   const { searchQuery } = useOutletContext();
