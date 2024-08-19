@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     // State to manage sessions
     const [sessions, setSessions] = useState([
-      { id: '1', date: '01/01/2022', time: '10:00 AM - 11:00 AM', tutor: 'John Doe', location: 'Room 101' },
+      { id: '1', date: '01/01/2022', time: '10:00 AM - 11:00 AM', tutor: 'Jamie Doe', location: 'Room 101' },
       { id: '2', date: '01/02/2022', time: '2:00 PM - 3:00 PM', tutor: 'Jane Smith', location: 'Room 202' }
     ]);
 
