@@ -8,6 +8,7 @@ import './AdminDashboard.css'; // Import the CSS file for specific component sty
 const AdminDashboard = () => {
     const { searchQuery } = useOutletContext();
 
+
     const filterData = (data, query) => {
         return data.filter(item => 
             Object.values(item).some(value =>
