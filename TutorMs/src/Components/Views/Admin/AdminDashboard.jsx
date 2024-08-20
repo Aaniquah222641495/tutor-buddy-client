@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminApi, TutorApi, StudentApi, LocationApi, SubjectApi } from 'student_tutor_booking_management_system';
 
-
 const AdminDashboard = () => {
     const [admins, setAdmins] = useState([]);
     const [tutors, setTutors] = useState([]);
@@ -9,7 +8,7 @@ const AdminDashboard = () => {
     const [locations, setLocations] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState([]);
 
     const adminApi = new AdminApi();
     const tutorApi = new TutorApi();
@@ -18,70 +17,77 @@ const AdminDashboard = () => {
     const subjectApi = new SubjectApi();
 
     useEffect(() => {
-        const fetchData = () => {
+        const fetchData = async () => {
             setLoading(true);
-            setError(null);
+            setErrors([]);
 
-            // Fetch admins
-            adminApi.getAllAdmins((error, data) => {
-                if (error) {
-                    setError('Error fetching admins: ' + error.message);
-                } else {
-                    setAdmins(data);
-                }
-            });
+            try {
+                const [adminsData, tutorsData, studentsData, locationsData, subjectsData] = await Promise.all([
+                    new Promise((resolve, reject) => {
+                        adminApi.getAllAdmins((error, data) => {
+                            if (error) reject('Error fetching admins: ' + error.message);
+                            else resolve(data);
+                        });
+                    }),
+                    new Promise((resolve, reject) => {
+                        tutorApi.getAllTutors((error, data) => {
+                            if (error) reject('Error fetching tutors: ' + error.message);
+                            else resolve(data);
+                        });
+                    }),
+                    new Promise((resolve, reject) => {
+                        studentApi.getAllStudents((error, data) => {
+                            if (error) reject('Error fetching students: ' + error.message);
+                            else resolve(data);
+                        });
+                    }),
+                    new Promise((resolve, reject) => {
+                        locationApi.getAllLocations((error, data) => {
+                            if (error) reject('Error fetching locations: ' + error.message);
+                            else resolve(data);
+                        });
+                    }),
+                    new Promise((resolve, reject) => {
+                        subjectApi.getAllSubject((error, data) => {
+                            if (error) reject('Error fetching subjects: ' + error.message);
+                            else resolve(data);
+                        });
+                    })
+                ]);
 
-            // Fetch tutors
-            tutorApi.getAllTutors((error, data) => {
-                if (error) {
-                    setError('Error fetching tutors: ' + error.message);
-                } else {
-                    setTutors(data);
-                }
-            });
-
-            // Fetch students
-            studentApi.getAllStudents((error, data) => {
-                if (error) {
-                    setError('Error fetching students: ' + error.message);
-                } else {
-                    setStudents(data);
-                }
-            });
-
-            // Fetch locations
-            locationApi.getAllLocations((error, data) => {
-                if (error) {
-                    setError('Error fetching locations: ' + error.message);
-                } else {
-                    setLocations(data);
-                }
-            });
-
-            // Fetch subjects
-            subjectApi.getAllSubject((error, data) => {
-                if (error) {
-                    setError('Error fetching subjects: ' + error.message);
-                } else {
-                    setSubjects(data);
-                }
-            });
+                setAdmins(adminsData);
+                setTutors(tutorsData);
+                setStudents(studentsData);
+                setLocations(locationsData);
+                setSubjects(subjectsData);
+            } catch (error) {
+                setErrors(prevErrors => [...prevErrors, error]);
+            }
 
             setLoading(false);
         };
 
         fetchData();
-    }, [adminApi, tutorApi, studentApi, locationApi, subjectApi]);
+    }, []);
 
-   
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className='section'>
             <h3 className='sub-header'>Admin Dashboard</h3>
+            {errors.length > 0 && (
+                <div className="error">
+                    {errors.map((error, index) => (
+                        <p key={index}>{error}</p>
+                    ))}
+                </div>
+            )}
 
             {/* Admins Table */}
             <div className='table-container'>
-            <h4 className='sub-header'>Admins</h4>
+                <h4 className='sub-header'>Admins</h4>
                 <table className='table'>
                     <thead>
                         <tr>
@@ -108,7 +114,7 @@ const AdminDashboard = () => {
 
             {/* Tutors Table */}
             <div className='table-container'>
-            <h4 className='sub-header'>Tutors</h4>
+                <h4 className='sub-header'>Tutors</h4>
                 <table className='table'>
                     <thead>
                         <tr>
@@ -137,7 +143,7 @@ const AdminDashboard = () => {
 
             {/* Students Table */}
             <div className='table-container'>
-            <h4 className='sub-header'>Students</h4>
+                <h4 className='sub-header'>Students</h4>
                 <table className='table'>
                     <thead>
                         <tr>
@@ -164,7 +170,7 @@ const AdminDashboard = () => {
 
             {/* Locations Table */}
             <div className='table-container'>
-            <h4 className='sub-header'>Venues</h4>
+                <h4 className='sub-header'>Venues</h4>
                 <table className='table'>
                     <thead>
                         <tr>
@@ -187,7 +193,7 @@ const AdminDashboard = () => {
 
             {/* Subjects Table */}
             <div className='table-container'>
-            <h4 className='sub-header'>Subjects</h4>
+                <h4 className='sub-header'>Subjects</h4>
                 <table className='table'>
                     <thead>
                         <tr>
