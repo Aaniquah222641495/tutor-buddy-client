@@ -1,107 +1,116 @@
 import React, { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
-import { BookingApi, StudentApi, TutorApi } from 'student_tutor_booking_management_system';
+import { StudentApi, TutorApi, ReviewApi, BookingApi } from 'student_tutor_booking_management_system';
 
 const Dashboard = () => {
-    const { searchQuery } = useOutletContext();
-
-    const bookingApi = new BookingApi();
-    const studentApi = new StudentApi();
-    const tutorApi = new TutorApi();
-
-    const [user, setUser] = useState(null);
-    const [tutors, setTutors] = useState([
-        // Sample tutor data
-        {
-            id: 1,
-            firstName: 'John',
-            lastName: 'Doe',
-            subject: 'Mathematics',
-            availability: 'Mon, Wed, Fri 10:00 AM - 12:00 PM',
-            rating: 4.5,
-        },
-        {
-            id: 2,
-            firstName: 'Jane',
-            lastName: 'Smith',
-            subject: 'Physics',
-            availability: 'Tue, Thu 2:00 PM - 4:00 PM',
-            rating: 4.7,
-        },
-        {
-            id: 3,
-            firstName: 'Emily',
-            lastName: 'Johnson',
-            subject: 'Chemistry',
-            availability: 'Mon, Wed 1:00 PM - 3:00 PM',
-            rating: 4.9,
-        },
-    ]);
-
-    const [sessions, setSessions] = useState([
-        // Sample session data
-        {
-            id: 1,
-            date: '2024-08-20',
-            time: '10:00 AM - 11:00 AM',
-            tutor: { firstName: 'John', lastName: 'Doe' },
-            location: 'Room 101',
-        },
-        {
-            id: 2,
-            date: '2024-08-22',
-            time: '2:00 PM - 3:00 PM',
-            tutor: { firstName: 'Jane', lastName: 'Smith' },
-            location: 'Room 102',
-        },
-    ]);
+    const [studentData, setStudentData] = useState(null);
+    const [tutorsData, setTutorsData] = useState([]);
+    const [reviewsData, setReviewsData] = useState([]);
+    const [sessionsData, setSessionsData] = useState([]);
 
     useEffect(() => {
-        studentApi.getStudentById(('userId'), (error, userData) => {
-            if (error) {
-                console.error("Error fetching student:", error);
-            } else {
-                setUser(userData);
+        const fetchStudentData = async () => {
+            try {
+                const email = "student@example.com"; // Replace with actual logic to get email
+                const studentApi = new StudentApi();
+                studentApi.authenticateStudent(email, "password", (error, data) => {
+                    if (error) {
+                        console.error("Error fetching student data", error);
+                    } else {
+                        setStudentData(data);
+                        fetchSessionsData(data.id); // Fetch sessions data after student data
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching student data", error);
             }
-        });
+        };
 
-        tutorApi.getAllTutors((error, tutorsData) => {
-            if (error) {
-                console.error("Error fetching tutors:", error);
-            } else {
-                setTutors(tutorsData);
+        const fetchSessionsData = async (studentId) => {
+            try {
+                const bookingApi = new BookingApi();
+                bookingApi.getAllBookingsByStudent(studentId, (error, data) => {
+                    if (error) {
+                        console.error("Error fetching sessions data", error);
+                    } else {
+                        const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
+                        setSessionsData(upcomingSessions);
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching sessions data", error);
             }
-        });
+        };
 
-        bookingApi.getBookingsByStudentId(('userId'), (error, sessionsData) => {
-            if (error) {
-                console.error("Error fetching sessions:", error);
-            } else {
-                setSessions(sessionsData);
+        const fetchTutorsData = async () => {
+            try {
+                const tutorApi = new TutorApi();
+                tutorApi.getAllTutors((error, data) => {
+                    if (error) {
+                        console.error("Error fetching tutors data", error);
+                    } else {
+                        setTutorsData(data);
+                        fetchReviewsForTutors(data.map(tutor => tutor.id));
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching tutors data", error);
             }
-        });
+        };
+
+        const fetchReviewsForTutors = async (tutorIds) => {
+            try {
+                const reviewApi = new ReviewApi();
+                let reviews = [];
+                for (let id of tutorIds) {
+                    await new Promise((resolve, reject) => {
+                        reviewApi.getAllReviewsByTutor(id, (error, data) => {
+                            if (error) {
+                                console.error(`Error fetching reviews for tutor ${id}`, error);
+                                reject(error);
+                            } else {
+                                reviews.push(...data);
+                                resolve();
+                            }
+                        });
+                    });
+                }
+                setReviewsData(reviews);
+            } catch (error) {
+                console.error("Error fetching reviews data", error);
+            }
+        };
+
+        fetchStudentData();
+        fetchTutorsData();
     }, []);
 
-    const filterData = (data, query) => {
-        return data.filter(item =>
-            Object.values(item).some(value =>
-                value.toLowerCase().includes(query.toLowerCase())
-            )
-        );
+    // Cancel booking handler
+    const handleCancelBooking = async (bookingId) => {
+        try {
+            const bookingApi = new BookingApi();
+            bookingApi.deleteBooking(bookingId, (error) => {
+                if (error) {
+                    console.error("Error canceling booking", error);
+                } else {
+                    // Remove the canceled booking from the state
+                    setSessionsData(prevSessions => prevSessions.filter(session => session.bookingId !== bookingId));
+                }
+            });
+        } catch (error) {
+            console.error("Error canceling booking", error);
+        }
     };
 
-    const cancelBooking = (bookingId) => {
-        bookingApi.deleteBooking(bookingId, (error) => {
-            if (error) {
-                console.error("Error canceling booking:", error);
-            } else {
-                setSessions(prevSessions => prevSessions.filter(session => session.id !== bookingId));
-            }
-        });
-    };
+    // Merge reviews with tutors data
+    const tutorsWithRatings = tutorsData.map(tutor => {
+        const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.id);
+        const totalRating = tutorReviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = tutorReviews.length ? totalRating / tutorReviews.length : 0;
+        return { ...tutor, rating: averageRating };
+    });
 
     return (
         <div className="dashboard">
@@ -111,76 +120,79 @@ const Dashboard = () => {
                 <h1>Student Dashboard</h1>
                 <div className="search-bar">
                     <input type="text" placeholder="Search" />
-                    <button className="btn btn-primary">Search</button>
+                    <button>Search</button>
                 </div>
             </header>
 
             <div className="dashboard-content">
-                {user && (
-                    <section className="profile-section">
-                        <div className="profile-card">
-                            <div className="profile-image">
-                                <img src={user.profileImage} alt="User" />
-                            </div>
-                            <div className="profile-details">
-                                <h2>{user.firstName} {user.lastName}</h2>
-                                <p>{user.email}</p>
-                                <p>{user.phone}</p>
-                                <button className="btn btn-primary">Edit Profile</button>
-                            </div>
+                <section className="profile-section">
+                    <div className="profile-card">
+                        <div className="profile-image">
+                            <img src="https://via.placeholder.com/150" alt="User"/>
                         </div>
-                    </section>
-                )}
-
-                <section className="management-section">
-                    <h4 className="sub-header">Available Tutors</h4>
-                    <div className="table-container">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>Tutor Name</th>
-                                    <th>Subject</th>
-                                    <th>Availability</th>
-                                    <th>Rating</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filterData(tutors, searchQuery).map(tutor => (
-                                    <tr key={tutors.id}>
-                                        <td>{tutors.firstName} {tutor.lastName}</td>
-                                        <td>{tutors.subject}</td>
-                                        <td>{tutors.availability}</td>
-                                        <td>{tutors.rating}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <button className="btn btn-primary" onClick={() => window.location.href = '/subjects'}>View Subjects</button>
+                        <div className="profile-details">
+                            {studentData ? (
+                                <>
+                                    <h2>{`${studentData.firstName} ${studentData.lastName}`}</h2>
+                                    <p>Email: {studentData.email}</p>
+                                    <p>Phone: {studentData.phoneNumber}</p>
+                                </>
+                            ) : (
+                                <p>Loading profile...</p>
+                            )}
+                            <button>Edit Profile</button>
+                        </div>
                     </div>
                 </section>
 
-                <section className="management-section">
-                    <h4 className="sub-header">Upcoming Sessions</h4>
-                    <div className="table-container">
-                        {sessions.map(sessions => (
-                            <div className="session-card" key={sessions.id}>
-                                <p>Date: {sessions.date}</p>
-                                <p>Time: {sessions.time}</p>
-                                <p>Tutor: {sessions.tutor.firstName} {sessions.tutor.lastName}</p>
-                                <p>Location: {sessions.location}</p>
-                                <button className="btn btn-primary" onClick={() => cancelBooking(session.id)}>Cancel Booking</button>
-                            </div>
+                <section className="tutors-section">
+                    <h2>Available Tutors</h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Tutor Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Rating</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {tutorsWithRatings.map(tutor => (
+                            <tr key={tutor.id}>
+                                <td>{tutor.name}</td>
+                                <td>{tutor.phoneNumber}</td>
+                                <td>{tutor.email}</td>
+                                <td>{tutor.rating.toFixed(1)}</td>
+                            </tr>
                         ))}
-                    </div>
-                </section>
+                        </tbody>
+                    </table>
 
-                <section className="management-section">
-                    <h4 className="sub-header">AI Chatbot</h4>
-                    <div className="table-container">
-                        <button className="btn btn-primary">Chat Now</button>
-                    </div>
+                    <button className="subject-button" onClick={() => window.location.href = '/subjects'}>View Subjects</button>
                 </section>
             </div>
+
+            <section className="sessions-section">
+                <h2>Upcoming Sessions</h2>
+                {sessionsData.length > 0 ? (
+                    sessionsData.map(session => (
+                        <div key={session.bookingId} className="session-card">
+                            <p>Date: {new Date(session._date).toLocaleDateString()}</p>
+                            <p>Time: {session.startTime} - {session.endTime}</p>
+                            <p>Tutor ID: {session.tutorId}</p>
+                            <p>Subject ID: {session.subjectId}</p>
+                            <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
+                        </div>
+                    ))
+                ) : (
+                    <p>No upcoming sessions</p>
+                )}
+            </section>
+
+            <section className="chat-section">
+                <h2>AI Chatbot</h2>
+                <button>Chat Now</button>
+            </section>
         </div>
     );
 };
