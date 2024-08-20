@@ -36,11 +36,12 @@ const ManageTutors = () => {
     const handleAddTutor = (newTutor) => {
         if (selectedTutor) {
             // Update an existing tutor
-            tutorApi.updateTutor(newTutor, selectedTutor.id, (error, updatedTutor) => {
+            tutorApi.updateTutor(newTutor, selectedTutor.tutorId, (error, updatedTutor) => {
                 if (error) {
                     console.error('Error updating tutor:', error);
+                    alert('Error updating tutor. Please check the console for details.');
                 } else {
-                    setTutors(tutors.map(tutor => (tutor.id === selectedTutor.id ? updatedTutor : tutor)));
+                    setTutors(tutors.map(tutor => (tutor.tutorId === selectedTutor.tutorId ? updatedTutor : tutor)));
                     setIsModalOpen(false);
                     setSelectedTutor(null);
                 }
@@ -50,6 +51,7 @@ const ManageTutors = () => {
             tutorApi.addTutor(newTutor, (error, addedTutor) => {
                 if (error) {
                     console.error('Error adding tutor:', error);
+                    alert('Error adding tutor. Please check the console for details.');
                 } else {
                     setTutors([...tutors, addedTutor]);
                     setIsModalOpen(false);
@@ -59,18 +61,18 @@ const ManageTutors = () => {
         }
     };
 
-    const handleDeleteTutor = (id) => {
-        tutorApi.deleteTutor(id, (error) => {
+    const handleDeleteTutor = (tutorId) => {
+        tutorApi.deleteTutor(tutorId, (error) => {
             if (error) {
                 console.error('Error deleting tutor:', error);
             } else {
-                setTutors(tutors.filter(tutor => tutor.id !== id));
+                setTutors(tutors.filter(tutor => tutor.tutorId !== tutorId));
             }
         });
     };
 
-    const handleTutorChange = (id) => {
-        const tutor = tutors.find(tutor => tutor.id === id);
+    const handleTutorChange = (tutorId) => {
+        const tutor = tutors.find(tutor => tutor.tutorId === tutorId);
         setSelectedTutor(tutor);
         setIsModalOpen(true);
     };
@@ -99,16 +101,16 @@ const ManageTutors = () => {
                         </thead>
                         <tbody>
                             {tutors.map(tutor => (
-                                <tr key={tutor.id}>
-                                    <td>{tutor.id}</td>
+                                <tr key={tutor.tutorId}>
+                                    <td>{tutor.tutorId}</td>
                                     <td>{tutor.name}</td>
                                     <td>{tutor.lastName}</td>
                                     <td>{tutor.phoneNumber}</td>
                                     <td>{tutor.email}</td>
-                                    <td>{tutor.subject}</td>
+                                    <td>{tutor.subjectName}</td>
                                     <td>
-                                        <button className='btn btn-warning' onClick={() => handleTutorChange(tutor.id)}>Edit</button>
-                                        <button className='btn btn-danger' onClick={() => handleDeleteTutor(tutor.id)}>Delete</button>
+                                        <button className='btn btn-warning' onClick={() => handleTutorChange(tutor.tutorId)}>Edit</button>
+                                        <button className='btn btn-danger' onClick={() => handleDeleteTutor(tutor.tutorId)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}

@@ -54,6 +54,7 @@ const Login = () => {
                             localStorage.setItem('admin', JSON.stringify ({name: data.name
                             }));
                             navigate('/adminDashboard');
+
                             console.log(response + " " + data.name);
                         }
                     }
