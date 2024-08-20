@@ -54,6 +54,7 @@ const Login = () => {
                             localStorage.setItem('admin', JSON.stringify ({name: data.name
                             }));
                             navigate('/adminDashboard');
+
                             console.log(response + " " + data.name);
                         }
                     }
@@ -70,7 +71,7 @@ const Login = () => {
                     }
                 );
             } else if (role === 'student') {
-                studentApi.authenticateTutor(email, password, (error, data, response) =>{
+                studentApi.authenticateStudent(email, password, (error, data, response) =>{
                         if (error) {
                             console.log(response + " " + data);
 
