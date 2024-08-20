@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-
 const AddAdminForm = ({ closeModal, handleAddAdmin, handleEditAdmin, selectedAdmin }) => {
-    const [admin, setAdmin] = useState({ firstName: '', lastName: '', email: '', phoneNumber: '', password: '' });
+    const [admin, setAdmin] = useState({ name: '', lastName: '', email: '', phoneNumber: '', password: '' });
 
     useEffect(() => {
         if (selectedAdmin) {
@@ -29,12 +28,12 @@ const AddAdminForm = ({ closeModal, handleAddAdmin, handleEditAdmin, selectedAdm
         <form onSubmit={handleSubmit} className="form">
             <h2 className="sub-header">{selectedAdmin ? 'Edit Admin' : 'Add Admin'}</h2>
             <div className="form-group">
-                <label htmlFor="firstName">First Name</label>
+                <label htmlFor="name">First Name</label>
                 <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={admin.firstName}
+                    id="name"
+                    name="name"
+                    value={admin.name}
                     onChange={handleChange}
                     required
                 />

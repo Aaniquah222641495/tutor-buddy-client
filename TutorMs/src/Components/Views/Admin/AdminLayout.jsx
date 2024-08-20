@@ -1,11 +1,20 @@
-// AdminLayout.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './AdminDashboard.css'; // Ensure this file includes the CSS for layout and search bar
 
 const AdminLayout = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const [adminName, setAdminName] = useState('Admin');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Fetch admin from local storage
+        const adminData = localStorage.getItem('admin');
+        if (adminData) {
+            const { name } = JSON.parse(adminData);
+            setAdminName(name);
+        }
+    }, []);
 
     const handleLogout = () => {
         console.log("Logging out...");
@@ -20,7 +29,7 @@ const AdminLayout = () => {
         <div className='dashboard-container'>
             <div className='sidebar'>
                 <Link to="/adminDashboard" className='d-flex align-items-center pb-3 mb-1 mt-md-3 me-md-auto text-white text-decoration-none'>
-                    <span className='fs-5 fw-bolder d-none d-sm-inline'>Welcome! </span>
+                    <span className='fs-5 fw-bolder d-none d-sm-inline'>Welcome, {adminName}!</span>
                 </Link>
                 <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li className="w-100">
@@ -51,6 +60,12 @@ const AdminLayout = () => {
                         <Link to="/adminDashboard/manageVenues" className="nav-link px-0 align-middle text-white">
                             <i className='fs-4 bi bi-geo-alt'></i>
                             <span className='ms-2 d-none d-sm-inline'>Manage Venues</span>
+                        </Link>
+                    </li>
+                    <li className="w-100">
+                        <Link to="/adminDashboard/manageSubjects" className="nav-link px-0 align-middle text-white">
+                            <i className='fs-4 bi bi-tag'></i>
+                            <span className='ms-2 d-none d-sm-inline'>Manage Subjects</span>
                         </Link>
                     </li>
                     <li className="w-100" onClick={handleLogout}>

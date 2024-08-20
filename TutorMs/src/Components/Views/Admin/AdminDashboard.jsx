@@ -8,6 +8,8 @@ import './AdminDashboard.css'; // Import the CSS file for specific component sty
 const AdminDashboard = () => {
     const { searchQuery } = useOutletContext();
 
+    //get admin object from local storgae
+    const admin = JSON.parse(localStorage.getItem('admin'));
 
     const filterData = (data, query) => {
         return data.filter(item => 

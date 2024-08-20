@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../../../Common/Modals/Modal';
 import AddAdminForm from '../../../Forms/Admin/AddAdminForm';
+import { AdminApi } from 'student_tutor_booking_management_system';
 import '../manage.css';
 
 const ManageAdmins = () => {
-    const [admins, setAdmins] = useState([
-        { adminId: 'A001', firstName: 'Alice', lastName: 'Johnson', email: 'alice@example.com', phoneNumber: '123-456-7890' },
-        { adminId: 'A002', firstName: 'Bob', lastName: 'Smith', email: 'bob@example.com', phoneNumber: '098-765-4321' }
-    ]);
+    const [admins, setAdmins] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedAdmin, setSelectedAdmin] = useState(null);
+
+    // Create an instance of AdminApi
+    const adminApi = new AdminApi();
+
+    // Fetch admins from the database when the component mounts
+    useEffect(() => {
+        const fetchAdmins = () => {
+            adminApi.getAllAdmins((error, data, response) => {
+                if (error) {
+                    console.error('Error fetching admins:', error);
+                } else {
+                    setAdmins(data); 
+                }
+            });
+        };
+
+        fetchAdmins();
+    }, [adminApi]);
 
     const openModal = (admin = null) => {
         setSelectedAdmin(admin); // Set the selected admin for editing or null for adding
@@ -19,18 +35,50 @@ const ManageAdmins = () => {
     const closeModal = () => setShowModal(false);
 
     const handleAddAdmin = (admin) => {
-        setAdmins([...admins, { ...admin, adminId: `A${(admins.length + 1).toString().padStart(3, '0')}` }]);
+        adminApi.createAdmin(admin, (error, data, response) => {
+            if (error) {
+                console.error('Error adding admin:', error);
+            } else {
+                setAdmins([...admins, data]);
+                closeModal();
+            }
+        });
     };
 
     const handleEditAdmin = (updatedAdmin) => {
-        setAdmins(admins.map(admin =>
-            admin.adminId === updatedAdmin.adminId ? updatedAdmin : admin
-        ));
+        const adminId = updatedAdmin.id;
+        const body = {
+            name: updatedAdmin.name,
+            lastName: updatedAdmin.lastName,
+            email: updatedAdmin.email,
+            phoneNumber: updatedAdmin.phoneNumber,
+            password: updatedAdmin.password
+        };
+
+        adminApi.updateAdmin(body, adminId, (error, data, response) => {
+            if (error) {
+                console.error('Error editing admin:', error);
+            } else {
+                console.log('Admin updated:', data);
+                setAdmins(admins.map(admin =>
+                    admin.id === data.id ? data : admin
+                ));
+                closeModal();
+            }
+        });
     };
 
-    const handleDeleteAdmin = (adminId) => {
-        setAdmins(admins.filter(admin => admin.adminId !== adminId));
+    const handleDeleteAdmin = (id) => {
+        adminApi.deleteAdmin(id, (error, data, response) => {
+            if (error) {
+                console.error('Error deleting admin:', error);
+            } else {
+                console.log('Admin deleted successfully.');
+                setAdmins(admins.filter(admin => admin.id !== id));
+            }
+        });
     };
+    
 
     return (
         <div className='section'>
@@ -49,15 +97,15 @@ const ManageAdmins = () => {
                     </thead>
                     <tbody>
                         {admins.map((admin) => (
-                            <tr key={admin.adminId}>
-                                <td>{admin.adminId}</td>
-                                <td>{admin.firstName}</td>
+                            <tr key={admin.id}>
+                                <td>{admin.id}</td>
+                                <td>{admin.name}</td>
                                 <td>{admin.lastName}</td>
                                 <td>{admin.email}</td>
                                 <td>{admin.phoneNumber}</td>
                                 <td>
                                     <button className='btn btn-warning' onClick={() => openModal(admin)}>Edit</button>
-                                    <button className='btn btn-danger' onClick={() => handleDeleteAdmin(admin.adminId)}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => handleDeleteAdmin(admin.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
