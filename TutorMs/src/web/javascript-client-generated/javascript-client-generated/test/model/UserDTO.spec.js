@@ -30,20 +30,20 @@
   var instance;
 
   describe('(package)', function() {
-    describe('TutorDTO', function() {
+    describe('UserDTO', function() {
       beforeEach(function() {
-        instance = new StudentTutorBookingManagementSystem.TutorDTO();
+        instance = new StudentTutorBookingManagementSystem.UserDTO();
       });
 
-      it('should create an instance of TutorDTO', function() {
-        // TODO: update the code to test TutorDTO
-        expect(instance).to.be.a(StudentTutorBookingManagementSystem.TutorDTO);
+      it('should create an instance of UserDTO', function() {
+        // TODO: update the code to test UserDTO
+        expect(instance).to.be.a(StudentTutorBookingManagementSystem.UserDTO);
       });
 
-      it('should have the property tutorId (base name: "tutorId")', function() {
-        // TODO: update the code to test the property tutorId
-        expect(instance).to.have.property('tutorId');
-        // expect(instance.tutorId).to.be(expectedValueLiteral);
+      it('should have the property userId (base name: "userId")', function() {
+        // TODO: update the code to test the property userId
+        expect(instance).to.have.property('userId');
+        // expect(instance.userId).to.be(expectedValueLiteral);
       });
 
       it('should have the property name (base name: "name")', function() {
@@ -76,10 +76,10 @@
         // expect(instance.password).to.be(expectedValueLiteral);
       });
 
-      it('should have the property assignedSubjects (base name: "assignedSubjects")', function() {
-        // TODO: update the code to test the property assignedSubjects
-        expect(instance).to.have.property('assignedSubjects');
-        // expect(instance.assignedSubjects).to.be(expectedValueLiteral);
+      it('should have the property role (base name: "role")', function() {
+        // TODO: update the code to test the property role
+        expect(instance).to.have.property('role');
+        // expect(instance.role).to.be(expectedValueLiteral);
       });
 
     });

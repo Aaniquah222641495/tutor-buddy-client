@@ -14,17 +14,16 @@
  *
  */
 import ApiClient from '../ApiClient';
-import SubjectDTO from './SubjectDTO';
 
 /**
- * The TutorDTO model module.
- * @module model/TutorDTO
+ * The AdminDTO model module.
+ * @module model/AdminDTO
  * @version 1.0.0
  */
-export default class TutorDTO {
+export default class AdminDTO {
   /**
-   * Constructs a new <code>TutorDTO</code>.
-   * @alias module:model/TutorDTO
+   * Constructs a new <code>AdminDTO</code>.
+   * @alias module:model/AdminDTO
    * @class
    * @param name {String} 
    * @param lastName {String} 
@@ -41,17 +40,17 @@ export default class TutorDTO {
   }
 
   /**
-   * Constructs a <code>TutorDTO</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>AdminDTO</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/TutorDTO} obj Optional instance to populate.
-   * @return {module:model/TutorDTO} The populated <code>TutorDTO</code> instance.
+   * @param {module:model/AdminDTO} obj Optional instance to populate.
+   * @return {module:model/AdminDTO} The populated <code>AdminDTO</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new TutorDTO();
-      if (data.hasOwnProperty('tutorId'))
-        obj.tutorId = ApiClient.convertToType(data['tutorId'], 'Number');
+      obj = obj || new AdminDTO();
+      if (data.hasOwnProperty('id'))
+        obj.id = ApiClient.convertToType(data['id'], 'Number');
       if (data.hasOwnProperty('name'))
         obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('lastName'))
@@ -62,45 +61,38 @@ export default class TutorDTO {
         obj.phoneNumber = ApiClient.convertToType(data['phoneNumber'], 'String');
       if (data.hasOwnProperty('password'))
         obj.password = ApiClient.convertToType(data['password'], 'String');
-      if (data.hasOwnProperty('assignedSubjects'))
-        obj.assignedSubjects = ApiClient.convertToType(data['assignedSubjects'], [SubjectDTO]);
     }
     return obj;
   }
 }
 
 /**
- * @member {Number} tutorId
+ * @member {Number} id
  */
-TutorDTO.prototype.tutorId = undefined;
+AdminDTO.prototype.id = undefined;
 
 /**
  * @member {String} name
  */
-TutorDTO.prototype.name = undefined;
+AdminDTO.prototype.name = undefined;
 
 /**
  * @member {String} lastName
  */
-TutorDTO.prototype.lastName = undefined;
+AdminDTO.prototype.lastName = undefined;
 
 /**
  * @member {String} email
  */
-TutorDTO.prototype.email = undefined;
+AdminDTO.prototype.email = undefined;
 
 /**
  * @member {String} phoneNumber
  */
-TutorDTO.prototype.phoneNumber = undefined;
+AdminDTO.prototype.phoneNumber = undefined;
 
 /**
  * @member {String} password
  */
-TutorDTO.prototype.password = undefined;
-
-/**
- * @member {Array.<module:model/SubjectDTO>} assignedSubjects
- */
-TutorDTO.prototype.assignedSubjects = undefined;
+AdminDTO.prototype.password = undefined;
 

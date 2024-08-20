@@ -14,44 +14,45 @@
  *
  */
 import ApiClient from '../ApiClient';
-import SubjectDTO from './SubjectDTO';
 
 /**
- * The TutorDTO model module.
- * @module model/TutorDTO
+ * The UserDTO model module.
+ * @module model/UserDTO
  * @version 1.0.0
  */
-export default class TutorDTO {
+export default class UserDTO {
   /**
-   * Constructs a new <code>TutorDTO</code>.
-   * @alias module:model/TutorDTO
+   * Constructs a new <code>UserDTO</code>.
+   * @alias module:model/UserDTO
    * @class
    * @param name {String} 
    * @param lastName {String} 
    * @param email {String} 
    * @param phoneNumber {String} 
    * @param password {String} 
+   * @param role {module:model/UserDTO.RoleEnum} 
    */
-  constructor(name, lastName, email, phoneNumber, password) {
+  constructor(name, lastName, email, phoneNumber, password, role) {
     this.name = name;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
+    this.role = role;
   }
 
   /**
-   * Constructs a <code>TutorDTO</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>UserDTO</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/TutorDTO} obj Optional instance to populate.
-   * @return {module:model/TutorDTO} The populated <code>TutorDTO</code> instance.
+   * @param {module:model/UserDTO} obj Optional instance to populate.
+   * @return {module:model/UserDTO} The populated <code>UserDTO</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new TutorDTO();
-      if (data.hasOwnProperty('tutorId'))
-        obj.tutorId = ApiClient.convertToType(data['tutorId'], 'Number');
+      obj = obj || new UserDTO();
+      if (data.hasOwnProperty('userId'))
+        obj.userId = ApiClient.convertToType(data['userId'], 'Number');
       if (data.hasOwnProperty('name'))
         obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('lastName'))
@@ -62,45 +63,69 @@ export default class TutorDTO {
         obj.phoneNumber = ApiClient.convertToType(data['phoneNumber'], 'String');
       if (data.hasOwnProperty('password'))
         obj.password = ApiClient.convertToType(data['password'], 'String');
-      if (data.hasOwnProperty('assignedSubjects'))
-        obj.assignedSubjects = ApiClient.convertToType(data['assignedSubjects'], [SubjectDTO]);
+      if (data.hasOwnProperty('role'))
+        obj.role = ApiClient.convertToType(data['role'], 'String');
     }
     return obj;
   }
 }
 
 /**
- * @member {Number} tutorId
+ * @member {Number} userId
  */
-TutorDTO.prototype.tutorId = undefined;
+UserDTO.prototype.userId = undefined;
 
 /**
  * @member {String} name
  */
-TutorDTO.prototype.name = undefined;
+UserDTO.prototype.name = undefined;
 
 /**
  * @member {String} lastName
  */
-TutorDTO.prototype.lastName = undefined;
+UserDTO.prototype.lastName = undefined;
 
 /**
  * @member {String} email
  */
-TutorDTO.prototype.email = undefined;
+UserDTO.prototype.email = undefined;
 
 /**
  * @member {String} phoneNumber
  */
-TutorDTO.prototype.phoneNumber = undefined;
+UserDTO.prototype.phoneNumber = undefined;
 
 /**
  * @member {String} password
  */
-TutorDTO.prototype.password = undefined;
+UserDTO.prototype.password = undefined;
 
 /**
- * @member {Array.<module:model/SubjectDTO>} assignedSubjects
+ * Allowed values for the <code>role</code> property.
+ * @enum {String}
+ * @readonly
  */
-TutorDTO.prototype.assignedSubjects = undefined;
+UserDTO.RoleEnum = {
+  /**
+   * value: "Student"
+   * @const
+   */
+  student: "Student",
+
+  /**
+   * value: "Tutor"
+   * @const
+   */
+  tutor: "Tutor",
+
+  /**
+   * value: "Admin"
+   * @const
+   */
+  admin: "Admin"
+};
+/**
+ * @member {module:model/UserDTO.RoleEnum} role
+ */
+UserDTO.prototype.role = undefined;
 

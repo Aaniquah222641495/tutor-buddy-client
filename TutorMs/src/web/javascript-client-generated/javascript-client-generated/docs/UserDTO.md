@@ -1,12 +1,20 @@
-# StudentTutorBookingManagementSystem.TutorDTO
+# StudentTutorBookingManagementSystem.UserDTO
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tutorId** | **Number** |  | [optional] 
+**userId** | **Number** |  | [optional] 
 **name** | **String** |  | 
 **lastName** | **String** |  | 
 **email** | **String** |  | 
 **phoneNumber** | **String** |  | 
 **password** | **String** |  | 
-**assignedSubjects** | [**[SubjectDTO]**](SubjectDTO.md) |  | [optional] 
+**role** | **String** |  | 
+
+<a name="RoleEnum"></a>
+## Enum: RoleEnum
+
+* `student` (value: `"Student"`)
+* `tutor` (value: `"Tutor"`)
+* `admin` (value: `"Admin"`)
+

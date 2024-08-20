@@ -1,12 +1,11 @@
-# StudentTutorBookingManagementSystem.TutorDTO
+# StudentTutorBookingManagementSystem.AdminDTO
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tutorId** | **Number** |  | [optional] 
+**id** | **Number** |  | [optional] 
 **name** | **String** |  | 
 **lastName** | **String** |  | 
 **email** | **String** |  | 
 **phoneNumber** | **String** |  | 
 **password** | **String** |  | 
-**assignedSubjects** | [**[SubjectDTO]**](SubjectDTO.md) |  | [optional] 

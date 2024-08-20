@@ -30,20 +30,20 @@
   var instance;
 
   describe('(package)', function() {
-    describe('TutorDTO', function() {
+    describe('StudentDTO', function() {
       beforeEach(function() {
-        instance = new StudentTutorBookingManagementSystem.TutorDTO();
+        instance = new StudentTutorBookingManagementSystem.StudentDTO();
       });
 
-      it('should create an instance of TutorDTO', function() {
-        // TODO: update the code to test TutorDTO
-        expect(instance).to.be.a(StudentTutorBookingManagementSystem.TutorDTO);
+      it('should create an instance of StudentDTO', function() {
+        // TODO: update the code to test StudentDTO
+        expect(instance).to.be.a(StudentTutorBookingManagementSystem.StudentDTO);
       });
 
-      it('should have the property tutorId (base name: "tutorId")', function() {
-        // TODO: update the code to test the property tutorId
-        expect(instance).to.have.property('tutorId');
-        // expect(instance.tutorId).to.be(expectedValueLiteral);
+      it('should have the property studentId (base name: "studentId")', function() {
+        // TODO: update the code to test the property studentId
+        expect(instance).to.have.property('studentId');
+        // expect(instance.studentId).to.be(expectedValueLiteral);
       });
 
       it('should have the property name (base name: "name")', function() {
@@ -76,10 +76,10 @@
         // expect(instance.password).to.be(expectedValueLiteral);
       });
 
-      it('should have the property assignedSubjects (base name: "assignedSubjects")', function() {
-        // TODO: update the code to test the property assignedSubjects
-        expect(instance).to.have.property('assignedSubjects');
-        // expect(instance.assignedSubjects).to.be(expectedValueLiteral);
+      it('should have the property studentNumber (base name: "studentNumber")', function() {
+        // TODO: update the code to test the property studentNumber
+        expect(instance).to.have.property('studentNumber');
+        // expect(instance.studentNumber).to.be(expectedValueLiteral);
       });
 
     });

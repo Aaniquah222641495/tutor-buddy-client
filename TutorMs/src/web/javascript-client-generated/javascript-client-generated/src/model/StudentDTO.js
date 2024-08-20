@@ -14,44 +14,45 @@
  *
  */
 import ApiClient from '../ApiClient';
-import SubjectDTO from './SubjectDTO';
 
 /**
- * The TutorDTO model module.
- * @module model/TutorDTO
+ * The StudentDTO model module.
+ * @module model/StudentDTO
  * @version 1.0.0
  */
-export default class TutorDTO {
+export default class StudentDTO {
   /**
-   * Constructs a new <code>TutorDTO</code>.
-   * @alias module:model/TutorDTO
+   * Constructs a new <code>StudentDTO</code>.
+   * @alias module:model/StudentDTO
    * @class
    * @param name {String} 
    * @param lastName {String} 
    * @param email {String} 
    * @param phoneNumber {String} 
    * @param password {String} 
+   * @param studentNumber {Number} 
    */
-  constructor(name, lastName, email, phoneNumber, password) {
+  constructor(name, lastName, email, phoneNumber, password, studentNumber) {
     this.name = name;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
+    this.studentNumber = studentNumber;
   }
 
   /**
-   * Constructs a <code>TutorDTO</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>StudentDTO</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/TutorDTO} obj Optional instance to populate.
-   * @return {module:model/TutorDTO} The populated <code>TutorDTO</code> instance.
+   * @param {module:model/StudentDTO} obj Optional instance to populate.
+   * @return {module:model/StudentDTO} The populated <code>StudentDTO</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new TutorDTO();
-      if (data.hasOwnProperty('tutorId'))
-        obj.tutorId = ApiClient.convertToType(data['tutorId'], 'Number');
+      obj = obj || new StudentDTO();
+      if (data.hasOwnProperty('studentId'))
+        obj.studentId = ApiClient.convertToType(data['studentId'], 'Number');
       if (data.hasOwnProperty('name'))
         obj.name = ApiClient.convertToType(data['name'], 'String');
       if (data.hasOwnProperty('lastName'))
@@ -62,45 +63,45 @@ export default class TutorDTO {
         obj.phoneNumber = ApiClient.convertToType(data['phoneNumber'], 'String');
       if (data.hasOwnProperty('password'))
         obj.password = ApiClient.convertToType(data['password'], 'String');
-      if (data.hasOwnProperty('assignedSubjects'))
-        obj.assignedSubjects = ApiClient.convertToType(data['assignedSubjects'], [SubjectDTO]);
+      if (data.hasOwnProperty('studentNumber'))
+        obj.studentNumber = ApiClient.convertToType(data['studentNumber'], 'Number');
     }
     return obj;
   }
 }
 
 /**
- * @member {Number} tutorId
+ * @member {Number} studentId
  */
-TutorDTO.prototype.tutorId = undefined;
+StudentDTO.prototype.studentId = undefined;
 
 /**
  * @member {String} name
  */
-TutorDTO.prototype.name = undefined;
+StudentDTO.prototype.name = undefined;
 
 /**
  * @member {String} lastName
  */
-TutorDTO.prototype.lastName = undefined;
+StudentDTO.prototype.lastName = undefined;
 
 /**
  * @member {String} email
  */
-TutorDTO.prototype.email = undefined;
+StudentDTO.prototype.email = undefined;
 
 /**
  * @member {String} phoneNumber
  */
-TutorDTO.prototype.phoneNumber = undefined;
+StudentDTO.prototype.phoneNumber = undefined;
 
 /**
  * @member {String} password
  */
-TutorDTO.prototype.password = undefined;
+StudentDTO.prototype.password = undefined;
 
 /**
- * @member {Array.<module:model/SubjectDTO>} assignedSubjects
+ * @member {Number} studentNumber
  */
-TutorDTO.prototype.assignedSubjects = undefined;
+StudentDTO.prototype.studentNumber = undefined;
 
