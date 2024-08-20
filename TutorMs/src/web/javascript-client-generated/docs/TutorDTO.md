@@ -9,3 +9,4 @@ Name | Type | Description | Notes
 **email** | **String** |  | 
 **phoneNumber** | **String** |  | 
 **password** | **String** |  | 
+**assignedSubjects** | [**[SubjectDTO]**](SubjectDTO.md) |  | [optional] 
