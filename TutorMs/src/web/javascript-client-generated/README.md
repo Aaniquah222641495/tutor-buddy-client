@@ -86,7 +86,7 @@ api.authenticateAdmin(email, password, callback);
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:8080*
+All URIs are relative to *http://localhost:8080*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
