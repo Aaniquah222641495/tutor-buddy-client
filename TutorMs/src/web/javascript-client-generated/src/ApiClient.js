@@ -32,7 +32,7 @@ export default class ApiClient {
         /**
          * The base URL against which to resolve every API call's (relative) path.
          * @type {String}
-         * @default https://localhost:8080
+         * @default http://localhost:8080
          */
         this.basePath = 'http://localhost:8080'.replace(/\/+$/, '');
 
