@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
+const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor, subjects }) => {
     const [name, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -15,7 +15,7 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
             setPhoneNumber(selectedTutor.phoneNumber);
             setEmail(selectedTutor.email);
             setPassword(selectedTutor.password);
-            setSubject(selectedTutor.subject);
+            setSubject(selectedTutor.subjectId); // Set the subjectId
         } else {
             setFirstName('');
             setLastName('');
@@ -28,8 +28,15 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newTutor = { name, lastName, phoneNumber, email, password, subject };
-        onAddTutor(newTutor);
+        const newTutor = { 
+            name, 
+            lastName, 
+            phoneNumber, 
+            email, 
+            password, 
+            subjectId: subject // Use subjectId for the selected subject
+        };
+        onAddTutor(newTutor, selectedTutor ? selectedTutor.tutorId : null);
     };
 
     return (
@@ -87,15 +94,22 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor }) => {
 
             <div className='form-group'>
                 <label>Subject</label>
-                <input
-                    type='text'
+                <select
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     required
-                />
+                >
+                    <option value='' disabled>Select a subject</option>
+                    {subjects.map(subject => (
+                        <option key={subject.subjectId} value={subject.subjectId}>
+                            {subject.subjectName}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <button type="submit">{selectedTutor ? 'Save Changes' : 'Add Tutor'}</button>
+            <button type="button" onClick={closeModal}>Cancel</button>
         </form>
     );
 };

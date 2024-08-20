@@ -48,18 +48,18 @@ const ManageSubjects = () => {
         }
     };
 
-    const handleDeleteSubject = (id) => {
-        subjectApi.deleteSubject(id, (error) => {
+    const handleDeleteSubject = (subjectId) => {
+        subjectApi.deleteSubject(subjectId, (error) => {
             if (error) {
                 console.error('Error deleting subject:', error);
             } else {
-                setSubjects(subjects.filter(subject => subject.subjectId !== id));
+                setSubjects(subjects.filter(subject => subject.subjectId !== subjectId));
             }
         });
     };
 
     const handleSubjectChange = (id) => {
-        const subject = subjects.find(subject => subject.subjectId === id);
+        const subject = subjects.find(subject => subject.subjectId === subjectId);
         setSelectedSubject(subject);
         setIsModalOpen(true);
     };
@@ -88,7 +88,7 @@ const ManageSubjects = () => {
                                     <td>{subject.subjectCode}</td>
                                     <td>{subject.subjectName}</td>
                                     <td>
-                                        <button className='btn btn-warning' onClick={() => handleSubjectChange(subject.subjectId)}>Edit</button>
+                                        
                                         <button className='btn btn-danger' onClick={() => handleDeleteSubject(subject.subjectId)}>Delete</button>
                                     </td>
                                 </tr>

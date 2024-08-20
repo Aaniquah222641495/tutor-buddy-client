@@ -1,162 +1,209 @@
-// AdminDashboard.jsx
-import React from 'react';
-import { useOutletContext } from 'react-router-dom';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React, { useState, useEffect } from 'react';
+import { AdminApi, TutorApi, StudentApi, LocationApi, SubjectApi } from 'student_tutor_booking_management_system';
 
-import './AdminDashboard.css'; // Import the CSS file for specific component styles
 
 const AdminDashboard = () => {
-    const { searchQuery } = useOutletContext();
+    const [admins, setAdmins] = useState([]);
+    const [tutors, setTutors] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [subjects, setSubjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    //get admin object from local storgae
-    const admin = JSON.parse(localStorage.getItem('admin'));
+    const adminApi = new AdminApi();
+    const tutorApi = new TutorApi();
+    const studentApi = new StudentApi();
+    const locationApi = new LocationApi();
+    const subjectApi = new SubjectApi();
 
-    const filterData = (data, query) => {
-        return data.filter(item => 
-            Object.values(item).some(value =>
-                value.toLowerCase().includes(query.toLowerCase())
-            )
-        );
-    };
+    useEffect(() => {
+        const fetchData = () => {
+            setLoading(true);
+            setError(null);
 
-    // Sample data for demonstration
-    const admins = [
-        { id: '1', firstName: 'Admin1', lastName: 'Last1', email: 'admin1@example.com', phone: '1234567890' },
-        { id: '2', firstName: 'Admin2', lastName: 'Last2', email: 'admin2@example.com', phone: '0987654321' }
-    ];
+            // Fetch admins
+            adminApi.getAllAdmins((error, data) => {
+                if (error) {
+                    setError('Error fetching admins: ' + error.message);
+                } else {
+                    setAdmins(data);
+                }
+            });
 
-    const tutors = [
-        { id: '1', firstName: 'John', lastName: 'Doe', phone: '1234567891', email: 'john.doe@example.com', subject: 'Applications Development 2' },
-        { id: '2', firstName: 'Jane', lastName: 'Doe', phone: '11234567899', email: 'jane.smith@example.com', subject: 'Applications Development Fundamentals 2' }
-    ];
+            // Fetch tutors
+            tutorApi.getAllTutors((error, data) => {
+                if (error) {
+                    setError('Error fetching tutors: ' + error.message);
+                } else {
+                    setTutors(data);
+                }
+            });
 
-    const students = [
-        { id: '1', firstName: 'Emily', lastName: 'Johnson', email: 'emily.johnson@example.com' },
-        { id: '2', firstName: 'Michael', lastName: 'Brown', email: 'michael.brown@example.com' }
-    ];
+            // Fetch students
+            studentApi.getAllStudents((error, data) => {
+                if (error) {
+                    setError('Error fetching students: ' + error.message);
+                } else {
+                    setStudents(data);
+                }
+            });
 
-    const venues = [
-        { id: '1', room: '2.22', building: 'Library' },
-        { id: '2', room: 'Lab 1.1', building: 'Engineering Building' }
-    ];
+            // Fetch locations
+            locationApi.getAllLocations((error, data) => {
+                if (error) {
+                    setError('Error fetching locations: ' + error.message);
+                } else {
+                    setLocations(data);
+                }
+            });
+
+            // Fetch subjects
+            subjectApi.getAllSubject((error, data) => {
+                if (error) {
+                    setError('Error fetching subjects: ' + error.message);
+                } else {
+                    setSubjects(data);
+                }
+            });
+
+            setLoading(false);
+        };
+
+        fetchData();
+    }, [adminApi, tutorApi, studentApi, locationApi, subjectApi]);
+
+   
 
     return (
-        <div className='dashboard-content'>
-            <div className='management-section'>
-                <h4 className='sub-header'>Manage Admins</h4>
-                <div className='table-container'>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>Admin ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Actions</th>
+        <div className='section'>
+            <h3 className='sub-header'>Admin Dashboard</h3>
+
+            {/* Admins Table */}
+            <div className='table-container'>
+            <h4 className='sub-header'>Admins</h4>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Admin ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {admins.map(admin => (
+                            <tr key={admin.id}>
+                                <td>{admin.id}</td>
+                                <td>{admin.name}</td>
+                                <td>{admin.lastName}</td>
+                                <td>{admin.email}</td>
+                                <td>{admin.phoneNumber}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {filterData(admins, searchQuery).map(admin => (
-                                <tr key={admin.id}>
-                                    <td>{admin.id}</td>
-                                    <td>{admin.firstName}</td>
-                                    <td>{admin.lastName}</td>
-                                    <td>{admin.email}</td>
-                                    <td>{admin.phone}</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            <div className='management-section'>
-                <h4 className='sub-header'>Manage Tutors</h4>
-                <div className='table-container'>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>Tutor ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                                <th>Email</th>
-                                <th>Subject</th>
-                                <th>Actions</th>
+            {/* Tutors Table */}
+            <div className='table-container'>
+            <h4 className='sub-header'>Tutors</h4>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Tutor ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tutors.map(tutor => (
+                            <tr key={tutor.tutorId}>
+                                <td>{tutor.tutorId}</td>
+                                <td>{tutor.name}</td>
+                                <td>{tutor.lastName}</td>
+                                <td>{tutor.phoneNumber}</td>
+                                <td>{tutor.email}</td>
+                                <td>{tutor.subjectName}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {filterData(tutors, searchQuery).map(tutor => (
-                                <tr key={tutor.id}>
-                                    <td>{tutor.id}</td>
-                                    <td>{tutor.firstName}</td>
-                                    <td>{tutor.lastName}</td>
-                                    <td>{tutor.phone}</td>
-                                    <td>{tutor.email}</td>
-                                    <td>{tutor.subject}</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            <div className='management-section'>
-                <h4 className='sub-header'>Manage Students</h4>
-                <div className='table-container'>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Actions</th>
+            {/* Students Table */}
+            <div className='table-container'>
+            <h4 className='sub-header'>Students</h4>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Student Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {students.map(student => (
+                            <tr key={student.studentNumber}>
+                                <td>{student.studentNumber}</td>
+                                <td>{student.name}</td>
+                                <td>{student.lastName}</td>
+                                <td>{student.phoneNumber}</td>
+                                <td>{student.email}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {filterData(students, searchQuery).map(student => (
-                                <tr key={student.id}>
-                                    <td>{student.id}</td>
-                                    <td>{student.firstName}</td>
-                                    <td>{student.lastName}</td>
-                                    <td>{student.email}</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
-            <div className='management-section'>
-                <h4 className='sub-header'>Manage Venues</h4>
-                <div className='table-container'>
-                    <table className='table'>
-                       
-<thead>
-                            <tr>
-                                <th>Venue ID</th>
-                                <th>Room</th>
-                                <th>Building</th>
-                                <th>Actions</th>
+            {/* Locations Table */}
+            <div className='table-container'>
+            <h4 className='sub-header'>Venues</h4>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Room</th>
+                            <th>Building</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {locations.map(location => (
+                            <tr key={location.locationId}>
+                                <td>{location.locationId}</td>
+                                <td>{location.room}</td>
+                                <td>{location.building}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {filterData(venues, searchQuery).map(venue => (
-                                <tr key={venue.id}>
-                                    <td>{venue.id}</td>
-                                    <td>{venue.room}</td>
-                                    <td>{venue.building}</td>
-                                    <td><button className='btn btn-primary'>Delete</button></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Subjects Table */}
+            <div className='table-container'>
+            <h4 className='sub-header'>Subjects</h4>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {subjects.map(subject => (
+                            <tr key={subject.subjectCode}>
+                                <td>{subject.subjectCode}</td>
+                                <td>{subject.subjectName}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
