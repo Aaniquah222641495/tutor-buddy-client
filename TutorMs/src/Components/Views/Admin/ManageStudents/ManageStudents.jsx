@@ -85,7 +85,7 @@ const ManageStudents = () => {
                     <tbody>
                         {students.map((student) => (
                             <tr key={student.studentId}>
-                                <td>{student.studentId}</td>
+                                <td>{student.studentNumber}</td>
                                 <td>{student.name}</td>
                                 <td>{student.lastName}</td>
                                 <td>{student.phoneNumber}</td>

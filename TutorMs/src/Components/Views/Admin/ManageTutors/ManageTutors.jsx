@@ -34,9 +34,18 @@ const ManageTutors = () => {
     }, []);
 
     const handleAddTutor = (newTutor) => {
+        const assignedSubjects = newTutor.assignedSubjects.map(subjectId => {
+            return subjects.find(subject => subject.subjectId === subjectId);
+        });
+
+        const tutorData = {
+            ...newTutor,
+            assignedSubjects
+        };
+
         if (selectedTutor) {
             // Update an existing tutor
-            tutorApi.updateTutor(newTutor, selectedTutor.tutorId, (error, updatedTutor) => {
+            tutorApi.updateTutor(tutorData, selectedTutor.tutorId, (error, updatedTutor) => {
                 if (error) {
                     console.error('Error updating tutor:', error);
                     alert('Error updating tutor. Please check the console for details.');
@@ -48,7 +57,7 @@ const ManageTutors = () => {
             });
         } else {
             // Add a new tutor
-            tutorApi.addTutor(newTutor, (error, addedTutor) => {
+            tutorApi.addTutor(tutorData, (error, addedTutor) => {
                 if (error) {
                     console.error('Error adding tutor:', error);
                     alert('Error adding tutor. Please check the console for details.');
@@ -95,7 +104,7 @@ const ManageTutors = () => {
                                 <th>Last Name</th>
                                 <th>Phone Number</th>
                                 <th>Email</th>
-                                <th>Subject</th>
+                                <th>Subjects</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -107,7 +116,9 @@ const ManageTutors = () => {
                                     <td>{tutor.lastName}</td>
                                     <td>{tutor.phoneNumber}</td>
                                     <td>{tutor.email}</td>
-                                    <td>{tutor.subjectName}</td>
+                                    <td>
+                                        {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ')}
+                                    </td>
                                     <td>
                                         <button className='btn btn-warning' onClick={() => handleTutorChange(tutor.tutorId)}>Edit</button>
                                         <button className='btn btn-danger' onClick={() => handleDeleteTutor(tutor.tutorId)}>Delete</button>

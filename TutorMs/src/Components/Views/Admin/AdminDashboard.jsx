@@ -17,57 +17,54 @@ const AdminDashboard = () => {
     const subjectApi = new SubjectApi();
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            setErrors([]);
+        setLoading(true);
+        setErrors([]);
 
-            try {
-                const [adminsData, tutorsData, studentsData, locationsData, subjectsData] = await Promise.all([
-                    new Promise((resolve, reject) => {
-                        adminApi.getAllAdmins((error, data) => {
-                            if (error) reject('Error fetching admins: ' + error.message);
-                            else resolve(data);
-                        });
-                    }),
-                    new Promise((resolve, reject) => {
-                        tutorApi.getAllTutors((error, data) => {
-                            if (error) reject('Error fetching tutors: ' + error.message);
-                            else resolve(data);
-                        });
-                    }),
-                    new Promise((resolve, reject) => {
-                        studentApi.getAllStudents((error, data) => {
-                            if (error) reject('Error fetching students: ' + error.message);
-                            else resolve(data);
-                        });
-                    }),
-                    new Promise((resolve, reject) => {
-                        locationApi.getAllLocations((error, data) => {
-                            if (error) reject('Error fetching locations: ' + error.message);
-                            else resolve(data);
-                        });
-                    }),
-                    new Promise((resolve, reject) => {
-                        subjectApi.getAllSubject((error, data) => {
-                            if (error) reject('Error fetching subjects: ' + error.message);
-                            else resolve(data);
-                        });
-                    })
-                ]);
+        // Function to handle API calls
+        const fetchData = () => {
+            adminApi.getAllAdmins((error, adminsData) => {
+                if (error) {
+                    setErrors(prevErrors => [...prevErrors, 'Error fetching admins: ' + error.message]);
+                } else {
+                    setAdmins(adminsData);
+                }
+            });
 
-                setAdmins(adminsData);
-                setTutors(tutorsData);
-                setStudents(studentsData);
-                setLocations(locationsData);
-                setSubjects(subjectsData);
-            } catch (error) {
-                setErrors(prevErrors => [...prevErrors, error]);
-            }
+            tutorApi.getAllTutors((error, tutorsData) => {
+                if (error) {
+                    setErrors(prevErrors => [...prevErrors, 'Error fetching tutors: ' + error.message]);
+                } else {
+                    setTutors(tutorsData);
+                }
+            });
 
-            setLoading(false);
+            studentApi.getAllStudents((error, studentsData) => {
+                if (error) {
+                    setErrors(prevErrors => [...prevErrors, 'Error fetching students: ' + error.message]);
+                } else {
+                    setStudents(studentsData);
+                }
+            });
+
+            locationApi.getAllLocations((error, locationsData) => {
+                if (error) {
+                    setErrors(prevErrors => [...prevErrors, 'Error fetching locations: ' + error.message]);
+                } else {
+                    setLocations(locationsData);
+                }
+            });
+
+            subjectApi.getAllSubject((error, subjectsData) => {
+                if (error) {
+                    setErrors(prevErrors => [...prevErrors, 'Error fetching subjects: ' + error.message]);
+                } else {
+                    setSubjects(subjectsData);
+                }
+            });
         };
 
         fetchData();
+        setLoading(false);
     }, []);
 
     if (loading) {
@@ -123,7 +120,7 @@ const AdminDashboard = () => {
                             <th>Last Name</th>
                             <th>Phone Number</th>
                             <th>Email</th>
-                            <th>Subject</th>
+                            <th>Subjects</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -134,7 +131,9 @@ const AdminDashboard = () => {
                                 <td>{tutor.lastName}</td>
                                 <td>{tutor.phoneNumber}</td>
                                 <td>{tutor.email}</td>
-                                <td>{tutor.subjectName}</td>
+                                <td>
+                                        {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ')}
+                                    </td>
                             </tr>
                         ))}
                     </tbody>

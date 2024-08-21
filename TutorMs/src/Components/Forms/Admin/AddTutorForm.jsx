@@ -1,105 +1,116 @@
 import React, { useState, useEffect } from 'react';
 
-const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor, subjects }) => {
-    const [name, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [subject, setSubject] = useState('');
+const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
+    const [tutorData, setTutorData] = useState({
+        name: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
+        password: '',
+        assignedSubjects: []
+    });
 
     useEffect(() => {
         if (selectedTutor) {
-            setFirstName(selectedTutor.name);
-            setLastName(selectedTutor.lastName);
-            setPhoneNumber(selectedTutor.phoneNumber);
-            setEmail(selectedTutor.email);
-            setPassword(selectedTutor.password);
-            setSubject(selectedTutor.subjectId); // Set the subjectId
-        } else {
-            setFirstName('');
-            setLastName('');
-            setPhoneNumber('');
-            setEmail('');
-            setPassword('');
-            setSubject('');
+            setTutorData({
+                name: selectedTutor.name || '',
+                lastName: selectedTutor.lastName || '',
+                phoneNumber: selectedTutor.phoneNumber || '',
+                email: selectedTutor.email || '',
+                password: '', // Password should not be pre-filled for security reasons
+                assignedSubjects: selectedTutor.assignedSubjects.map(sub => sub.subjectId) || []
+            });
         }
     }, [selectedTutor]);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setTutorData({
+            ...tutorData,
+            [name]: value
+        });
+    };
+
+    const handleSubjectsChange = (e) => {
+        const { options } = e.target;
+        const selectedSubjects = [];
+        for (let i = 0, l = options.length; i < l; i++) {
+            if (options[i].selected) {
+                selectedSubjects.push(Number(options[i].value));
+            }
+        }
+        setTutorData({
+            ...tutorData,
+            assignedSubjects: selectedSubjects
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newTutor = { 
-            name, 
-            lastName, 
-            phoneNumber, 
-            email, 
-            password, 
-            subjectId: subject // Use subjectId for the selected subject
-        };
-        onAddTutor(newTutor, selectedTutor ? selectedTutor.tutorId : null);
+        onAddTutor(tutorData);
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <h2>{selectedTutor ? 'Edit Tutor' : 'Add New Tutor'}</h2>
-            <div className='form-group'>
-                <label>First Name</label>
-                <input
-                    type='text'
-                    value={name}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
+            <div>
+                <label>First Name:</label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    value={tutorData.name} 
+                    onChange={handleChange} 
+                    required 
                 />
             </div>
-
-            <div className='form-group'>
-                <label>Last Name</label>
-                <input
-                    type='text'
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
+            <div>
+                <label>Last Name:</label>
+                <input 
+                    type="text" 
+                    name="lastName" 
+                    value={tutorData.lastName} 
+                    onChange={handleChange} 
+                    required 
                 />
             </div>
-
-            <div className='form-group'>
-                <label>Phone Number</label>
-                <input
-                    type='tel'
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    required
+            <div>
+                <label>Phone Number:</label>
+                <input 
+                    type="text" 
+                    name="phoneNumber" 
+                    value={tutorData.phoneNumber} 
+                    onChange={handleChange} 
+                    required 
                 />
             </div>
-
-            <div className='form-group'>
-                <label>Email</label>
-                <input
-                    type='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+            <div>
+                <label>Email:</label>
+                <input 
+                    type="email" 
+                    name="email" 
+                    value={tutorData.email} 
+                    onChange={handleChange} 
+                    required 
                 />
             </div>
-
-            <div className='form-group'>
-                <label>Password</label>
-                <input
-                    type='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
+            <div>
+                <label>Password:</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    value={tutorData.password} 
+                    onChange={handleChange} 
+                    required 
                 />
             </div>
-
-            <div className='form-group'>
-                <label>Subject</label>
-                <select
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
+            <div>
+                <label>Subjects:</label>
+                <select 
+                    multiple 
+                    name="assignedSubjects" 
+                    value={tutorData.assignedSubjects} 
+                    onChange={handleSubjectsChange}
                     required
                 >
-                    <option value='' disabled>Select a subject</option>
                     {subjects.map(subject => (
                         <option key={subject.subjectId} value={subject.subjectId}>
                             {subject.subjectName}
@@ -107,9 +118,7 @@ const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor, subjects }) => {
                     ))}
                 </select>
             </div>
-
-            <button type="submit">{selectedTutor ? 'Save Changes' : 'Add Tutor'}</button>
-            <button type="button" onClick={closeModal}>Cancel</button>
+            <button type="submit">Save</button>
         </form>
     );
 };
