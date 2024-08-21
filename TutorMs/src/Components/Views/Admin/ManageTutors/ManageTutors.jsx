@@ -3,12 +3,14 @@ import '../manage.css';
 import Modal from '../../../Common/Modals/Modal';
 import AddTutorForm from '../../../Forms/Admin/AddTutorForm';
 import { TutorApi, SubjectApi } from 'student_tutor_booking_management_system';
+import { useOutletContext } from 'react-router-dom';
 
 const ManageTutors = () => {
     const [tutors, setTutors] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTutor, setSelectedTutor] = useState(null);
+    const { searchQuery } = useOutletContext();
 
     const tutorApi = new TutorApi();
     const subjectApi = new SubjectApi();
@@ -31,12 +33,21 @@ const ManageTutors = () => {
                 setSubjects(data);
             }
         });
-    }, []);
+    }, [tutorApi, subjectApi]);
 
     const handleAddTutor = (newTutor) => {
+        const assignedSubjects = newTutor.assignedSubjects.map(subjectId => {
+            return subjects.find(subject => subject.subjectId === subjectId);
+        });
+
+        const tutorData = {
+            ...newTutor,
+            assignedSubjects
+        };
+
         if (selectedTutor) {
             // Update an existing tutor
-            tutorApi.updateTutor(newTutor, selectedTutor.tutorId, (error, updatedTutor) => {
+            tutorApi.updateTutor(tutorData, selectedTutor.tutorId, (error, updatedTutor) => {
                 if (error) {
                     console.error('Error updating tutor:', error);
                     alert('Error updating tutor. Please check the console for details.');
@@ -48,7 +59,7 @@ const ManageTutors = () => {
             });
         } else {
             // Add a new tutor
-            tutorApi.addTutor(newTutor, (error, addedTutor) => {
+            tutorApi.addTutor(tutorData, (error, addedTutor) => {
                 if (error) {
                     console.error('Error adding tutor:', error);
                     alert('Error adding tutor. Please check the console for details.');
@@ -82,11 +93,24 @@ const ManageTutors = () => {
         setSelectedTutor(null);
     };
 
+    // Filter functions
+    const filterData = (data, fields) => {
+        return data.filter(item =>
+            fields.some(field =>
+                item[field]?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    };
+
+    const filteredTutors = filterData(tutors, ['tutorId', 'name', 'lastName', 'phoneNumber', 'email']);
+
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Tutors</h4>
+            <h4 className='sub-header'>Manage Tutors
+                <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Tutor</button>
+            </h4>
             <div className='table-container'>
-                {tutors.length > 0 ? (
+                {filteredTutors.length > 0 ? (
                     <table className='table'>
                         <thead>
                             <tr>
@@ -95,19 +119,21 @@ const ManageTutors = () => {
                                 <th>Last Name</th>
                                 <th>Phone Number</th>
                                 <th>Email</th>
-                                <th>Subject</th>
+                                <th>Subjects</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {tutors.map(tutor => (
+                            {filteredTutors.map(tutor => (
                                 <tr key={tutor.tutorId}>
                                     <td>{tutor.tutorId}</td>
                                     <td>{tutor.name}</td>
                                     <td>{tutor.lastName}</td>
                                     <td>{tutor.phoneNumber}</td>
                                     <td>{tutor.email}</td>
-                                    <td>{tutor.subjectName}</td>
+                                    <td>
+                                        {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ')}
+                                    </td>
                                     <td>
                                         <button className='btn btn-warning' onClick={() => handleTutorChange(tutor.tutorId)}>Edit</button>
                                         <button className='btn btn-danger' onClick={() => handleDeleteTutor(tutor.tutorId)}>Delete</button>
@@ -119,9 +145,6 @@ const ManageTutors = () => {
                 ) : (
                     <p>No tutors available. Add a tutor to get started.</p>
                 )}
-            </div>
-            <div className='button-container'>
-                <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Tutor</button>
             </div>
             {isModalOpen && (
                 <Modal 
