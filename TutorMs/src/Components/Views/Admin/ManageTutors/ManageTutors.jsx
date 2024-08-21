@@ -3,12 +3,14 @@ import '../manage.css';
 import Modal from '../../../Common/Modals/Modal';
 import AddTutorForm from '../../../Forms/Admin/AddTutorForm';
 import { TutorApi, SubjectApi } from 'student_tutor_booking_management_system';
+import { useOutletContext } from 'react-router-dom';
 
 const ManageTutors = () => {
     const [tutors, setTutors] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTutor, setSelectedTutor] = useState(null);
+    const { searchQuery } = useOutletContext();
 
     const tutorApi = new TutorApi();
     const subjectApi = new SubjectApi();
@@ -31,7 +33,7 @@ const ManageTutors = () => {
                 setSubjects(data);
             }
         });
-    }, []);
+    }, [tutorApi, subjectApi]);
 
     const handleAddTutor = (newTutor) => {
         const assignedSubjects = newTutor.assignedSubjects.map(subjectId => {
@@ -91,13 +93,24 @@ const ManageTutors = () => {
         setSelectedTutor(null);
     };
 
+    // Filter functions
+    const filterData = (data, fields) => {
+        return data.filter(item =>
+            fields.some(field =>
+                item[field]?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    };
+
+    const filteredTutors = filterData(tutors, ['tutorId', 'name', 'lastName', 'phoneNumber', 'email']);
+
     return (
         <div className='section'>
             <h4 className='sub-header'>Manage Tutors
                 <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Tutor</button>
             </h4>
             <div className='table-container'>
-                {tutors.length > 0 ? (
+                {filteredTutors.length > 0 ? (
                     <table className='table'>
                         <thead>
                             <tr>
@@ -111,7 +124,7 @@ const ManageTutors = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {tutors.map(tutor => (
+                            {filteredTutors.map(tutor => (
                                 <tr key={tutor.tutorId}>
                                     <td>{tutor.tutorId}</td>
                                     <td>{tutor.name}</td>
@@ -132,9 +145,6 @@ const ManageTutors = () => {
                 ) : (
                     <p>No tutors available. Add a tutor to get started.</p>
                 )}
-            </div>
-            <div className='button-container'>
-
             </div>
             {isModalOpen && (
                 <Modal 

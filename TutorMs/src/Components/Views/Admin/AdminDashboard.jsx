@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AdminApi, TutorApi, StudentApi, LocationApi, SubjectApi } from 'student_tutor_booking_management_system';
-import "./AdminDashboard.css"
+import "./AdminDashboard.css";
+import { useOutletContext } from 'react-router-dom';
 
 const AdminDashboard = () => {
     const [admins, setAdmins] = useState([]);
@@ -10,6 +11,8 @@ const AdminDashboard = () => {
     const [subjects, setSubjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState([]);
+
+    const { searchQuery } = useOutletContext();
 
     const adminApi = new AdminApi();
     const tutorApi = new TutorApi();
@@ -21,7 +24,6 @@ const AdminDashboard = () => {
         setLoading(true);
         setErrors([]);
 
-        // Function to handle API calls
         const fetchData = () => {
             adminApi.getAllAdmins((error, adminsData) => {
                 if (error) {
@@ -68,6 +70,21 @@ const AdminDashboard = () => {
         setLoading(false);
     }, []);
 
+    // Filter functions
+    const filterData = (data, fields) => {
+        return data.filter(item =>
+            fields.some(field =>
+                item[field]?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    };
+
+    const filteredAdmins = filterData(admins, ['id', 'name', 'lastName', 'email', 'phoneNumber']);
+    const filteredTutors = filterData(tutors, ['tutorId', 'name', 'lastName', 'phoneNumber', 'email']);
+    const filteredStudents = filterData(students, ['studentNumber', 'name', 'lastName', 'phoneNumber', 'email']);
+    const filteredLocations = filterData(locations, ['locationId', 'room', 'building']);
+    const filteredSubjects = filterData(subjects, ['subjectCode', 'subjectName']);
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -97,15 +114,21 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {admins.map(admin => (
-                            <tr key={admin.id}>
-                                <td>{admin.id}</td>
-                                <td>{admin.name}</td>
-                                <td>{admin.lastName}</td>
-                                <td>{admin.email}</td>
-                                <td>{admin.phoneNumber}</td>
+                        {filteredAdmins.length > 0 ? (
+                            filteredAdmins.map(admin => (
+                                <tr key={admin.id}>
+                                    <td>{admin.id}</td>
+                                    <td>{admin.name}</td>
+                                    <td>{admin.lastName}</td>
+                                    <td>{admin.email}</td>
+                                    <td>{admin.phoneNumber}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5">No matching results</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -125,18 +148,24 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {tutors.map(tutor => (
-                            <tr key={tutor.tutorId}>
-                                <td>{tutor.tutorId}</td>
-                                <td>{tutor.name}</td>
-                                <td>{tutor.lastName}</td>
-                                <td>{tutor.phoneNumber}</td>
-                                <td>{tutor.email}</td>
-                                <td>
+                        {filteredTutors.length > 0 ? (
+                            filteredTutors.map(tutor => (
+                                <tr key={tutor.tutorId}>
+                                    <td>{tutor.tutorId}</td>
+                                    <td>{tutor.name}</td>
+                                    <td>{tutor.lastName}</td>
+                                    <td>{tutor.phoneNumber}</td>
+                                    <td>{tutor.email}</td>
+                                    <td>
                                         {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ')}
                                     </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="6">No matching results</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -155,15 +184,21 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map(student => (
-                            <tr key={student.studentNumber}>
-                                <td>{student.studentNumber}</td>
-                                <td>{student.name}</td>
-                                <td>{student.lastName}</td>
-                                <td>{student.phoneNumber}</td>
-                                <td>{student.email}</td>
+                        {filteredStudents.length > 0 ? (
+                            filteredStudents.map(student => (
+                                <tr key={student.studentNumber}>
+                                    <td>{student.studentNumber}</td>
+                                    <td>{student.name}</td>
+                                    <td>{student.lastName}</td>
+                                    <td>{student.phoneNumber}</td>
+                                    <td>{student.email}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5">No matching results</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -180,13 +215,19 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {locations.map(location => (
-                            <tr key={location.locationId}>
-                                <td>{location.locationId}</td>
-                                <td>{location.room}</td>
-                                <td>{location.building}</td>
+                        {filteredLocations.length > 0 ? (
+                            filteredLocations.map(location => (
+                                <tr key={location.locationId}>
+                                    <td>{location.locationId}</td>
+                                    <td>{location.room}</td>
+                                    <td>{location.building}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="3">No matching results</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -202,12 +243,18 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {subjects.map(subject => (
-                            <tr key={subject.subjectCode}>
-                                <td>{subject.subjectCode}</td>
-                                <td>{subject.subjectName}</td>
+                        {filteredSubjects.length > 0 ? (
+                            filteredSubjects.map(subject => (
+                                <tr key={subject.subjectCode}>
+                                    <td>{subject.subjectCode}</td>
+                                    <td>{subject.subjectName}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="2">No matching results</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>

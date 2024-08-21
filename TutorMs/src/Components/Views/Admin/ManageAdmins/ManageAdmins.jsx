@@ -3,11 +3,13 @@ import Modal from '../../../Common/Modals/Modal';
 import AddAdminForm from '../../../Forms/Admin/AddAdminForm';
 import { AdminApi } from 'student_tutor_booking_management_system';
 import '../manage.css';
+import { useOutletContext } from 'react-router-dom';
 
 const ManageAdmins = () => {
     const [admins, setAdmins] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedAdmin, setSelectedAdmin] = useState(null);
+    const { searchQuery } = useOutletContext();
 
     // Create an instance of AdminApi
     const adminApi = new AdminApi();
@@ -19,7 +21,7 @@ const ManageAdmins = () => {
                 if (error) {
                     console.error('Error fetching admins:', error);
                 } else {
-                    setAdmins(data); 
+                    setAdmins(data);
                 }
             });
         };
@@ -78,18 +80,28 @@ const ManageAdmins = () => {
             }
         });
     };
-    
+
+    // Filter functions
+    const filterData = (data, fields) => {
+        return data.filter(item =>
+            fields.some(field =>
+                item[field]?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    };
+
+    const filteredAdmins = filterData(admins, ['id', 'name', 'lastName', 'email', 'phoneNumber']);
 
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Admin
+            <h4 className='sub-header'>Manage Admins
                 <button className='btn btn-primary' onClick={() => openModal()}>Add Admin</button>
             </h4>
             <div className='table-container'>
                 <table className='table'>
                     <thead>
-                    <tr>
-                    <th>Admin ID</th>
+                        <tr>
+                            <th>Admin ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
@@ -98,7 +110,7 @@ const ManageAdmins = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {admins.map((admin) => (
+                        {filteredAdmins.map((admin) => (
                             <tr key={admin.id}>
                                 <td>{admin.id}</td>
                                 <td>{admin.name}</td>

@@ -3,11 +3,13 @@ import '../manage.css';
 import Modal from '../../../Common/Modals/Modal';
 import AddSubjectForm from '../../../Forms/Admin/AddSubjectForm';
 import { SubjectApi } from 'student_tutor_booking_management_system';
+import { useOutletContext } from 'react-router-dom';
 
 const ManageSubjects = () => {
     const [subjects, setSubjects] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSubject, setSelectedSubject] = useState(null);
+    const { searchQuery } = useOutletContext();
 
     const subjectApi = new SubjectApi();
 
@@ -20,7 +22,7 @@ const ManageSubjects = () => {
                 setSubjects(data);
             }
         });
-    }, []);
+    }, [subjectApi]);
 
     const handleAddSubject = (newSubject) => {
         if (selectedSubject) {
@@ -59,7 +61,7 @@ const ManageSubjects = () => {
     };
 
     const handleSubjectChange = (id) => {
-        const subject = subjects.find(subject => subject.subjectId === subjectId);
+        const subject = subjects.find(subject => subject.subjectId === id);
         setSelectedSubject(subject);
         setIsModalOpen(true);
     };
@@ -69,13 +71,24 @@ const ManageSubjects = () => {
         setSelectedSubject(null);
     };
 
+    // Filter functions
+    const filterData = (data, fields) => {
+        return data.filter(item =>
+            fields.some(field =>
+                item[field]?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    };
+
+    const filteredSubjects = filterData(subjects, ['subjectCode', 'subjectName']);
+
     return (
         <div className='section'>
             <h4 className='sub-header'>Manage Subjects
                 <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Subject</button>
             </h4>
             <div className='table-container'>
-                {subjects.length > 0 ? (
+                {filteredSubjects.length > 0 ? (
                     <table className='table'>
                         <thead>
                             <tr>
@@ -85,12 +98,12 @@ const ManageSubjects = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {subjects.map(subject => (
+                            {filteredSubjects.map(subject => (
                                 <tr key={subject.subjectId}>
                                     <td>{subject.subjectCode}</td>
                                     <td>{subject.subjectName}</td>
                                     <td>
-                                        
+                                        <button className='btn btn-warning' onClick={() => handleSubjectChange(subject.subjectId)}>Edit</button>
                                         <button className='btn btn-danger' onClick={() => handleDeleteSubject(subject.subjectId)}>Delete</button>
                                     </td>
                                 </tr>
@@ -102,7 +115,7 @@ const ManageSubjects = () => {
                 )}
             </div>
             <div className='button-container'>
-
+               
             </div>
             {isModalOpen && (
                 <Modal 
