@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
@@ -15,11 +15,16 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
-                const storedStudentData = sessionStorage.getItem('student');  // Corrected to sessionStorage
+                const storedStudentData = sessionStorage.getItem('student');
                 if (storedStudentData) {
                     const student = JSON.parse(storedStudentData);
+                    console.log("Stored student data:", student); // Debug: Log student data
                     setStudentData(student);
-                    fetchSessionsData(student.id);
+                    if (student.id) {
+                        await fetchSessionsData(student.id); // Pass student ID to fetchSessionsData
+                    } else {
+                        console.error("Student ID not found in stored data");
+                    }
                 } else {
                     console.error("No student data found in sessionStorage");
                 }
@@ -28,18 +33,29 @@ const Dashboard = () => {
             }
         };
 
+
         const fetchSessionsData = async (studentId) => {
             try {
+                console.log("Fetching sessions for student ID:", studentId); // Debug: Log student ID
                 const bookingApi = new BookingApi();
-                bookingApi.getAllBookingsByStudent(studentId, (error, data) => {
-                    if (error) {
-                        console.error("Error fetching sessions data", error);
-                    } else {
-                        // Filter sessions with dates in the future
-                        const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
-                        setSessionsData(upcomingSessions);
-                    }
+                const data = await new Promise((resolve, reject) => {
+                    bookingApi.getAllBookingsByStudent(studentId, (error, result) => {
+                        if (error) {
+                            console.error("Error fetching sessions from API:", error); // Log API error
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    });
                 });
+                console.log("Fetched sessions data:", data); // Log data
+                if (data && Array.isArray(data)) {
+                    const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
+                    console.log("Upcoming sessions:", upcomingSessions); // Log filtered sessions
+                    setSessionsData(upcomingSessions);
+                } else {
+                    console.error("Fetched data is not an array:", data); // Error: Data should be an array
+                }
             } catch (error) {
                 console.error("Error fetching sessions data", error);
             }
@@ -110,11 +126,11 @@ const Dashboard = () => {
         return { ...tutor, rating: averageRating };
     });
 
-    function handleLogout() {
+    const handleLogout = () => {
         console.log("Logging out...");
         sessionStorage.removeItem('student');
         navigate('/');
-    }
+    };
 
     return (
         <div className="dashboard">
@@ -132,7 +148,7 @@ const Dashboard = () => {
                 <section className="profile-section">
                     <div className="profile-card">
                         <div className="profile-image">
-                            <img src="https://via.placeholder.com/150" alt="User"/>
+                            <img src="https://via.placeholder.com/150" alt="User" />
                         </div>
                         <div className="profile-details">
                             {studentData ? (
@@ -173,22 +189,52 @@ const Dashboard = () => {
                         </tbody>
                     </table>
 
-                    <button className="subject-button" onClick={() => window.location.href = '/subjects'}>View Subjects</button>
+                    <button className="subject-button" onClick={() => navigate('/subjects')}>View Subjects</button>
                 </section>
             </div>
 
             <section className="sessions-section">
                 <h2>Upcoming Sessions</h2>
                 {sessionsData.length > 0 ? (
-                    sessionsData.map(session => (
-                        <div key={session.bookingId} className="session-card">
-                            <p>Date: {new Date(session._date).toLocaleDateString()}</p>
-                            <p>Time: {session.startTime} - {session.endTime}</p>
-                            <p>Tutor ID: {session.tutorId}</p>
-                            <p>Subject ID: {session.subjectId}</p>
-                            <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
-                        </div>
-                    ))
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Topic</th>
+                            <th>Tutor ID</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {sessionsData.map(session => {
+                            // Debug: Log session data
+                            console.log("Session data:", session);
+
+                            // Ensure _date and other fields are present and valid
+                            const sessionDate = new Date(session._date);
+                            const formattedDate = sessionDate.toLocaleDateString();
+                            const formattedStartTime = session.startTime || "N/A";
+                            const formattedEndTime = session.endTime || "N/A";
+                            const formattedTopic = session.topic || "No topic";
+                            const formattedTutorId = session.tutorId || "No ID";
+
+                            return (
+                                <tr key={session.bookingId}>
+                                    <td>{formattedDate}</td>
+                                    <td>{`${formattedStartTime} - ${formattedEndTime}`}</td>
+                                    <td>{formattedTopic}</td>
+                                    <td>{formattedTutorId}</td>
+                                    <td>
+                                        <button onClick={() => handleCancelBooking(session.bookingId)}>
+                                            Cancel Booking
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
                 ) : (
                     <p>No upcoming sessions</p>
                 )}

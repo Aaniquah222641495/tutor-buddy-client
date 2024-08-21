@@ -49,10 +49,11 @@ const Tutors = () => {
       <StudentNavbar />
 
       <header className="tutors-header">
+        <h1>Tutors</h1>
         <input
-          type="text"
-          placeholder="Search tutors by name, subject, or location"
-          className="search-bar"
+            type="text"
+            placeholder="Search tutors by name, subject, or location"
+            className="search-bar"
         />
         <button className="search-button">Search</button>
       </header>

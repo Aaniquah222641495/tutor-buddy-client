@@ -4,11 +4,11 @@ import './StudentNavbar.css';
 import logo from '../../../assets/logo black.png';
 
 const StudentNavbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  // const handleDropdownToggle = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
   return (
     <nav className="navbar">
@@ -22,14 +22,14 @@ const StudentNavbar = () => {
         <li><Link to="/tutors">View Tutors</Link></li>
         <li><Link to="/subjects">View Subjects</Link></li>
       </ul>
-      <div className="user-profile" onClick={handleDropdownToggle}>
-        <img src="https://via.placeholder.com/150" alt="User" className="user-image" />
-        {dropdownOpen && (
-          <div className="dropdown-menu">
-            <button onClick={() => console.log('Logout clicked')}>Logout</button>
-          </div>
-        )}
-      </div>
+      {/*<div className="user-profile" onClick={handleDropdownToggle}>*/}
+      {/*  <img src="https://via.placeholder.com/150" alt="User" className="user-image" />*/}
+      {/*  {dropdownOpen && (*/}
+      {/*    <div className="dropdown-menu">*/}
+      {/*      <button onClick={() => console.log('Logout clicked')}>Logout</button>*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+      {/*</div>*/}
     </nav>
   );
 };
