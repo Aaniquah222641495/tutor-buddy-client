@@ -82,12 +82,14 @@ const ManageAdmins = () => {
 
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Admins</h4>
+            <h4 className='sub-header'>Manage Admin
+                <button className='btn btn-primary' onClick={() => openModal()}>Add Admin</button>
+            </h4>
             <div className='table-container'>
                 <table className='table'>
                     <thead>
-                        <tr>
-                            <th>Admin ID</th>
+                    <tr>
+                    <th>Admin ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
@@ -112,9 +114,7 @@ const ManageAdmins = () => {
                     </tbody>
                 </table>
             </div>
-            <div className='button-container'>
-                <button className='btn btn-primary' onClick={() => openModal()}>Add Admin</button>
-            </div>
+
             {showModal && (
                 <Modal
                     show={showModal}

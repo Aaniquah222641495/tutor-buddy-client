@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminApi, TutorApi, StudentApi, LocationApi, SubjectApi } from 'student_tutor_booking_management_system';
-
+import "./AdminDashboard.css"
 
 const AdminDashboard = () => {
     const [admins, setAdmins] = useState([]);
