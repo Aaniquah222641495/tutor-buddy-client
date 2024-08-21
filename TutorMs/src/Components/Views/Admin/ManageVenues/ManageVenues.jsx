@@ -66,15 +66,25 @@ const ManageVenues = () => {
 
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Venues</h4>
+            <h4 className='sub-header'>Manage Venues
+                <button
+                    className='btn btn-primary'
+                    onClick={() => {
+                        setSelectedVenue(null); // Clear selection for adding new venue
+                        setShowModal(true);
+                    }}
+                >
+                    Add Venue
+                </button>
+            </h4>
             <div className='table-container'>
                 <table className='table'>
                     <thead>
-                        <tr>
-                            <th>Venue ID</th>
-                            <th>Room</th>
-                            <th>Building</th>
-                            <th>Actions</th>
+                    <tr>
+                        <th>Venue ID</th>
+                        <th>Room</th>
+                        <th>Building</th>
+                        <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,15 +113,7 @@ const ManageVenues = () => {
                 </table>
             </div>
             <div className='button-container'>
-                <button
-                    className='btn btn-primary'
-                    onClick={() => {
-                        setSelectedVenue(null); // Clear selection for adding new venue
-                        setShowModal(true);
-                    }}
-                >
-                    Add Venue
-                </button>
+
             </div>
             {showModal && (
                 <Modal

@@ -69,7 +69,9 @@ const ManageStudents = () => {
 
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Students</h4>
+            <h4 className='sub-header'>Manage Students
+                <button className='btn btn-primary' onClick={() => openModal()}>Add Student</button>
+            </h4>
             <div className='table-container'>
                 <table className='table'>
                     <thead>
@@ -100,7 +102,7 @@ const ManageStudents = () => {
                 </table>
             </div>
             <div className='button-container'>
-                <button className='btn btn-primary' onClick={() => openModal()}>Add Student</button>
+
             </div>
             {showModal && (
                 <Modal

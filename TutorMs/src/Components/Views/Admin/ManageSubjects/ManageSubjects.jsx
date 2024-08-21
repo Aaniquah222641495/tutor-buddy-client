@@ -71,7 +71,9 @@ const ManageSubjects = () => {
 
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Subjects</h4>
+            <h4 className='sub-header'>Manage Subjects
+                <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Subject</button>
+            </h4>
             <div className='table-container'>
                 {subjects.length > 0 ? (
                     <table className='table'>
@@ -100,7 +102,7 @@ const ManageSubjects = () => {
                 )}
             </div>
             <div className='button-container'>
-                <button className='btn btn-primary' onClick={() => setIsModalOpen(true)}>Add Subject</button>
+
             </div>
             {isModalOpen && (
                 <Modal 
