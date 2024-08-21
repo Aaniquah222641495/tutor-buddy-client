@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './AdminLayout.css';
-import logo from "../../../assets/logo.png";// Ensure this file includes the CSS for layout and search bar
-
+import logo from "../../../assets/adminLogo.png";// Ensure this file includes the CSS for layout and search bar
+import userIcon from "../../../assets/icons8-user-96.png";
 const AdminLayout = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [adminName, setAdminName] = useState('Admin');
@@ -30,10 +30,13 @@ const AdminLayout = () => {
         <div className='dashboard-container'>
             <div className='sidebar'>
                 <img className="sidebar-logo" src={logo}/>
-                <Link to="/adminDashboard"
-                      className='d-flex align-items-center pb-3 mb-1 mt-md-3 me-md-auto text-decoration-none'>
-                    <span className='welcome-message'> Welcome, {adminName}!</span>
-                </Link>
+                <div className="welcome-container">
+                    <img className="user-icon" src={userIcon}/>
+                    <Link to="/adminDashboard"
+                          className='pb-3 mb-1 mt-md-3 text-decoration-none'>
+                        <span className='welcome-message'> Welcome, {adminName}!</span>
+                    </Link>
+                </div>
                 <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                     id="menu">
                     <li className="w-100">
