@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
+import { useNavigate } from 'react-router-dom';
 import { StudentApi, TutorApi, ReviewApi, BookingApi } from 'student_tutor_booking_management_system';
 
 const Dashboard = () => {
@@ -9,39 +10,23 @@ const Dashboard = () => {
     const [tutorsData, setTutorsData] = useState([]);
     const [reviewsData, setReviewsData] = useState([]);
     const [sessionsData, setSessionsData] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
-                // Example: Retrieve email and password from a form input
-                // const email = document.getElementById("emailInput").value;
-                // const password = document.getElementById("passwordInput").value;
-
-                // Example: Retrieve email and password from a stored session (e.g., localStorage or sessionStorage)
-                const email = localStorage.getItem("userEmail");
-                const password = localStorage.getItem("userPassword");
-
-                // Ensure that the user has entered the credentials
-                if (!email || !password) {
-                    console.error("Email or password is missing");
-                    return;
+                const storedStudentData = sessionStorage.getItem('student');  // Corrected to sessionStorage
+                if (storedStudentData) {
+                    const student = JSON.parse(storedStudentData);
+                    setStudentData(student);
+                    fetchSessionsData(student.id);
+                } else {
+                    console.error("No student data found in sessionStorage");
                 }
-
-                const studentApi = new StudentApi();
-
-                studentApi.authenticateStudent(email, password, (error, data) => {
-                    if (error) {
-                        console.error("Error fetching student data", error);
-                    } else {
-                        setStudentData(data);
-                        fetchSessionsData(data.id); // Fetch sessions data after student data
-                    }
-                });
             } catch (error) {
                 console.error("Error fetching student data", error);
             }
         };
-
 
         const fetchSessionsData = async (studentId) => {
             try {
@@ -50,6 +35,7 @@ const Dashboard = () => {
                     if (error) {
                         console.error("Error fetching sessions data", error);
                     } else {
+                        // Filter sessions with dates in the future
                         const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
                         setSessionsData(upcomingSessions);
                     }
@@ -102,7 +88,6 @@ const Dashboard = () => {
         fetchTutorsData();
     }, []);
 
-    // Cancel booking handler
     const handleCancelBooking = async (bookingId) => {
         try {
             const bookingApi = new BookingApi();
@@ -110,7 +95,6 @@ const Dashboard = () => {
                 if (error) {
                     console.error("Error canceling booking", error);
                 } else {
-                    // Remove the canceled booking from the state
                     setSessionsData(prevSessions => prevSessions.filter(session => session.bookingId !== bookingId));
                 }
             });
@@ -119,13 +103,18 @@ const Dashboard = () => {
         }
     };
 
-    // Merge reviews with tutors data
     const tutorsWithRatings = tutorsData.map(tutor => {
         const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.id);
         const totalRating = tutorReviews.reduce((acc, review) => acc + review.rating, 0);
         const averageRating = tutorReviews.length ? totalRating / tutorReviews.length : 0;
         return { ...tutor, rating: averageRating };
     });
+
+    function handleLogout() {
+        console.log("Logging out...");
+        sessionStorage.removeItem('student');
+        navigate('/');
+    }
 
     return (
         <div className="dashboard">
@@ -147,7 +136,6 @@ const Dashboard = () => {
                         </div>
                         <div className="profile-details">
                             {studentData ? (
-
                                 <>
                                     <h2>{`${studentData.firstName} ${studentData.lastName}`}</h2>
                                     <p>Email: {studentData.email}</p>
@@ -157,6 +145,7 @@ const Dashboard = () => {
                                 <p>Loading profile...</p>
                             )}
                             <button>Edit Profile</button>
+                            <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>
                 </section>
