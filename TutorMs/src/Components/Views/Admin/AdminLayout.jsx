@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import './AdminDashboard.css'; // Ensure this file includes the CSS for layout and search bar
+import './AdminLayout.css'; // Ensure this file includes the CSS for layout and search bar
 
 const AdminLayout = () => {
     const [searchQuery, setSearchQuery] = useState("");
