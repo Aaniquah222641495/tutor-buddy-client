@@ -133,7 +133,7 @@ const Login = () => {
                     </div>
 
                     <div className='form-group'>
-                        <button type="submit" className='btn btn-success w-100'>Login</button>
+                        <button type="submit" className='btn btn-primary w-100'>Login</button>
                     </div>
                 </form>
             </div>

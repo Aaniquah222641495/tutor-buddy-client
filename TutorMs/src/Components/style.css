@@ -20,7 +20,9 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     flex-direction: column;
 }
-
+.loginForm h2{
+    font-weight: bold;
+}
 /* General form styles */
 .form-group {
     margin-bottom: 20px;
