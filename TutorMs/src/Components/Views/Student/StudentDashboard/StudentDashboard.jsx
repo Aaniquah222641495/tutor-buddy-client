@@ -13,9 +13,23 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
-                const email = "student@example.com"; // Replace with actual logic to get email
+                // Example: Retrieve email and password from a form input
+                // const email = document.getElementById("emailInput").value;
+                // const password = document.getElementById("passwordInput").value;
+
+                // Example: Retrieve email and password from a stored session (e.g., localStorage or sessionStorage)
+                const email = localStorage.getItem("userEmail");
+                const password = localStorage.getItem("userPassword");
+
+                // Ensure that the user has entered the credentials
+                if (!email || !password) {
+                    console.error("Email or password is missing");
+                    return;
+                }
+
                 const studentApi = new StudentApi();
-                studentApi.authenticateStudent(email, "password", (error, data) => {
+
+                studentApi.authenticateStudent(email, password, (error, data) => {
                     if (error) {
                         console.error("Error fetching student data", error);
                     } else {
@@ -27,6 +41,7 @@ const Dashboard = () => {
                 console.error("Error fetching student data", error);
             }
         };
+
 
         const fetchSessionsData = async (studentId) => {
             try {
@@ -132,6 +147,7 @@ const Dashboard = () => {
                         </div>
                         <div className="profile-details">
                             {studentData ? (
+
                                 <>
                                     <h2>{`${studentData.firstName} ${studentData.lastName}`}</h2>
                                     <p>Email: {studentData.email}</p>
