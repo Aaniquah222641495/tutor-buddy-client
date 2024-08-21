@@ -9,15 +9,15 @@ const AdminLayout = () => {
 
     useEffect(() => {
         // Fetch admin from local storage
-        const adminData = localStorage.getItem('admin');
+        const adminData = JSON.parse(sessionStorage.getItem('admin'));
         if (adminData) {
-            const { name } = JSON.parse(adminData);
-            setAdminName(name);
+            setAdminName(adminData.name);
         }
     }, []);
 
     const handleLogout = () => {
         console.log("Logging out...");
+        sessionStorage.removeItem('admin');
         navigate('/');
     };
 
