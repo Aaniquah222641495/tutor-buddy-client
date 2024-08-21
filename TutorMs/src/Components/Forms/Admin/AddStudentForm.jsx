@@ -6,6 +6,8 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
     const [lastName, setLastName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
+    const [studentNumber, setStudentNumber] = useState('');
+    const [password, setPassword] = useState(''); 
 
     useEffect(() => {
         if (selectedStudent) {
@@ -14,18 +16,22 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
             setLastName(selectedStudent.lastName);
             setPhoneNumber(selectedStudent.phoneNumber);
             setEmail(selectedStudent.email);
+            setStudentNumber(selectedStudent.studentNumber);
+            
         } else {
             setStudentId('');
             setFirstName('');
             setLastName('');
             setPhoneNumber('');
             setEmail('');
+            setStudentNumber('');
+            setPassword(''); // Clear the password field when adding new
         }
     }, [selectedStudent]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const student = { studentId, name, lastName, phoneNumber, email };  
+        const student = { studentId, name, lastName, phoneNumber, email, studentNumber, password }; 
         if (selectedStudent) {
             handleEditStudent(student);
         } else {
@@ -38,12 +44,12 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
         <form onSubmit={handleSubmit} className="form">
             <h2 className="sub-header">{selectedStudent ? 'Edit Student' : 'Add New Student'}</h2>
             <div className='form-group'>
-                <label htmlFor="studentId">Student Number</label>
+                <label htmlFor="studentNumber">Student Number</label>
                 <input
                     type='text'
-                    id="studentId"
-                    value={studentId}  // Updated to use studentId
-                    onChange={(e) => setStudentId(e.target.value)}
+                    id="studentNumber"
+                    value={studentNumber}  
+                    onChange={(e) => setStudentNumber(e.target.value)}
                     required
                     disabled={!!selectedStudent} // Disable if editing
                 />
@@ -88,6 +94,18 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
                     required
                 />
             </div>
+            {!selectedStudent && ( // Show password field only when adding a new student
+                <div className='form-group'>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type='password'
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+            )}
             <button type="submit" className='btn btn-primary'>
                 {selectedStudent ? 'Update Student' : 'Add Student'}
             </button>
