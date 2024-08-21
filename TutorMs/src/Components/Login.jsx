@@ -51,10 +51,8 @@ const Login = () => {
                         }
                         else{
                             //Store admin information in local storage
-                            localStorage.setItem('admin', JSON.stringify ({name: data.name
-                            }));
+                            sessionStorage.setItem('admin', JSON.stringify(data));
                             navigate('/adminDashboard');
-
                             console.log(response + " " + data.name);
                         }
                     }
@@ -65,6 +63,7 @@ const Login = () => {
                             console.log(response + " " + data);
 
                         } else {
+                            sessionStorage.setItem('tutor', JSON.stringify(data));
                             navigate('/tutorDashboard');
                             console.log(response + " " + data);
                         }
@@ -76,6 +75,7 @@ const Login = () => {
                             console.log(response + " " + data);
 
                         } else {
+                            sessionStorage.setItem('student', JSON.stringify(data));
                             navigate('/studentDashboard');
                             console.log(response + " " + data);
                         }
