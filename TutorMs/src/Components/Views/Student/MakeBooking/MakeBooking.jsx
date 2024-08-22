@@ -17,6 +17,7 @@ const BookingModal = ({ isOpen, onClose, tutor }) => {
             <button>Book Session</button>
           </div>
           <h3>Booking Form</h3>
+
           <form>
             <label>
               Name:
@@ -40,6 +41,7 @@ const BookingModal = ({ isOpen, onClose, tutor }) => {
             </label>
             <button type="submit">Book Now</button>
           </form>
+
         </div>
       </div>
   );

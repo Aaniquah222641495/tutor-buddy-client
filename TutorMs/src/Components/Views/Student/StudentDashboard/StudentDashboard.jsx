@@ -192,6 +192,7 @@ const Dashboard = () => {
                     </table>
 
                     <button className="subject-button" onClick={() => navigate('/subjects')}>View Subjects</button>
+
                 </section>
             </div>
 

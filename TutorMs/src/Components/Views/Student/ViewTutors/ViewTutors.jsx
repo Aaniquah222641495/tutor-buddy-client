@@ -88,7 +88,9 @@ const Tutors = () => {
                   <p>Phone: {tutor.phoneNumber}</p>
                   {/*<p>Rating: {averageRating}</p>*/}
                   <p>Rating: Unavailable currently</p>
+
                   <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
+
                 </div>
             );
           })}

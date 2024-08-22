@@ -46,6 +46,7 @@ const Subjects = () => {
               </div>
           ))}
         </section>
+
       </div>
   );
 };
