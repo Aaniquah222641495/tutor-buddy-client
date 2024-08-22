@@ -153,7 +153,8 @@ const Dashboard = () => {
                         <div className="profile-details">
                             {studentData ? (
                                 <>
-                                    <h2>{`${studentData.firstName} ${studentData.lastName}`}</h2>
+                                    {/*<h2>{`${studentData.firstName} ${studentData.lastName}`}</h2>*/}
+                                    <h2>{studentData.lastName}</h2>
                                     <p>Email: {studentData.email}</p>
                                     <p>Phone: {studentData.phoneNumber}</p>
                                 </>
@@ -183,7 +184,8 @@ const Dashboard = () => {
                                 <td>{tutor.name}</td>
                                 <td>{tutor.phoneNumber}</td>
                                 <td>{tutor.email}</td>
-                                <td>{tutor.rating.toFixed(1)}</td>
+                                {/*<td>{tutor.rating.toFixed(1)}</td>*/}
+                                <td>Unavailable currently</td>
                             </tr>
                         ))}
                         </tbody>
