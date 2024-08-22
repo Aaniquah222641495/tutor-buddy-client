@@ -13,6 +13,8 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        
+        // Fetch student data and set it to state
         const fetchStudentData = async () => {
             try {
                 const storedStudentData = sessionStorage.getItem('student');
@@ -20,11 +22,6 @@ const Dashboard = () => {
                     const student = JSON.parse(storedStudentData);
                     console.log("Stored student data:", student); // Debug: Log student data
                     setStudentData(student);
-                    if (student.id) {
-                        await fetchSessionsData(student.id); // Pass student ID to fetchSessionsData
-                    } else {
-                        console.error("Student ID not found in stored data");
-                    }
                 } else {
                     console.error("No student data found in sessionStorage");
                 }
@@ -33,33 +30,46 @@ const Dashboard = () => {
             }
         };
 
-
-        const fetchSessionsData = async (studentId) => {
+        const fetchSessionsData = async () => {
             try {
-                console.log("Fetching sessions for student ID:", studentId); // Debug: Log student ID
-                const bookingApi = new BookingApi();
-                const data = await new Promise((resolve, reject) => {
-                    bookingApi.getAllBookingsByStudent(studentId, (error, result) => {
-                        if (error) {
-                            console.error("Error fetching sessions from API:", error); // Log API error
-                            reject(error);
+                const storedStudentData = sessionStorage.getItem('student');
+                if (storedStudentData) {
+                    const student = JSON.parse(storedStudentData);
+                    console.log("Stored student data:", student); // Debug: Log student data
+
+                    if (student.id) {
+                        console.log("Fetching sessions for student ID:", student.id); // Debug: Log student ID
+                        const bookingApi = new BookingApi();
+                        const data = await new Promise((resolve, reject) => {
+                            bookingApi.getAllBookingsByStudent(student.id, (error, result) => {
+                                if (error) {
+                                    console.error("Error fetching sessions from API:", error); // Log API error
+                                    reject(error);
+                                } else {
+                                    resolve(result);
+                                }
+                            });
+                        });
+                        console.log("Fetched sessions data:", data); // Log data
+
+                        if (data && Array.isArray(data)) {
+                            const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
+                            console.log("Upcoming sessions:", upcomingSessions); // Log filtered sessions
+                            setSessionsData(upcomingSessions);
                         } else {
-                            resolve(result);
+                            console.error("Fetched data is not an array:", data); // Error: Data should be an array
                         }
-                    });
-                });
-                console.log("Fetched sessions data:", data); // Log data
-                if (data && Array.isArray(data)) {
-                    const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
-                    console.log("Upcoming sessions:", upcomingSessions); // Log filtered sessions
-                    setSessionsData(upcomingSessions);
+                    } else {
+                        console.error("Student ID not found in stored data");
+                    }
                 } else {
-                    console.error("Fetched data is not an array:", data); // Error: Data should be an array
+                    console.error("No student data found in sessionStorage");
                 }
             } catch (error) {
                 console.error("Error fetching sessions data", error);
             }
         };
+
 
         const fetchTutorsData = async () => {
             try {
@@ -100,6 +110,7 @@ const Dashboard = () => {
             }
         };
 
+        fetchSessionsData();
         fetchStudentData();
         fetchTutorsData();
     }, []);
@@ -171,23 +182,23 @@ const Dashboard = () => {
                     <h2>Available Tutors</h2>
                     <table>
                         <thead>
-                        <tr>
-                            <th>Tutor Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Rating</th>
-                        </tr>
+                            <tr>
+                                <th>Tutor Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Rating</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {tutorsWithRatings.map(tutor => (
-                            <tr key={tutor.id}>
-                                <td>{tutor.name}</td>
-                                <td>{tutor.phoneNumber}</td>
-                                <td>{tutor.email}</td>
-                                {/*<td>{tutor.rating.toFixed(1)}</td>*/}
-                                <td>Unavailable currently</td>
-                            </tr>
-                        ))}
+                            {tutorsWithRatings.map(tutor => (
+                                <tr key={tutor.id}>
+                                    <td>{tutor.name}</td>
+                                    <td>{tutor.phoneNumber}</td>
+                                    <td>{tutor.email}</td>
+                                    {/*<td>{tutor.rating.toFixed(1)}</td>*/}
+                                    <td>Unavailable currently</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
 
@@ -201,47 +212,48 @@ const Dashboard = () => {
                 {sessionsData.length > 0 ? (
                     <table>
                         <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Topic</th>
-                            <th>Tutor ID</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Topic</th>
+                                <th>Tutor ID</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {sessionsData.map(session => {
-                            // Debug: Log session data
-                            console.log("Session data:", session);
+                            {sessionsData.map(session => {
+                                // Debug: Log session data
+                                console.log("Session data:", session);
 
-                            // Ensure _date and other fields are present and valid
-                            const sessionDate = new Date(session._date);
-                            const formattedDate = sessionDate.toLocaleDateString();
-                            const formattedStartTime = session.startTime || "N/A";
-                            const formattedEndTime = session.endTime || "N/A";
-                            const formattedTopic = session.topic || "No topic";
-                            const formattedTutorId = session.tutorId || "No ID";
+                                // Ensure _date and other fields are present and valid
+                                const sessionDate = new Date(session._date);
+                                const formattedDate = sessionDate.toLocaleDateString();
+                                const formattedStartTime = session.startTime || "N/A";
+                                const formattedEndTime = session.endTime || "N/A";
+                                const formattedTopic = session.topic || "No topic";
+                                const formattedTutorId = session.tutorId || "No ID";
 
-                            return (
-                                <tr key={session.bookingId}>
-                                    <td>{formattedDate}</td>
-                                    <td>{`${formattedStartTime} - ${formattedEndTime}`}</td>
-                                    <td>{formattedTopic}</td>
-                                    <td>{formattedTutorId}</td>
-                                    <td>
-                                        <button onClick={() => handleCancelBooking(session.bookingId)}>
-                                            Cancel Booking
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                                return (
+                                    <tr key={session.bookingId}>
+                                        <td>{formattedDate}</td>
+                                        <td>{`${formattedStartTime} - ${formattedEndTime}`}</td>
+                                        <td>{formattedTopic}</td>
+                                        <td>{formattedTutorId}</td>
+                                        <td>
+                                            <button onClick={() => handleCancelBooking(session.bookingId)}>
+                                                Cancel Booking
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 ) : (
                     <p>No upcoming sessions</p>
                 )}
             </section>
+
 
             <section className="chat-section">
                 <h2>AI Chatbot</h2>

@@ -1,16 +1,17 @@
+/* Navbar Styles */
 .navbar {
-  background-color: #ffffff;
-  border-bottom: 1px solid #dcdcdc;
+  background-color: #ffffff; /* Match sidebar background */
+  border-bottom: 1px solid #dcdcdc; /* Light border for separation */
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
 }
 
 .navbar-logo {
   font-size: 1.5rem;
-  color: #000;
+  color: #002F81; /* Match primary color */
   text-decoration: none;
 }
 
@@ -32,7 +33,7 @@
 
 .navbar a {
   text-decoration: none;
-  color: #007bff;
+  color: #002F81; /* Match primary color */
   font-weight: 500;
   padding: 8px 15px;
   border-radius: 5px;
@@ -40,8 +41,8 @@
 }
 
 .navbar a:hover {
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: #002F81; /* Match primary color */
+  color: #ffffff; /* Text color for hover state */
 }
 
 .user-profile {
@@ -59,9 +60,9 @@
   position: absolute;
   top: 50px;
   right: 0;
-  background-color: white;
-  border: 1px solid #dcdcdc;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc; /* Light border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
   border-radius: 5px;
   padding: 10px;
   display: flex;
@@ -69,17 +70,17 @@
 }
 
 .dropdown-menu button {
-  background-color: #ffffff;
+  background-color: #ffffff; /* Match dropdown background */
   border: none;
   padding: 8px 10px;
   text-align: left;
-  color: #007bff;
+  color: #002F81; /* Match primary color */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .dropdown-menu button:hover {
-  background-color: #f2f2f2;
+  background-color: #f2f2f2; /* Light background for hover state */
 }
 
 .navbar-search {
@@ -89,15 +90,15 @@
 
 .navbar-search input[type="text"] {
   padding: 8px;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #dcdcdc; /* Light border */
   border-radius: 5px;
   margin-right: 10px;
 }
 
 .navbar-search button {
   padding: 8px 15px;
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: #002F81; /* Match primary color */
+  color: #ffffff; /* Text color for button */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -105,5 +106,5 @@
 }
 
 .navbar-search button:hover {
-  background-color: #0056b3;
+  background-color: #001f6c; /* Darker shade on hover */
 }
