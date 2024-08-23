@@ -14,6 +14,7 @@
  *
  */
 import ApiClient from '../ApiClient';
+import SubjectDTO from './SubjectDTO';
 
 /**
  * The TutorDTO model module.
@@ -61,6 +62,8 @@ export default class TutorDTO {
         obj.phoneNumber = ApiClient.convertToType(data['phoneNumber'], 'String');
       if (data.hasOwnProperty('password'))
         obj.password = ApiClient.convertToType(data['password'], 'String');
+      if (data.hasOwnProperty('assignedSubjects'))
+        obj.assignedSubjects = ApiClient.convertToType(data['assignedSubjects'], [SubjectDTO]);
     }
     return obj;
   }
@@ -95,4 +98,9 @@ TutorDTO.prototype.phoneNumber = undefined;
  * @member {String} password
  */
 TutorDTO.prototype.password = undefined;
+
+/**
+ * @member {Array.<module:model/SubjectDTO>} assignedSubjects
+ */
+TutorDTO.prototype.assignedSubjects = undefined;
 

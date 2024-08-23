@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'; // Added useEffect
+import React, { useState, useEffect } from 'react';
 import Modal from '../../../Common/Modals/Modal';
 import AddStudentForm from '../../../Forms/Admin/AddStudentForm';
 import { StudentApi } from 'student_tutor_booking_management_system';
 import '../manage.css';
+import { useOutletContext } from 'react-router-dom';
 
 const ManageStudents = () => {
     const [students, setStudents] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const { searchQuery } = useOutletContext();
 
     const studentApi = new StudentApi();
 
@@ -18,13 +20,13 @@ const ManageStudents = () => {
                 if (error) {
                     console.error('Error fetching students:', error);
                 } else {
-                    setStudents(data); 
+                    setStudents(data);
                 }
             });
         };
 
         fetchStudents();
-    }, []);
+    }, [studentApi]);
 
     const openModal = (student = null) => {
         setSelectedStudent(student); // Set the selected student for editing or null for adding
@@ -38,7 +40,7 @@ const ManageStudents = () => {
             if (error) {
                 console.error('Error adding student:', error);
             } else {
-                setStudents([...students, data]); 
+                setStudents([...students, data]);
                 closeModal();
             }
         });
@@ -67,9 +69,22 @@ const ManageStudents = () => {
         });
     };
 
+    // Filter functions
+    const filterData = (data, fields) => {
+        return data.filter(item =>
+            fields.some(field =>
+                item[field]?.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+    };
+
+    const filteredStudents = filterData(students, ['studentNumber', 'name', 'lastName', 'phoneNumber', 'email']);
+
     return (
         <div className='section'>
-            <h4 className='sub-header'>Manage Students</h4>
+            <h4 className='sub-header'>Manage Students
+                <button className='btn btn-primary' onClick={() => openModal()}>Add Student</button>
+            </h4>
             <div className='table-container'>
                 <table className='table'>
                     <thead>
@@ -83,9 +98,9 @@ const ManageStudents = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map((student) => (
+                        {filteredStudents.map((student) => (
                             <tr key={student.studentId}>
-                                <td>{student.studentId}</td>
+                                <td>{student.studentNumber}</td>
                                 <td>{student.name}</td>
                                 <td>{student.lastName}</td>
                                 <td>{student.phoneNumber}</td>
@@ -100,7 +115,7 @@ const ManageStudents = () => {
                 </table>
             </div>
             <div className='button-container'>
-                <button className='btn btn-primary' onClick={() => openModal()}>Add Student</button>
+                {/* Additional buttons or content can be added here */}
             </div>
             {showModal && (
                 <Modal

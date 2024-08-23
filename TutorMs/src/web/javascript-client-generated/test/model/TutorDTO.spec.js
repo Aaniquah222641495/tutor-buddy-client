@@ -76,6 +76,12 @@
         // expect(instance.password).to.be(expectedValueLiteral);
       });
 
+      it('should have the property assignedSubjects (base name: "assignedSubjects")', function() {
+        // TODO: update the code to test the property assignedSubjects
+        expect(instance).to.have.property('assignedSubjects');
+        // expect(instance.assignedSubjects).to.be(expectedValueLiteral);
+      });
+
     });
   });
 

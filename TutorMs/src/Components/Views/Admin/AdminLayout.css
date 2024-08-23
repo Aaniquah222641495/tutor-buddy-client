@@ -1,0 +1,95 @@
+
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard-container ul{
+    width: 70%;
+}
+
+.sidebar {
+    width: 250px;
+    position: fixed;
+    height: 100%;
+    background-color: #ffffff;
+    color: rgb(230, 221, 221);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px; /* Added padding to balance the content */
+}
+.sidebar-logo{
+    width: 100%;
+    horiz-align: center;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 1px 1px;
+    padding: 10px;
+
+}
+
+.user-icon{
+    width: 75px;
+}
+
+.sidebar .nav-link {
+    color: #002F81;
+    text-decoration: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #002F81;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.sidebar .nav-link span {
+    display: inline-block;
+}
+
+.welcome-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.welcome-message {
+    font-size: 1.00rem; /* Adjust the size as needed */
+    font-weight: bold;
+    color: #002F81;
+    /* Space below the welcome message */
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    margin-bottom: 100px;
+    background-color: #dee2e6;
+}
+
+.main-header {
+    padding: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar-container {
+    margin-bottom: 1rem;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
