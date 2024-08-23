@@ -9,6 +9,7 @@ const Tutors = () => {
   const [selectedTutor, setSelectedTutor] = useState(null);
   const [tutors, setTutors] = useState([]);
   const [tutorReviews, setTutorReviews] = useState({}); // Holds reviews keyed by tutor ID
+  const [searchQuery, setSearchQuery] = useState(''); // Holds the search query
 
   useEffect(() => {
     const fetchTutorsAndReviews = async () => {
@@ -61,47 +62,52 @@ const Tutors = () => {
     return (totalRating / reviews.length).toFixed(0); // Return a fixed decimal rating
   };
 
+  // Filter tutors based on the search query
+  const filteredTutors = tutors.filter((tutor) =>
+    `${tutor.name} ${tutor.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-      <div className="tutors-page">
+    <div className="tutors-page">
+      <StudentNavbar />
 
-        <StudentNavbar />
-
-        <header className="tutors-header">
-          <h1>Tutors</h1>
-          <input
-              type="text"
-              placeholder="Search tutors by name"
-              className="search-bar"
-          />
-          <button className="search-button">Search</button>
-        </header>
-
-        <section className="tutor-list">
-          {tutors.map((tutor) => {
-            const reviews = tutorReviews[tutor.id] || [];
-            const averageRating = calculateAverageRating(reviews);
-
-            return (
-                <div className="tutor-card" key={tutor.email}>
-                  <h2>{tutor.name} {tutor.lastName}</h2>
-                  <p>Email: {tutor.email}</p>
-                  <p>Phone: {tutor.phoneNumber}</p>
-                  {/*<p>Rating: {averageRating}</p>*/}
-                  <p>Rating: Unavailable currently</p>
-
-                  <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
-
-                </div>
-            );
-          })}
-        </section>
-
-        <BookingModal
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-            tutor={selectedTutor}
+      <header className="tutors-header">
+        <h1>Tutors</h1>
+        <input
+          type="text"
+          placeholder="Search tutors by name"
+          className="search-bar"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on change
         />
-      </div>
+        <button className="search-button">Search</button>
+      </header>
+
+      <section className="tutor-list">
+        {filteredTutors.map((tutor) => {
+          const reviews = tutorReviews[tutor.id] || [];
+          const averageRating = calculateAverageRating(reviews);
+
+          return (
+            <div className="tutor-card" key={tutor.email}>
+              <h2>{tutor.name} {tutor.lastName}</h2>
+              <p>Email: {tutor.email}</p>
+              <p>Phone: {tutor.phoneNumber}</p>
+              {/* <p>Rating: {averageRating}</p> */}
+              <p>Rating: Unavailable currently</p>
+
+              <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
+            </div>
+          );
+        })}
+      </section>
+
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        tutor={selectedTutor}
+      />
+    </div>
   );
 };
 

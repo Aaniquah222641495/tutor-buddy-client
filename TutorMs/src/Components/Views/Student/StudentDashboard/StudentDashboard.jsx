@@ -10,17 +10,18 @@ const Dashboard = () => {
     const [tutorsData, setTutorsData] = useState([]);
     const [reviewsData, setReviewsData] = useState([]);
     const [sessionsData, setSessionsData] = useState([]);
+    const [studentId, setStudentId] = useState('');
+    const [password, setPassword] = useState('');
+    const [searchError, setSearchError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        
-        // Fetch student data and set it to state
         const fetchStudentData = async () => {
             try {
                 const storedStudentData = sessionStorage.getItem('student');
                 if (storedStudentData) {
                     const student = JSON.parse(storedStudentData);
-                    console.log("Stored student data:", student); // Debug: Log student data
+                    console.log("Stored student data:", student);
                     setStudentData(student);
                 } else {
                     console.error("No student data found in sessionStorage");
@@ -29,47 +30,6 @@ const Dashboard = () => {
                 console.error("Error fetching student data", error);
             }
         };
-
-        const fetchSessionsData = async () => {
-            try {
-                const storedStudentData = sessionStorage.getItem('student');
-                if (storedStudentData) {
-                    const student = JSON.parse(storedStudentData);
-                    console.log("Stored student data:", student); // Debug: Log student data
-
-                    if (student.id) {
-                        console.log("Fetching sessions for student ID:", student.id); // Debug: Log student ID
-                        const bookingApi = new BookingApi();
-                        const data = await new Promise((resolve, reject) => {
-                            bookingApi.getAllBookingsByStudent(student.id, (error, result) => {
-                                if (error) {
-                                    console.error("Error fetching sessions from API:", error); // Log API error
-                                    reject(error);
-                                } else {
-                                    resolve(result);
-                                }
-                            });
-                        });
-                        console.log("Fetched sessions data:", data); // Log data
-
-                        if (data && Array.isArray(data)) {
-                            const upcomingSessions = data.filter(session => new Date(session._date) >= new Date());
-                            console.log("Upcoming sessions:", upcomingSessions); // Log filtered sessions
-                            setSessionsData(upcomingSessions);
-                        } else {
-                            console.error("Fetched data is not an array:", data); // Error: Data should be an array
-                        }
-                    } else {
-                        console.error("Student ID not found in stored data");
-                    }
-                } else {
-                    console.error("No student data found in sessionStorage");
-                }
-            } catch (error) {
-                console.error("Error fetching sessions data", error);
-            }
-        };
-
 
         const fetchTutorsData = async () => {
             try {
@@ -110,26 +70,56 @@ const Dashboard = () => {
             }
         };
 
-        fetchSessionsData();
         fetchStudentData();
         fetchTutorsData();
     }, []);
 
+    const fetchUpcomingSessions = async (id) => {
+        try {
+            const bookingApi = new BookingApi();
+            console.log("Fetching bookings for student ID:", id);  // Debugging line
+            bookingApi.getAllBookingsByStudent(id, (error, data) => {
+                if (error) {
+                    console.error("Error fetching bookings:", error);
+                    setSearchError("Error fetching bookings.");
+                } else {
+                    console.log("Fetched bookings:", data);  // Debugging line
+                    setSessionsData(data);
+                    setSearchError('');
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching bookings:", error);
+            setSearchError("Error fetching bookings.");
+        }
+    };
+    
+
+    const handleSearch = () => {
+        if (studentId && password) {
+            fetchUpcomingSessions(studentId);
+        } else {
+            setSearchError("Please enter both student ID and password.");
+        }
+    };
+
     const handleCancelBooking = async (bookingId) => {
         try {
             const bookingApi = new BookingApi();
-            bookingApi.deleteBooking(bookingId, (error) => {
+            console.log("Attempting to cancel booking with ID:", bookingId);  // Add this line for debugging
+            bookingApi.deleteBooking(bookingId, (error, data, response) => {
                 if (error) {
-                    console.error("Error canceling booking", error);
+                    console.error("Error canceling booking:", error);
                 } else {
+                    console.log("Successfully canceled booking with ID:", bookingId);  // Add this line for success feedback
                     setSessionsData(prevSessions => prevSessions.filter(session => session.bookingId !== bookingId));
                 }
             });
         } catch (error) {
-            console.error("Error canceling booking", error);
+            console.error("Error canceling booking:", error);
         }
     };
-
+    
     const tutorsWithRatings = tutorsData.map(tutor => {
         const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.id);
         const totalRating = tutorReviews.reduce((acc, review) => acc + review.rating, 0);
@@ -140,6 +130,7 @@ const Dashboard = () => {
     const handleLogout = () => {
         console.log("Logging out...");
         sessionStorage.removeItem('student');
+        sessionStorage.removeItem('studentId');
         navigate('/');
     };
 
@@ -149,10 +140,6 @@ const Dashboard = () => {
 
             <header className="dashboard-header">
                 <h1>Student Dashboard</h1>
-                <div className="search-bar">
-                    <input type="text" placeholder="Search" />
-                    <button>Search</button>
-                </div>
             </header>
 
             <div className="dashboard-content">
@@ -164,7 +151,6 @@ const Dashboard = () => {
                         <div className="profile-details">
                             {studentData ? (
                                 <>
-                                    {/*<h2>{`${studentData.firstName} ${studentData.lastName}`}</h2>*/}
                                     <h2>{studentData.lastName}</h2>
                                     <p>Email: {studentData.email}</p>
                                     <p>Phone: {studentData.phoneNumber}</p>
@@ -195,65 +181,53 @@ const Dashboard = () => {
                                     <td>{tutor.name}</td>
                                     <td>{tutor.phoneNumber}</td>
                                     <td>{tutor.email}</td>
-                                    {/*<td>{tutor.rating.toFixed(1)}</td>*/}
-                                    <td>Unavailable currently</td>
+                                    <td>{tutor.rating.toFixed(1)}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
 
                     <button className="subject-button" onClick={() => navigate('/subjects')}>View Subjects</button>
-
                 </section>
             </div>
 
             <section className="sessions-section">
-                <h2>Upcoming Sessions</h2>
-                {sessionsData.length > 0 ? (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Topic</th>
-                                <th>Tutor ID</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sessionsData.map(session => {
-                                // Debug: Log session data
-                                console.log("Session data:", session);
+                <h2>Search Upcoming Sessions</h2>
+                <div className="search-form">
+                    <input 
+                        type="text" 
+                        placeholder="Student ID" 
+                        value={studentId}
+                        onChange={(e) => setStudentId(e.target.value)}
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button onClick={handleSearch}>Search</button>
+                    {searchError && <p className="error-message">{searchError}</p>}
+                </div>
 
-                                // Ensure _date and other fields are present and valid
-                                const sessionDate = new Date(session._date);
-                                const formattedDate = sessionDate.toLocaleDateString();
-                                const formattedStartTime = session.startTime || "N/A";
-                                const formattedEndTime = session.endTime || "N/A";
-                                const formattedTopic = session.topic || "No topic";
-                                const formattedTutorId = session.tutorId || "No ID";
+                <div className="sessions-list">
+                    <h3>Upcoming Sessions</h3>
+                    <ul>
+                        {sessionsData.map(session => (
+                            <li key={session.bookingId}>
+                                <p>Session ID: {session.bookingId}</p>
+                                <p>Date: {session.date || 'N/A'}</p>
+                                <p>Time: {session.time || 'N/A'}</p>
+                                <p>Subject: {session.subject || 'N/A'}</p>
+                                <p>Tutor: {session.tutorName || 'N/A'}</p>
+                                <p>Location: {session.location || 'N/A'}</p>
+                                <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-                                return (
-                                    <tr key={session.bookingId}>
-                                        <td>{formattedDate}</td>
-                                        <td>{`${formattedStartTime} - ${formattedEndTime}`}</td>
-                                        <td>{formattedTopic}</td>
-                                        <td>{formattedTutorId}</td>
-                                        <td>
-                                            <button onClick={() => handleCancelBooking(session.bookingId)}>
-                                                Cancel Booking
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                ) : (
-                    <p>No upcoming sessions</p>
-                )}
             </section>
-
 
             <section className="chat-section">
                 <h2>AI Chatbot</h2>
