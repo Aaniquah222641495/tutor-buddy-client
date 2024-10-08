@@ -100,22 +100,22 @@ const AdminDashboard = () => {
                 </div>
             )}
 
-            {/* Admins Table */}
-            <div className='table-container'>
-                <h4 className='sub-header'>Admins</h4>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Admin ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredAdmins.length > 0 ? (
-                            filteredAdmins.map(admin => (
+            {/* Conditionally render tables based on filtered results */}
+            {filteredAdmins.length > 0 && (
+                <div className='table-container'>
+                    <h4 className='sub-header'>Admins</h4>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>Admin ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredAdmins.map(admin => (
                                 <tr key={admin.id}>
                                     <td>{admin.id}</td>
                                     <td>{admin.name}</td>
@@ -123,33 +123,28 @@ const AdminDashboard = () => {
                                     <td>{admin.email}</td>
                                     <td>{admin.phoneNumber}</td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5">No matching results</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
 
-            {/* Tutors Table */}
-            <div className='table-container'>
-                <h4 className='sub-header'>Tutors</h4>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Tutor ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Subjects</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredTutors.length > 0 ? (
-                            filteredTutors.map(tutor => (
+            {filteredTutors.length > 0 && (
+                <div className='table-container'>
+                    <h4 className='sub-header'>Tutors</h4>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>Tutor ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>Subjects</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredTutors.map(tutor => (
                                 <tr key={tutor.tutorId}>
                                     <td>{tutor.tutorId}</td>
                                     <td>{tutor.name}</td>
@@ -160,32 +155,27 @@ const AdminDashboard = () => {
                                         {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ')}
                                     </td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="6">No matching results</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
 
-            {/* Students Table */}
-            <div className='table-container'>
-                <h4 className='sub-header'>Students</h4>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Student Number</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredStudents.length > 0 ? (
-                            filteredStudents.map(student => (
+            {filteredStudents.length > 0 && (
+                <div className='table-container'>
+                    <h4 className='sub-header'>Students</h4>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>Student Number</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredStudents.map(student => (
                                 <tr key={student.studentNumber}>
                                     <td>{student.studentNumber}</td>
                                     <td>{student.name}</td>
@@ -193,71 +183,57 @@ const AdminDashboard = () => {
                                     <td>{student.phoneNumber}</td>
                                     <td>{student.email}</td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="5">No matching results</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
 
-            {/* Locations Table */}
-            <div className='table-container'>
-                <h4 className='sub-header'>Venues</h4>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Room</th>
-                            <th>Building</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredLocations.length > 0 ? (
-                            filteredLocations.map(location => (
+            {filteredLocations.length > 0 && (
+                <div className='table-container'>
+                    <h4 className='sub-header'>Venues</h4>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Room</th>
+                                <th>Building</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredLocations.map(location => (
                                 <tr key={location.locationId}>
                                     <td>{location.locationId}</td>
                                     <td>{location.room}</td>
                                     <td>{location.building}</td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="3">No matching results</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
 
-            {/* Subjects Table */}
-            <div className='table-container'>
-                <h4 className='sub-header'>Subjects</h4>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Subject Code</th>
-                            <th>Subject Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredSubjects.length > 0 ? (
-                            filteredSubjects.map(subject => (
+            {filteredSubjects.length > 0 && (
+                <div className='table-container'>
+                    <h4 className='sub-header'>Subjects</h4>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th>Subject Code</th>
+                                <th>Subject Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredSubjects.map(subject => (
                                 <tr key={subject.subjectCode}>
                                     <td>{subject.subjectCode}</td>
                                     <td>{subject.subjectName}</td>
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="2">No matching results</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };

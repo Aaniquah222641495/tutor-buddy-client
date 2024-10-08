@@ -36,6 +36,7 @@ const ManageTutors = () => {
     }, [tutorApi, subjectApi]);
 
     const handleAddTutor = (newTutor) => {
+        // Convert assigned subjects to objects if needed
         const assignedSubjects = newTutor.assignedSubjects.map(subjectId => {
             return subjects.find(subject => subject.subjectId === subjectId);
         });
@@ -46,15 +47,17 @@ const ManageTutors = () => {
         };
 
         if (selectedTutor) {
-            // Update an existing tutor
+            // Update the existing tutor
             tutorApi.updateTutor(tutorData, selectedTutor.tutorId, (error, updatedTutor) => {
                 if (error) {
                     console.error('Error updating tutor:', error);
                     alert('Error updating tutor. Please check the console for details.');
                 } else {
+                    // Update the state with the new tutor data
                     setTutors(tutors.map(tutor => (tutor.tutorId === selectedTutor.tutorId ? updatedTutor : tutor)));
                     setIsModalOpen(false);
                     setSelectedTutor(null);
+                    alert('Tutor updated successfully.');
                 }
             });
         } else {
@@ -67,21 +70,27 @@ const ManageTutors = () => {
                     setTutors([...tutors, addedTutor]);
                     setIsModalOpen(false);
                     setSelectedTutor(null);
+                    alert('Tutor added successfully.');
                 }
             });
         }
     };
 
     const handleDeleteTutor = (tutorId) => {
-        tutorApi.deleteTutor(tutorId, (error) => {
-            if (error) {
-                console.error('Error deleting tutor:', error);
-            } else {
-                setTutors(tutors.filter(tutor => tutor.tutorId !== tutorId));
-            }
-        });
+        if (window.confirm('Are you sure you want to delete this tutor?')) {
+            tutorApi.deleteTutor(tutorId, (error) => {
+                if (error) {
+                    console.error('Error deleting tutor:', error);
+                    alert('Failed to delete tutor. Please check the console for more details.');
+                } else {
+                    // Remove the deleted tutor from the state
+                    setTutors(tutors.filter(tutor => tutor.tutorId !== tutorId));
+                    alert('Tutor successfully deleted.');
+                }
+            });
+        }
     };
-
+    
     const handleTutorChange = (tutorId) => {
         const tutor = tutors.find(tutor => tutor.tutorId === tutorId);
         setSelectedTutor(tutor);

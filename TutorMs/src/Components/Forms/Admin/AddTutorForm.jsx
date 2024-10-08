@@ -20,6 +20,16 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
                 password: '', // Password should not be pre-filled for security reasons
                 assignedSubjects: selectedTutor.assignedSubjects.map(sub => sub.subjectId) || []
             });
+        } else {
+            // Reset form for adding a new tutor
+            setTutorData({
+                name: '',
+                lastName: '',
+                phoneNumber: '',
+                email: '',
+                password: '',
+                assignedSubjects: []
+            });
         }
     }, [selectedTutor]);
 
@@ -31,23 +41,24 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
         });
     };
 
-    const handleSubjectsChange = (e) => {
-        const { options } = e.target;
-        const selectedSubjects = [];
-        for (let i = 0, l = options.length; i < l; i++) {
-            if (options[i].selected) {
-                selectedSubjects.push(Number(options[i].value));
-            }
-        }
+    const handleSubjectChange = (e) => {
+        const selectedSubjectId = Number(e.target.value);
         setTutorData({
             ...tutorData,
-            assignedSubjects: selectedSubjects
+            assignedSubjects: [selectedSubjectId] // Update to a single selected subject
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onAddTutor(tutorData);
+
+        // Basic validation if needed
+        if (!tutorData.email.includes('@')) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        onAddTutor(tutorData); // Call the parent component function
     };
 
     return (
@@ -105,12 +116,12 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
             <div>
                 <label>Subjects:</label>
                 <select 
-                    multiple 
                     name="assignedSubjects" 
-                    value={tutorData.assignedSubjects} 
-                    onChange={handleSubjectsChange}
+                    value={tutorData.assignedSubjects[0] || ''} // Ensure single value
+                    onChange={handleSubjectChange}
                     required
                 >
+                    <option value="" disabled>Select a subject</option>
                     {subjects.map(subject => (
                         <option key={subject.subjectId} value={subject.subjectId}>
                             {subject.subjectName}
@@ -118,7 +129,7 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
                     ))}
                 </select>
             </div>
-            <button type="submit">Save</button>
+            <button type="submit">{selectedTutor ? 'Update' : 'Save'}</button>
         </form>
     );
 };
