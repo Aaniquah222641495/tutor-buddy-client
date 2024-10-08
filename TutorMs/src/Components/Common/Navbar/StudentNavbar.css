@@ -1,73 +1,110 @@
-/* src/StudentNavbar.css */
-
+/* Navbar Styles */
 .navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #dcdcdc;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .navbar-logo {
-    font-size: 1.5rem;
-    color: #000;
-    text-decoration: none;
-  }
-  
-  .navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar li {
-    margin-right: 20px;
-  }
-  
-  .navbar li:last-child {
-    margin-right: 0;
-  }
-  
-  .navbar a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: 500;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .navbar a:hover {
-    background-color: #007bff;
-    color: #ffffff;
-  }
-  
-  .navbar-search {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-search input[type="text"] {
-    padding: 8px;
-    border: 1px solid #dcdcdc;
-    border-radius: 5px;
-    margin-right: 10px;
-  }
-  
-  .navbar-search button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .navbar-search button:hover {
-    background-color: #0056b3;
-  }
+  background-color: #ffffff; /* Match sidebar background */
+  border-bottom: 1px solid #dcdcdc; /* Light border for separation */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  color: #002F81; /* Match primary color */
+  text-decoration: none;
+}
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar li {
+  margin-right: 20px;
+}
+
+.navbar li:last-child {
+  margin-right: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #002F81; /* Match primary color */
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: #002F81; /* Match primary color */
+  color: #ffffff; /* Text color for hover state */
+}
+
+.user-profile {
+  position: relative;
+  cursor: pointer;
+}
+
+.user-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc; /* Light border */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu button {
+  background-color: #ffffff; /* Match dropdown background */
+  border: none;
+  padding: 8px 10px;
+  text-align: left;
+  color: #002F81; /* Match primary color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f2f2f2; /* Light background for hover state */
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-search input[type="text"] {
+  padding: 8px;
+  border: 1px solid #dcdcdc; /* Light border */
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.navbar-search button {
+  padding: 8px 15px;
+  background-color: #002F81; /* Match primary color */
+  color: #ffffff; /* Text color for button */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-search button:hover {
+  background-color: #001f6c; /* Darker shade on hover */
+}
