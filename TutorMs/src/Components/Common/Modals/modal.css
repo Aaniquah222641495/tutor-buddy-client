@@ -19,6 +19,7 @@
     max-width: 500px; /* Optional: to limit maximum width */
     box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Soft shadow for better focus */
     position: relative;
+    max-height: min-content;
 }
 
 .close-button {

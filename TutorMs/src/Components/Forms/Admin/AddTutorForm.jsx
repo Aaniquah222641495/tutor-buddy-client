@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
+const AddTutorForm = ({ closeModal, onAddTutor, selectedTutor, subjects = [] }) => {
     const [tutorData, setTutorData] = useState({
         name: '',
         lastName: '',
@@ -52,19 +52,26 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Basic validation if needed
+        // Basic validation
         if (!tutorData.email.includes('@')) {
             alert('Please enter a valid email address.');
             return;
         }
 
+        if (!/^\d{10}$/.test(tutorData.phoneNumber)) {
+            alert('Please enter a valid phone number.');
+            return;
+        }
+
         onAddTutor(tutorData); // Call the parent component function
+        closeModal(); // Close the modal after submission
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>First Name:</label>
+        <form onSubmit={handleSubmit} className="form">
+            <h2 className="sub-header">{selectedTutor ? 'Edit Tutor' : 'Add New Tutor'}</h2>
+            <div className='form-group'>
+                <label htmlFor="name">First Name</label>
                 <input 
                     type="text" 
                     name="name" 
@@ -73,8 +80,8 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
                     required 
                 />
             </div>
-            <div>
-                <label>Last Name:</label>
+            <div className='form-group'>
+                <label htmlFor="lastName">Last Name</label>
                 <input 
                     type="text" 
                     name="lastName" 
@@ -83,17 +90,17 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
                     required 
                 />
             </div>
-            <div>
-                <label>Phone Number:</label>
+            <div className='form-group'>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input 
-                    type="text" 
+                    type="tel" 
                     name="phoneNumber" 
                     value={tutorData.phoneNumber} 
                     onChange={handleChange} 
                     required 
                 />
             </div>
-            <div>
+            <div className='form-group'>
                 <label>Email:</label>
                 <input 
                     type="email" 
@@ -103,17 +110,19 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
                     required 
                 />
             </div>
-            <div>
-                <label>Password:</label>
-                <input 
-                    type="password" 
-                    name="password" 
-                    value={tutorData.password} 
-                    onChange={handleChange} 
-                    required 
-                />
-            </div>
-            <div>
+            {!selectedTutor && ( // Show password field only when adding a new tutor
+                <div className='form-group'>
+                    <label>Password:</label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        value={tutorData.password} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                </div>
+            )}
+            <div className='form-group'>
                 <label>Subjects:</label>
                 <select 
                     name="assignedSubjects" 
@@ -129,7 +138,9 @@ const AddTutorForm = ({ onAddTutor, selectedTutor, subjects = [] }) => {
                     ))}
                 </select>
             </div>
-            <button type="submit">{selectedTutor ? 'Update' : 'Save'}</button>
+            <button type="submit" className='btn btn-primary'>
+                {selectedTutor ? 'Update' : 'Save'}
+            </button>
         </form>
     );
 };

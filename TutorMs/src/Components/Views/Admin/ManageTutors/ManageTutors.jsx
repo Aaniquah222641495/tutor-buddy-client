@@ -35,7 +35,7 @@ const ManageTutors = () => {
         });
     }, [tutorApi, subjectApi]);
 
-    const handleAddTutor = (newTutor) => {
+   const handleAddTutor = (newTutor) => {
         // Convert assigned subjects to objects if needed
         const assignedSubjects = newTutor.assignedSubjects.map(subjectId => {
             return subjects.find(subject => subject.subjectId === subjectId);

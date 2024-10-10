@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const AddSubjectForm = ({ onAddSubject, selectedSubject }) => {
+const AddSubjectForm = ({ closeModal, onAddSubject, selectedSubject }) => {
     const [subjectCode, setSubjectCode] = useState('');
     const [subjectName, setSubjectName] = useState('');
 
@@ -8,6 +8,10 @@ const AddSubjectForm = ({ onAddSubject, selectedSubject }) => {
         if (selectedSubject) {
             setSubjectCode(selectedSubject.subjectCode);
             setSubjectName(selectedSubject.subjectName);
+        } else {
+            // Reset fields if no subject is selected
+            setSubjectCode('');
+            setSubjectName('');
         }
     }, [selectedSubject]);
 
@@ -17,11 +21,13 @@ const AddSubjectForm = ({ onAddSubject, selectedSubject }) => {
             subjectCode,
             subjectName
         };
-        onAddSubject(subject);
+        onAddSubject(subject); // Call the parent component function
+        closeModal(); // Close the modal after submission
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form">
+            <h2 className="sub-header">{selectedSubject ? 'Edit Subject' : 'Add New Subject'}</h2>
             <div className="form-group">
                 <label htmlFor="subjectCode">Subject Code</label>
                 <input
@@ -42,7 +48,9 @@ const AddSubjectForm = ({ onAddSubject, selectedSubject }) => {
                     required
                 />
             </div>
-            <button type="submit" className='btn btn-primary'>Save</button>
+            <button type="submit" className='btn btn-primary'>
+                {selectedSubject ? 'Update' : 'Save'}
+            </button>
         </form>
     );
 };
