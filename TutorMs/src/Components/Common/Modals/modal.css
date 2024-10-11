@@ -9,18 +9,24 @@
     align-items: center;
     justify-content: center;
     padding: 1rem; /* Adds some space around the modal */
+    overflow: hidden; /* Prevents body scrolling when modal is open */
 }
 
 .modal-content {
     background: white; /* Solid white background for the modal content */
-    padding: 2rem; /* More padding for a spacious look */
+    padding: 2rem; /* Reduced padding for a more compact look */
     border-radius: 8px;
-    width: 90%; /* Slightly smaller than the screen width */
-    max-width: 500px; /* Optional: to limit maximum width */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Soft shadow for better focus */
+    width: 100%; /* Slightly smaller modal width */
+    max-width: 600px; /* Smaller maximum width */
+    max-height: 80vh; /* Limit height to 80% of the viewport */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for better focus */
     position: relative;
-    max-height: min-content;
+    overflow-y: auto; /* Enable vertical scroll for overflowing content */
+    display: flex;
+    flex-direction: column;
+  
 }
+
 
 .close-button {
     position: absolute;
@@ -31,4 +37,13 @@
     font-size: 20px;
     cursor: pointer;
     color: #007bff; /* Matches the button color theme */
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: #000000; /* Solid black scrollbar for visibility */
+    border-radius: 10px;
 }

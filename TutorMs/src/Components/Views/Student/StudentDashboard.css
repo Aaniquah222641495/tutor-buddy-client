@@ -298,7 +298,7 @@ form button {
 
 .subject-card {
     flex: 1;
-    min-width: 300px;
+    min-width: 200px;
     border: 1px solid #002F81;
     padding: 20px;
     border-radius: 10px;
@@ -324,3 +324,368 @@ form button {
     margin-left: 10px;
 }
 
+/* Custom Styles for Subjects Component */
+/* Global Styles */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #dee2e6;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #002F81;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    position: relative;
+    margin-top: auto;
+    height: 100px;
+}
+
+/* Common Button Styles */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #002F81;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #001f6c;
+}
+
+/* Dashboard Styles */
+.dashboard {
+    padding: 20px;
+    flex-grow: 1;
+    padding-bottom: 80px;
+    background-color: #dee2e6;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-content {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Profile Section Styles */
+.profile-section {
+    flex: 1;
+    max-width: 300px;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #002F81;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+/* Tutors Section Styles */
+.tutors-section {
+    flex: 2;
+    background-color: white;
+    border: 1px solid #002F81;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tutors-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tutors-section th, .tutors-section td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tutors-section th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.tutors-section .subject-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #002F81;
+    color: white;
+}
+
+/* Sessions Section */
+.sessions-section {
+    margin-top: 20px;
+    background-color: white;
+    border: 1px solid #002F81;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sessions-section .search-form {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px;
+    border: 1px solid #002F81;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sessions-section .search-form input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.sessions-section .search-form button {
+    padding: 10px 20px;
+    background-color: #002F81;
+    color: white;
+    border-radius: 5px;
+}
+
+.sessions-section .sessions-list {
+    background-color: white;
+    border: 1px solid #002F81;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sessions-section .sessions-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sessions-section .sessions-list li {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.sessions-section .sessions-list button {
+    background-color: #d9534f;
+    color: white;
+}
+
+/* Chat Section */
+.chat-section {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: black;
+    margin-bottom: 20px;
+}
+
+/* Tutors Page */
+.tutors-page, .subjects-page {
+    padding: 20px;
+    flex-grow: 1;
+    padding-bottom: 100px;
+    box-sizing: border-box;
+    background-color: #dee2e6;
+}
+
+.tutors-header, .subjects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tutor-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.tutor-card, .subject-card {
+    flex: 1;
+    min-width: 300px;
+    border: 1px solid #002F81;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tutor-card h2, .subject-card h2 {
+    margin-bottom: 10px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.tutor-info {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Form Styles */
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #002F81;
+    color: white;
+}
+
+.subject-card {
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid #002F81;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Unified search bar style for tutors and subjects */
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #002F81;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* Custom Styles for Subjects Component */
+.subjects-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.subjects-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.subjects-container .search-bar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.subjects-container .search-bar input {
+    flex: 1;
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.subjects-container .search-bar button {
+    padding: 10px 20px;
+    background-color: #002F81;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+}

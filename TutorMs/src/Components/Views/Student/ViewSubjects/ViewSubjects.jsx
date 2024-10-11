@@ -34,6 +34,7 @@ const Subjects = () => {
   return (
     <div className="subjects-page">
       <StudentNavbar />
+      <div className="subjects-container">
 
       <header className="subjects-header">
         <h1>Subjects</h1>
@@ -47,6 +48,7 @@ const Subjects = () => {
           <button>Search</button>
         </div>
       </header>
+      </div>
 
       <section className="subject-list">
         {filteredSubjects.map(subject => (

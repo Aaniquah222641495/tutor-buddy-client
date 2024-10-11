@@ -12,7 +12,9 @@ import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
 import AdminLayout from './Components/Views/Admin/AdminLayout';
 import TutorDashboard from './Components/Views/Tutour/TutorDashboard';
 import ManageSubjects from './Components/Views/Admin/ManageSubjects/ManageSubjects';
-
+import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard';
+import ViewSubjects from './Components/Views/Student/ViewSubjects/ViewSubjects';
+import ViewTutors from './Components/Views/Student/ViewTutors/ViewTutors';
 const App = () => {
     return (
         <Router>
@@ -32,6 +34,12 @@ const App = () => {
                 </Routes>
                 <Routes>
                     <Route path='/tutorDashboard' element={<TutorDashboard/>} />
+                </Routes>
+
+                <Routes>
+                    <Route path='/studentDashboard' element={<StudentDashboard/>} />
+                    <Route path='/subjects' element={<ViewSubjects/>} />
+                    <Route path='/tutors' element={<ViewTutors/>} />
                 </Routes>
                 <Footer />
             </div>
