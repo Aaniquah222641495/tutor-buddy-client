@@ -4,6 +4,7 @@
 }
 
 .tutors-header {
+    margin-top: 20px;
     display: flex;
     flex-direction: column; /* Stack heading and search bar vertically */
     align-items: center; /* Center-align content */
@@ -30,7 +31,6 @@
 
 .search-button {
     padding: 10px 20px; /* Padding for button */
-    margin-left: 10px; /* Space between input and button */
     background-color: #007bff; /* Bootstrap primary color */
     color: white; /* White text */
     border: none; /* No border */
