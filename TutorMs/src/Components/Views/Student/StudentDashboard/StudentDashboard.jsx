@@ -3,6 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 import { useNavigate } from 'react-router-dom';
+import StarRating from '../ViewTutors/StarRating';
 import { StudentApi, TutorApi, ReviewApi, BookingApi } from 'student_tutor_booking_management_system';
 
 const Dashboard = () => {
@@ -31,7 +32,7 @@ const Dashboard = () => {
             }
         };
 
-        const fetchTutorsData = async () => {
+        const fetchTutorsData = () => {
             try {
                 const tutorApi = new TutorApi();
                 tutorApi.getAllTutors((error, data) => {
@@ -39,7 +40,7 @@ const Dashboard = () => {
                         console.error("Error fetching tutors data", error);
                     } else {
                         setTutorsData(data);
-                        fetchReviewsForTutors(data.map(tutor => tutor.id));
+                        fetchReviewsForTutors(data.map(tutor => tutor.tutorId)); // Use tutorId
                     }
                 });
             } catch (error) {
@@ -47,43 +48,40 @@ const Dashboard = () => {
             }
         };
 
-        const fetchReviewsForTutors = async (tutorIds) => {
-            try {
-                const reviewApi = new ReviewApi();
-                let reviews = [];
-                for (let id of tutorIds) {
-                    await new Promise((resolve, reject) => {
-                        reviewApi.getAllReviewsByTutor(id, (error, data) => {
-                            if (error) {
-                                console.error(`Error fetching reviews for tutor ${id}`, error);
-                                reject(error);
-                            } else {
-                                reviews.push(...data);
-                                resolve();
-                            }
-                        });
-                    });
-                }
-                setReviewsData(reviews);
-            } catch (error) {
-                console.error("Error fetching reviews data", error);
-            }
+        const fetchReviewsForTutors = (tutorIds) => {
+            const reviewApi = new ReviewApi();
+            let allReviews = [];
+
+            tutorIds.forEach((tutorId, index) => {
+                console.log(`Fetching reviews for Tutor ID: ${tutorId}`); // Debug log
+                reviewApi.getAllReviewsByTutor(tutorId, (error, data) => {
+                    if (error) {
+                        console.error(`Error fetching reviews for tutor ${tutorId}`, error);
+                    } else {
+                        allReviews = [...allReviews, ...data];
+                    }
+                    // After the last request, set the reviews data
+                    if (index === tutorIds.length - 1) {
+                        setReviewsData(allReviews);
+                    }
+                });
+            });
         };
 
         fetchStudentData();
         fetchTutorsData();
     }, []);
 
-    const fetchUpcomingSessions = async (id) => {
+    const fetchUpcomingSessions = (id) => {
         try {
             const bookingApi = new BookingApi();
-            console.log("Fetching bookings for student ID:", id);  // Debugging line
+            console.log("Fetching bookings for student ID:", id);
             bookingApi.getAllBookingsByStudent(id, (error, data) => {
                 if (error) {
                     console.error("Error fetching bookings:", error);
                     setSearchError("Error fetching bookings.");
                 } else {
-                    console.log("Fetched bookings:", data);  // Debugging line
+                    console.log("Fetched bookings:", data);
                     setSessionsData(data);
                     setSearchError('');
                 }
@@ -93,25 +91,20 @@ const Dashboard = () => {
             setSearchError("Error fetching bookings.");
         }
     };
-    
 
     const handleSearch = () => {
-        if (studentId && password) {
-            fetchUpcomingSessions(studentId);
-        } else {
-            setSearchError("Please enter both student ID and password.");
-        }
+        fetchUpcomingSessions(studentData.studentId);
     };
 
-    const handleCancelBooking = async (bookingId) => {
+    const handleCancelBooking = (bookingId) => {
         try {
             const bookingApi = new BookingApi();
-            console.log("Attempting to cancel booking with ID:", bookingId);  // Add this line for debugging
+            console.log("Attempting to cancel booking with ID:", bookingId);
             bookingApi.deleteBooking(bookingId, (error, data, response) => {
                 if (error) {
                     console.error("Error canceling booking:", error);
                 } else {
-                    console.log("Successfully canceled booking with ID:", bookingId);  // Add this line for success feedback
+                    console.log("Successfully canceled booking with ID:", bookingId);
                     setSessionsData(prevSessions => prevSessions.filter(session => session.bookingId !== bookingId));
                 }
             });
@@ -119,9 +112,9 @@ const Dashboard = () => {
             console.error("Error canceling booking:", error);
         }
     };
-    
+
     const tutorsWithRatings = tutorsData.map(tutor => {
-        const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.id);
+        const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.tutorId); // Use tutorId
         const totalRating = tutorReviews.reduce((acc, review) => acc + review.rating, 0);
         const averageRating = tutorReviews.length ? totalRating / tutorReviews.length : 0;
         return { ...tutor, rating: averageRating };
@@ -177,11 +170,11 @@ const Dashboard = () => {
                         </thead>
                         <tbody>
                             {tutorsWithRatings.map(tutor => (
-                                <tr key={tutor.id}>
+                                <tr key={tutor.tutorId}> {/* Use tutorId */}
                                     <td>{tutor.name}</td>
                                     <td>{tutor.phoneNumber}</td>
                                     <td>{tutor.email}</td>
-                                    <td>{tutor.rating.toFixed(1)}</td>
+                                    <td><StarRating rating={tutor.rating} /></td>  {/* Use the StarRating component */}
                                 </tr>
                             ))}
                         </tbody>
@@ -226,12 +219,6 @@ const Dashboard = () => {
                         ))}
                     </ul>
                 </div>
-
-            </section>
-
-            <section className="chat-section">
-                <h2>AI Chatbot</h2>
-                <button>Chat Now</button>
             </section>
         </div>
     );

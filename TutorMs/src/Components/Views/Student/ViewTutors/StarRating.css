@@ -1,0 +1,26 @@
+.star-rating {
+  display: flex; 
+  justify-content: left; 
+  align-items: left; 
+  gap: 5px; 
+  margin: auto; 
+}
+
+.star {
+  font-size: 24px; 
+  color: gray; 
+  cursor: pointer; 
+  transition: color 0.3s; 
+}
+
+.star.filled {
+  color: gold; /* Filled or hovered stars will appear gold */
+}
+
+.star:hover {
+  color: gold; /* Change color to gold on hover */
+}
+
+.star.active {
+  color: gold; /* Color for active rating stars */
+}
