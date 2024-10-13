@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BookingModal from '../MakeBooking/MakeBooking';
-import '../StudentDashboard.css';
+import '../ViewTutors/ViewTutors.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 import { TutorApi, ReviewApi } from 'student_tutor_booking_management_system';
 import StarRating from '../ViewTutors/StarRating'; // Import the StarRating component
