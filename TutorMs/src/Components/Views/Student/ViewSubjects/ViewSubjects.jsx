@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubjectApi } from 'student_tutor_booking_management_system';
 import '../StudentDashboard.css';
+import './ViewSubjects.css'; // Import the CSS file
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 
 const Subjects = () => {
@@ -34,21 +35,19 @@ const Subjects = () => {
   return (
     <div className="subjects-page">
       <StudentNavbar />
-      <div className="subjects-container">
-
       <header className="subjects-header">
         <h1>Subjects</h1>
-        <div className="search-bar">
+        <div className="search-container">
           <input
             type="text"
             placeholder="Search subjects"
+            className="search-bar"
             value={searchQuery} // Bind input value to search query state
             onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on input change
           />
-          <button>Search</button>
+          <button className="search-button">Search</button>
         </div>
       </header>
-      </div>
 
       <section className="subject-list">
         {filteredSubjects.map(subject => (
