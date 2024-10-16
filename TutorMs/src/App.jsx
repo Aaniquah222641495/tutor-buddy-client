@@ -18,6 +18,7 @@ const App = () => {
             <div className='app'>
                 <Routes>
                     <Route path='/' element={<Login />} />
+                    <Route path='/tutorDashboard' element={<TutorDashboard/>} />
                     <Route path='/adminDashboard' element={<AdminLayout />}>
                         <Route index element={<AdminDashboard />} />
                         <Route path='manageAdmins' element={<ManageAdmins />} />
@@ -26,9 +27,6 @@ const App = () => {
                         <Route path='manageVenues' element={<ManageVenues />} />
                     </Route>
                     <Route path='/bookingForm' element={<BookingForm />} />
-                </Routes>
-                <Routes>
-                    <Route path='/tutorDashboard' element={<TutorDashboard/>} />
                 </Routes>
                 <Footer />
             </div>

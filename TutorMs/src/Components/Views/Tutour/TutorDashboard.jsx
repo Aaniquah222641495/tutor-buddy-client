@@ -11,22 +11,23 @@ function Dashboard() {
     <div className="dashboard">
       <header>
         <div className="logo">Logo</div>
-        <nav>
+        {/* <nav>
           <a href="#">Home</a>
           <a href="#">Profile</a>
           <a href="#">View Bookings</a>
           <a href="#">Update Availability</a>
           <a href="#">View Students</a>
-        </nav>
+        </nav> */}
       </header>
       <main>
         <aside>
           <Profile />
-          <SessionsOverview />
+          {/* <UpcomingBookings /> */}
+          {/* <SessionsOverview /> */}
         </aside>
         <section>
           <UpcomingBookings />
-          <Availability />
+          {/* <Availability /> */}
           <ViewBookings />
         </section>
       </main>

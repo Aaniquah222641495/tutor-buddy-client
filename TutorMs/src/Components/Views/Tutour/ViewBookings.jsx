@@ -1,20 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BookingApi } from 'student_tutor_booking_management_system';
 
-function ViewBookings() {
-  const bookings = [
-    {
-      student: 'Amy',
-      location: 'Room 1.1',
-      date: '2022-01-01',
-      time: '10:00 AM'
-    },
-    {
-      student: 'Aaniquah',
-      location: 'Room 2.10',
-      date: '2022-01-02',
-      time: '11:00 AM'
-    }
-  ];
+function viewBookings() {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBookings = () => {
+      const bookingApi = new BookingApi();
+      bookingApi.getAllBookings((error, data, response) => {
+        if (error) {
+          console.error('Error fetching bookings:', error);
+          setError('Failed to fetch bookings');
+        } else {
+          console.log('Fetched data:', data);
+          if (Array.isArray(data)) {
+            setBookings(data);  // Ensure data is an array before setting it
+          } else {
+            console.error('Data is not an array:', data);
+            setError('Unexpected data format');
+          }
+        }
+        setLoading(false); // Set loading to false after the fetch completes
+      });
+    };
+
+    fetchBookings();
+  }, []);
+
+  const handleDeleteBooking = (id) => {
+    const bookingApi = new BookingApi();
+    bookingApi.deleteBooking(id, (error, data, response) => {
+      if (error) {
+        console.error('Error deleting booking:', error);
+      } else {
+        console.log('Booking deleted successfully.');
+        setBookings(bookings.filter((booking) => booking.bookingId !== id));
+      }
+    });
+  };
+
+  if (loading) {
+    return <p>Loading bookings...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="view-bookings">
@@ -23,6 +56,7 @@ function ViewBookings() {
         <thead>
           <tr>
             <th>Student</th>
+            <th>Subject</th>
             <th>Location</th>
             <th>Date</th>
             <th>Time</th>
@@ -32,13 +66,14 @@ function ViewBookings() {
         <tbody>
           {bookings.map((booking, index) => (
             <tr key={index}>
-              <td>{booking.student}</td>
-              <td>{booking.location}</td>
+              <td>{booking.studentId}</td>
+              <td>{booking.topic}</td>
+              <td>{booking.locationId}</td>
               <td>{booking.date}</td>
-              <td>{booking.time}</td>
+              <td>{booking.startTime} - {booking.endTime}</td>
               <td>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => handleDeleteBooking(booking.id)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -48,5 +83,5 @@ function ViewBookings() {
   );
 }
 
-export default ViewBookings;
+export default viewBookings;
 

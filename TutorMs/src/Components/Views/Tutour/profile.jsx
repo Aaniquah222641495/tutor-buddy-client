@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 function Profile() {
   const [profileImage, setProfileImage] = useState(null);
+ 
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -13,6 +14,8 @@ function Profile() {
       reader.readAsDataURL(file);
     }
   };
+
+  
 
   return (
     <div className="profile">
@@ -41,7 +44,7 @@ function Profile() {
         </button>
       </div>
       <div className="profile-info">
-        <h2>Name</h2>
+      <h2>Name</h2>
         <p>Email: example@example.com</p>
         <p>Phone: 123-456-7890</p>
         <button>Edit Profile</button>
