@@ -43,6 +43,7 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
     return (
         <form onSubmit={handleSubmit} className="form">
             <h2 className="sub-header">{selectedStudent ? 'Edit Student' : 'Add New Student'}</h2>
+            <div className="modal-body">
             <div className='form-group'>
                 <label htmlFor="studentNumber">Student Number</label>
                 <input
@@ -109,6 +110,8 @@ const AddStudentForm = ({ closeModal, handleAddStudent, handleEditStudent, selec
             <button type="submit" className='btn btn-primary'>
                 {selectedStudent ? 'Update Student' : 'Add Student'}
             </button>
+
+            </div>
         </form>
     );
 };

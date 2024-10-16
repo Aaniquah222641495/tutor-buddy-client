@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {AdminApi} from 'student_tutor_booking_management_system';
 import {TutorApi} from 'student_tutor_booking_management_system';
 import {StudentApi} from 'student_tutor_booking_management_system';
+import CPUTlogo from '../assets/CPUTlogo.png';
 const Login = () => {
     const [role, setRole] = useState('');
     const [email, setEmail] = useState('');
@@ -88,9 +89,12 @@ const Login = () => {
     };
 
     return (
+        <div className='loginContainer'>
+        <div className='backgroundImage'></div>
         <div className='loginPage'>
             <div className='loginForm'>
-                <h2 className='text-center'>Login Page</h2>
+            <img src={CPUTlogo} alt='Login Icon' className='loginIcon'/>
+                <h2 className='text-center'>Login </h2>
                 <form onSubmit={handleLogin}>
                     <div className='form-group'>
                         <label htmlFor="email"><strong>Email:</strong></label>
@@ -138,6 +142,7 @@ const Login = () => {
                 </form>
             </div>
         </div>
+     </div>
     );
 };
 

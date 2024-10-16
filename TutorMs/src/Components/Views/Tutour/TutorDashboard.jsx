@@ -4,7 +4,6 @@ import SessionsOverview from './SessionsOverview';
 import UpcomingBookings from './UpcomingBookings';
 import Availability from './Availibility';
 import ViewBookings from './ViewBookings';
-import './viewBookings.css';
 
 function Dashboard() {
   return (

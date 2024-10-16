@@ -11,22 +11,35 @@ import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
 import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
 import AdminLayout from './Components/Views/Admin/AdminLayout';
 import TutorDashboard from './Components/Views/Tutour/TutorDashboard';
-
+import ManageSubjects from './Components/Views/Admin/ManageSubjects/ManageSubjects';
+import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard';
+import ViewSubjects from './Components/Views/Student/ViewSubjects/ViewSubjects';
+import ViewTutors from './Components/Views/Student/ViewTutors/ViewTutors';
 const App = () => {
     return (
         <Router>
             <div className='app'>
                 <Routes>
                     <Route path='/' element={<Login />} />
-                    <Route path='/tutorDashboard' element={<TutorDashboard/>} />
                     <Route path='/adminDashboard' element={<AdminLayout />}>
                         <Route index element={<AdminDashboard />} />
                         <Route path='manageAdmins' element={<ManageAdmins />} />
                         <Route path='manageTutors' element={<ManageTutors />} />
                         <Route path='manageStudents' element={<ManageStudents />} />
                         <Route path='manageVenues' element={<ManageVenues />} />
+                        <Route path='manageSubjects' element={<ManageSubjects />} />
+                        
                     </Route>
                     <Route path='/bookingForm' element={<BookingForm />} />
+                </Routes>
+                <Routes>
+                    <Route path='/tutorDashboard' element={<TutorDashboard/>} />
+                </Routes>
+
+                <Routes>
+                    <Route path='/studentDashboard' element={<StudentDashboard/>} />
+                    <Route path='/subjects' element={<ViewSubjects/>} />
+                    <Route path='/tutors' element={<ViewTutors/>} />
                 </Routes>
                 <Footer />
             </div>

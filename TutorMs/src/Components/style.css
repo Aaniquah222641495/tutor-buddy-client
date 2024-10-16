@@ -1,12 +1,27 @@
 
-/* Ensures the login page fills the viewport with white background */
+/* Container for the login page and background image */
+.loginContainer {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+/* Background image styles */
+.backgroundImage {
+    flex: 1; /* Takes up the left side */
+    background-image: url('../assets/background.jpg'); /* Replace with your image path */
+    background-size: contain; /* Cover the area */
+    background-position: center; /* Center the image */
+    margin-bottom: 200px;
+}
+
+/* Styles for the login page */
 .loginPage {
     background-color: #ffffff; /* White background */
     color: black; /* Text color */
-    height: 100vh; /* Full viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 700px; /* Fixed width for the login form */
+    margin-top: 20px;
+    padding: 30px; /* Padding for form */
+    
 }
 
 /* Styles specific to the login form */
@@ -16,16 +31,22 @@
     padding: 30px;
     border-radius: 8px;
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
+    height: 90%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
     flex-direction: column;
 }
 .loginForm h2{
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 /* General form styles */
 .form-group {
-    margin-bottom: 20px;
+    margin-top: 30px;
+ 
 }
 
 .form-group label {
@@ -49,9 +70,16 @@
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
 }
 
+
+.loginIcon {
+    width: 80px;
+    height: auto;
+    margin-right: 10px;
+   
+}
 /* Button styles */
 .btn-success {
-    background-color: #007bff;
+    background-color: #05274c;
     border-color: #007bff;
     color: white;
     padding: 10px 20px;
