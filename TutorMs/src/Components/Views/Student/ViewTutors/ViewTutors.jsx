@@ -97,6 +97,7 @@ const Tutors = () => {
                             <h2>{tutor.name} {tutor.lastName}</h2>
                             <p>Email: {tutor.email}</p>
                             <p>Phone: {tutor.phoneNumber}</p>
+                            <p>Subject: {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ') || 'N/A'}</p>
                             <p>Rating: <StarRating rating={averageRating} /></p> {/* Added StarRating component */}
     
                             <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
