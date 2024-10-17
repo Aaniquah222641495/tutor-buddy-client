@@ -11,8 +11,6 @@ const Dashboard = () => {
     const [tutorsData, setTutorsData] = useState([]);
     const [reviewsData, setReviewsData] = useState([]);
     const [sessionsData, setSessionsData] = useState([]);
-    const [studentId, setStudentId] = useState('');
-    const [password, setPassword] = useState('');
     const [searchError, setSearchError] = useState('');
     const navigate = useNavigate();
 
@@ -24,6 +22,7 @@ const Dashboard = () => {
                     const student = JSON.parse(storedStudentData);
                     console.log("Stored student data:", student);
                     setStudentData(student);
+                    fetchUpcomingSessions(student.studentId); // Automatically fetch sessions
                 } else {
                     console.error("No student data found in sessionStorage");
                 }
@@ -92,26 +91,26 @@ const Dashboard = () => {
         }
     };
 
-    const handleSearch = () => {
-        fetchUpcomingSessions(studentData.studentId);
-    };
-
     const handleCancelBooking = (bookingId) => {
         try {
             const bookingApi = new BookingApi();
             console.log("Attempting to cancel booking with ID:", bookingId);
             bookingApi.deleteBooking(bookingId, (error, data, response) => {
                 if (error) {
-                    console.error("Error canceling booking:", error);
+                    console.error("Error canceling booking:", error, response);
+                    alert(`Failed to cancel booking. Please try again later. Error: ${error}`);
                 } else {
                     console.log("Successfully canceled booking with ID:", bookingId);
                     setSessionsData(prevSessions => prevSessions.filter(session => session.bookingId !== bookingId));
+                    alert("Booking canceled successfully.");
                 }
             });
         } catch (error) {
             console.error("Error canceling booking:", error);
+            alert("An unexpected error occurred. Please try again.");
         }
     };
+    
 
     const tutorsWithRatings = tutorsData.map(tutor => {
         const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.tutorId); // Use tutorId
@@ -165,6 +164,7 @@ const Dashboard = () => {
                                 <th>Tutor Name</th>
                                 <th>Phone Number</th>
                                 <th>Email</th>
+                                <th>Subjects</th>
                                 <th>Rating</th>
                             </tr>
                         </thead>
@@ -174,6 +174,7 @@ const Dashboard = () => {
                                     <td>{tutor.name}</td>
                                     <td>{tutor.phoneNumber}</td>
                                     <td>{tutor.email}</td>
+                                    <td>{(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ') || 'N/A'}</td>
                                     <td><StarRating rating={tutor.rating} /></td>  {/* Use the StarRating component */}
                                 </tr>
                             ))}
@@ -185,41 +186,24 @@ const Dashboard = () => {
             </div>
 
             <section className="sessions-section">
-                <h2>Search Upcoming Sessions</h2>
-                <div className="search-form">
-                    <input 
-                        type="text" 
-                        placeholder="Student ID" 
-                        value={studentId}
-                        onChange={(e) => setStudentId(e.target.value)}
-                    />
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button onClick={handleSearch}>Search</button>
-                    {searchError && <p className="error-message">{searchError}</p>}
-                </div>
+    <div className="sessions-list">
+        <h3>Upcoming Sessions</h3>
+        <ul>
+            {sessionsData.map(session => (
+                <li key={session.bookingId}>
+                    <p><strong>Session ID:</strong> {session.bookingId}</p>
+                    <p><strong>Date:</strong> {session.date || 'N/A'}</p>
+                    <p><strong>Time:</strong> {session.time || 'N/A'}</p>
+                    <p><strong>Subject:</strong> {session.subject || 'N/A'}</p>
+                    <p><strong>Tutor:</strong> {session.tutorName || 'N/A'}</p>
+                    <p><strong>Location:</strong> {session.location || 'N/A'}</p>
+                    <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
+                </li>
+            ))}
+        </ul>
+    </div>
+</section>
 
-                <div className="sessions-list">
-                    <h3>Upcoming Sessions</h3>
-                    <ul>
-                        {sessionsData.map(session => (
-                            <li key={session.bookingId}>
-                                <p>Session ID: {session.bookingId}</p>
-                                <p>Date: {session.date || 'N/A'}</p>
-                                <p>Time: {session.time || 'N/A'}</p>
-                                <p>Subject: {session.subject || 'N/A'}</p>
-                                <p>Tutor: {session.tutorName || 'N/A'}</p>
-                                <p>Location: {session.location || 'N/A'}</p>
-                                <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </section>
         </div>
     );
 };

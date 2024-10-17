@@ -1,9 +1,9 @@
-.tutors-page {
+.subjects-page {
     padding: 20px;
     background-color: #f9f9f9; /* Light background for contrast */
 }
 
-.tutors-header {
+.subjects-header {
     margin-top: 20px;
     display: flex;
     flex-direction: column; /* Stack heading and search bar vertically */
@@ -11,7 +11,7 @@
     margin-bottom: 20px; /* Space below the header */
 }
 
-.tutors-header h1 {
+.subjects-header h1 {
     font-size: 2em; /* Larger font size for the heading */
     color: #333; /* Dark text color */
 }
@@ -44,14 +44,14 @@
     background-color: #0056b3; /* Darker shade on hover */
 }
 
-.tutor-list {
+.subject-list {
     display: flex;
     flex-wrap: wrap; /* Allow cards to wrap */
-    justify-content: center; /* Center the tutor cards */
+    justify-content: center; /* Center the subject cards */
     gap: 20px; /* Space between cards */
 }
 
-.tutor-card {
+.subject-card {
     background: white; /* White background for cards */
     border: 1px solid #ddd; /* Light border */
     border-radius: 10px; /* Rounded corners */
@@ -61,15 +61,15 @@
     transition: transform 0.2s; /* Transition for scaling effect */
 }
 
-.tutor-card:hover {
+.subject-card:hover {
     transform: scale(1.05); /* Scale up on hover */
 }
 
-.tutor-card h2 {
-    font-size: 1.5em; /* Font size for tutor name */
+.subject-card h2 {
+    font-size: 1.5em; /* Font size for subject name */
     color: #333; /* Dark text color */
 }
 
-.tutor-card p {
+.subject-card p {
     margin: 5px 0; /* Margin between paragraphs */
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BookingModal from '../MakeBooking/MakeBooking';
+
 import '../ViewTutors/ViewTutors.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 import { TutorApi, ReviewApi } from 'student_tutor_booking_management_system';
@@ -71,37 +72,40 @@ const Tutors = () => {
     return (
         <div className="tutors-page">
             <StudentNavbar />
-
+    
             <header className="tutors-header">
                 <h1>Tutors</h1>
-                <input
-                    type="text"
-                    placeholder="Search tutors by name"
-                    className="search-bar"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on change
-                />
-                <button className="search-button">Search</button>
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search tutors by name"
+                        className="search-bar"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on change
+                    />
+                    <button className="search-button">Search</button>
+                </div>
             </header>
-
+    
             <section className="tutor-list">
                 {filteredTutors.map((tutor) => {
                     const reviews = tutorReviews[tutor.tutorId] || []; // Use tutorId
                     const averageRating = calculateAverageRating(reviews);
-
+    
                     return (
                         <div className="tutor-card" key={tutor.email}>
                             <h2>{tutor.name} {tutor.lastName}</h2>
                             <p>Email: {tutor.email}</p>
                             <p>Phone: {tutor.phoneNumber}</p>
+                            <p>Subject: {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ') || 'N/A'}</p>
                             <p>Rating: <StarRating rating={averageRating} /></p> {/* Added StarRating component */}
-
+    
                             <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
                         </div>
                     );
                 })}
             </section>
-
+    
             <BookingModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
