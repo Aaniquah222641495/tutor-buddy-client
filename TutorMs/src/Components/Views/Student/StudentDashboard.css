@@ -448,43 +448,6 @@ button:hover {
 }
 
 /* Sessions Section */
-.sessions-section {
-    margin-top: 20px;
-    background-color: white;
-    border: 1px solid #002F81;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.sessions-section .search-form {
-    background-color: #f8f9fa; /* Light gray background */
-    padding: 20px;
-    border: 1px solid #002F81;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.sessions-section .search-form input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-}
-
-.sessions-section .search-form button {
-    padding: 10px 20px;
-    background-color: #002F81;
-    color: white;
-    border-radius: 5px;
-}
-
 .sessions-section .sessions-list {
     background-color: white;
     border: 1px solid #002F81;
@@ -496,18 +459,45 @@ button:hover {
 .sessions-section .sessions-list ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between each session card */
+    justify-content: space-between;
 }
 
 .sessions-section .sessions-list li {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    flex: 1 1 30%; /* Ensures three sessions per row */
+    background-color: #f8f9fa;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.sessions-section .sessions-list li:hover {
+    transform: scale(1.03); /* Slightly enlarge on hover */
+}
+
+.sessions-section .sessions-list p {
+    margin: 5px 0;
+    font-size: 14px;
 }
 
 .sessions-section .sessions-list button {
     background-color: #d9534f;
     color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+.sessions-section .sessions-list button:hover {
+    background-color: #c9302c; /* Darker red for hover effect */
+}
+
 
 /* Chat Section */
 .chat-section {
