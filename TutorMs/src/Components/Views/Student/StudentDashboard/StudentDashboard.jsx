@@ -4,6 +4,7 @@ import '../StudentDashboard.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 import { useNavigate } from 'react-router-dom';
 import StarRating from '../ViewTutors/StarRating';
+import EditProfileModal from '../StudentDashboard/EditProfileModel';
 import { StudentApi, TutorApi, ReviewApi, BookingApi } from 'student_tutor_booking_management_system';
 
 const Dashboard = () => {
@@ -12,6 +13,7 @@ const Dashboard = () => {
     const [reviewsData, setReviewsData] = useState([]);
     const [sessionsData, setSessionsData] = useState([]);
     const [searchError, setSearchError] = useState('');
+    const [showEditModal, setShowEditModal] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -71,6 +73,19 @@ const Dashboard = () => {
         fetchTutorsData();
     }, []);
 
+    const handleEditProfile = () => {
+        setShowEditModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowEditModal(false);
+    };
+
+    const handleUpdateStudent = (updatedStudent) => {
+        setStudentData(updatedStudent);
+        sessionStorage.setItem('student', JSON.stringify(updatedStudent)); // Update session storage
+    };
+
     const fetchUpcomingSessions = (id) => {
         try {
             const bookingApi = new BookingApi();
@@ -110,7 +125,7 @@ const Dashboard = () => {
             alert("An unexpected error occurred. Please try again.");
         }
     };
-    
+
 
     const tutorsWithRatings = tutorsData.map(tutor => {
         const tutorReviews = reviewsData.filter(review => review.tutorId === tutor.tutorId); // Use tutorId
@@ -150,7 +165,7 @@ const Dashboard = () => {
                             ) : (
                                 <p>Loading profile...</p>
                             )}
-                            <button>Edit Profile</button>
+                            <button onClick={handleEditProfile}>Edit Profile</button>
                             <button onClick={handleLogout}>Logout</button>
                         </div>
                     </div>
@@ -186,23 +201,33 @@ const Dashboard = () => {
             </div>
 
             <section className="sessions-section">
-    <div className="sessions-list">
-        <h3>Upcoming Sessions</h3>
-        <ul>
-            {sessionsData.map(session => (
-                <li key={session.bookingId}>
-                    <p><strong>Session ID:</strong> {session.bookingId}</p>
-                    <p><strong>Date:</strong> {session.date || 'N/A'}</p>
-                    <p><strong>Time:</strong> {session.time || 'N/A'}</p>
-                    <p><strong>Subject:</strong> {session.subject || 'N/A'}</p>
-                    <p><strong>Tutor:</strong> {session.tutorName || 'N/A'}</p>
-                    <p><strong>Location:</strong> {session.location || 'N/A'}</p>
-                    <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
-                </li>
-            ))}
-        </ul>
-    </div>
-</section>
+                <div className="sessions-list">
+                    <h3>Upcoming Sessions</h3>
+                    <ul>
+                        {sessionsData.map(session => (
+                            <li key={session.bookingId}>
+                                <p><strong>Session ID:</strong> {session.bookingId}</p>
+                                <p><strong>Date:</strong> {session.date || 'N/A'}</p>
+                                <p><strong>Time:</strong> {session.time || 'N/A'}</p>
+                                <p><strong>Subject:</strong> {session.subject || 'N/A'}</p>
+                                <p><strong>Tutor:</strong> {session.tutorName || 'N/A'}</p>
+                                <p><strong>Location:</strong> {session.location || 'N/A'}</p>
+                                <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
+
+            {/* Include the Edit Profile Modal */}
+            {studentData && (
+                <EditProfileModal 
+                    show={showEditModal} 
+                    handleClose={handleCloseModal} 
+                    studentData={studentData} 
+                    onUpdate={handleUpdateStudent} 
+                />
+            )}
 
         </div>
     );
