@@ -1,8 +1,23 @@
-import React from 'react';
-//import '../StudentDashboard.css';
+import React, { useState, useEffect } from 'react';
+import { StudentApi } from 'student_tutor_booking_management_system';
 import './MakeBooking.css';
 
-const BookingModal = ({ isOpen, onClose, tutor }) => {
+const BookingModal = ({ isOpen, onClose, tutor, studentId }) => {
+  const [studentData, setStudentData] = useState({ name: '', email: '' });
+
+  useEffect(() => {
+    if (isOpen && studentId) {
+      const studentApi = new StudentApi();
+      studentApi.getStudentById(studentId, (error, data) => {
+        if (error) {
+          console.error("Error fetching student data:", error);
+        } else {
+          setStudentData({ name: data.name, email: data.email });
+        }
+      });
+    }
+  }, [isOpen, studentId]);
+
   if (!isOpen) return null;
 
   return (
@@ -17,11 +32,11 @@ const BookingModal = ({ isOpen, onClose, tutor }) => {
           <form>
             <label>
               Name:
-              <input type="text" name="name" />
+              <input type="text" name="name" value={studentData.name} readOnly />
             </label>
             <label>
               Email:
-              <input type="email" name="email" />
+              <input type="email" name="email" value={studentData.email} readOnly />
             </label>
             <label>
               Phone Number:
