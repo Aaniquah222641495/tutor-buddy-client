@@ -5,57 +5,95 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6); /* Darker overlay for better focus */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow-y: auto; /* Allows scrolling if content overflows */
 }
 
 .modal-content.booking-modal {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px; /* Adjusted width */
-    max-width: 80%; /* Ensures it’s responsive */
+    background: #fff;
+    padding: 25px; /* Increased padding for better spacing */
+    border-radius: 12px; /* Slightly more rounded corners */
+    width: 450px; /* Increased width */
+    max-width: 90%; /* Ensure responsiveness */
     position: relative;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    animation: fadeIn 0.3s ease; /* Fade-in effect */
 }
 
 .modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px; /* Adjusted for better alignment */
+    right: 15px;
     border: none;
-    font-size: 20px;
+    background: none; /* Removed button background */
+    font-size: 22px; /* Slightly larger */
     cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: #f00; /* Red hover effect */
 }
 
 form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 25px; /* Consistent padding */
+    border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 form label {
     display: block;
     margin-bottom: 10px;
-    font-weight: bold;
+    font-weight: 600;
+    color: #444;
 }
 
-form input {
+form input, form select {
     width: 100%;
-    padding: 8px;
+    padding: 10px; /* Slightly larger input padding */
     margin-top: 5px;
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: 6px; /* Slightly more rounded */
     border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+form input:focus, form select:focus {
+    border-color: #002F81; /* Highlight border on focus */
+    outline: none;
 }
 
 form button {
-    padding: 10px 20px;
+    padding: 12px 25px; /* Larger button padding */
     background-color: #002F81;
     color: white;
-    border-radius: 5px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0044cc; /* Slightly lighter on hover */
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
