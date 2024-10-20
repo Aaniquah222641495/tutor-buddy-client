@@ -131,7 +131,7 @@ button:hover {
 }
 
 .sessions-section .search-form {
-    background-color: #f8f9fa; /* Light gray background */
+    background-color: #f8f9fa; 
     padding: 20px;
     border: 1px solid #002F81;
     border-radius: 10px;
@@ -461,12 +461,12 @@ button:hover {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Space between each session card */
+    gap: 20px; 
     justify-content: space-between;
 }
 
 .sessions-section .sessions-list li {
-    flex: 1 1 30%; /* Ensures three sessions per row */
+    flex: 1 1 30%; 
     background-color: #f8f9fa;
     padding: 15px;
     border: 1px solid #ddd;
@@ -476,7 +476,7 @@ button:hover {
 }
 
 .sessions-section .sessions-list li:hover {
-    transform: scale(1.03); /* Slightly enlarge on hover */
+    transform: scale(1.03); 
 }
 
 .sessions-section .sessions-list p {
@@ -495,7 +495,7 @@ button:hover {
 }
 
 .sessions-section .sessions-list button:hover {
-    background-color: #c9302c; /* Darker red for hover effect */
+    background-color: #c9302c; 
 }
 
 

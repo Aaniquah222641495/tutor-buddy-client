@@ -1,75 +1,75 @@
 .tutors-page {
     padding: 20px;
-    background-color: #f9f9f9; /* Light background for contrast */
+    background-color: #f9f9f9; 
 }
 
 .tutors-header {
     margin-top: 20px;
     display: flex;
-    flex-direction: column; /* Stack heading and search bar vertically */
-    align-items: center; /* Center-align content */
-    margin-bottom: 20px; /* Space below the header */
+    flex-direction: column; 
+    align-items: center; 
+    margin-bottom: 20px; 
 }
 
 .tutors-header h1 {
-    font-size: 2em; /* Larger font size for the heading */
-    color: #333; /* Dark text color */
+    font-size: 2em; 
+    color: #333; 
 }
 
 .search-container {
-    display: flex; /* Align children (input and button) in a row */
-    margin-top: 10px; /* Space above the search bar */
+    display: flex; 
+    margin-top: 10px; 
 }
 
 .search-bar {
     width: 100%; 
-    max-width: 400px; /* Maximum width for the search bar */
-    padding: 10px; /* Padding for the input */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-    margin-right: 10px; /* Space between the search bar and button */
+    max-width: 400px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin-right: 10px; 
 }
 
 .search-button {
-    padding: 10px 20px; /* Padding for button */
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
-    transition: background-color 0.3s; /* Transition for hover effect */
+    padding: 10px 20px; 
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
 }
 
 .search-button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3; 
 }
 
 .tutor-list {
     display: flex;
-    flex-wrap: wrap; /* Allow cards to wrap */
-    justify-content: center; /* Center the tutor cards */
-    gap: 20px; /* Space between cards */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
 }
 
 .tutor-card {
-    background: white; /* White background for cards */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 10px; /* Rounded corners */
-    padding: 15px; /* Inner padding */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    width: 250px; /* Fixed width for cards */
-    transition: transform 0.2s; /* Transition for scaling effect */
+    background: white; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    padding: 15px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    width: 250px; 
+    transition: transform 0.2s; 
 }
 
 .tutor-card:hover {
-    transform: scale(1.05); /* Scale up on hover */
+    transform: scale(1.05);
 }
 
 .tutor-card h2 {
-    font-size: 1.5em; /* Font size for tutor name */
-    color: #333; /* Dark text color */
+    font-size: 1.5em; 
+    color: #333; 
 }
 
 .tutor-card p {
-    margin: 5px 0; /* Margin between paragraphs */
+    margin: 5px 0; 
 }
