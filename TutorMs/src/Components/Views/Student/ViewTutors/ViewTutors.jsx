@@ -3,14 +3,15 @@ import BookingModal from '../MakeBooking/MakeBooking';
 import '../ViewTutors/ViewTutors.css';
 import StudentNavbar from '../../../Common/Navbar/StudentNavbar';
 import { TutorApi, ReviewApi } from 'student_tutor_booking_management_system';
-import StarRating from '../ViewTutors/StarRating'; // Import the StarRating component
+import StarRating from '../ViewTutors/StarRating'; 
 
 const Tutors = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTutor, setSelectedTutor] = useState(null);
     const [tutors, setTutors] = useState([]);
-    const [tutorReviews, setTutorReviews] = useState({}); // Holds reviews keyed by tutor ID
-    const [searchQuery, setSearchQuery] = useState(''); // Holds the search query
+    const [tutorReviews, setTutorReviews] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
+    const [studentId, setStudentId] = useState(123); // Assuming you have a way to get the logged-in student's ID
 
     useEffect(() => {
         const fetchTutorsAndReviews = async () => {
@@ -27,10 +28,9 @@ const Tutors = () => {
 
                 setTutors(fetchedTutors);
 
-                // Fetch reviews for each tutor
                 const reviewsData = {};
                 for (const tutor of fetchedTutors) {
-                    const tutorId = tutor.tutorId; // Use tutorId instead of id
+                    const tutorId = tutor.tutorId;
                     const reviews = await new Promise((resolve, reject) => {
                         reviewApi.getAllReviewsByTutor(tutorId, (error, data) => {
                             if (error) reject(error);
@@ -60,10 +60,9 @@ const Tutors = () => {
     const calculateAverageRating = (reviews) => {
         if (!reviews.length) return 0;
         const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-        return (totalRating / reviews.length).toFixed(1); // Return a fixed decimal rating
+        return (totalRating / reviews.length).toFixed(1);
     };
 
-    // Filter tutors based on the search query
     const filteredTutors = tutors.filter((tutor) =>
         `${tutor.name} ${tutor.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -71,22 +70,22 @@ const Tutors = () => {
     return (
         <div className="tutors-page">
             <StudentNavbar />
-
             <header className="tutors-header">
                 <h1>Tutors</h1>
-                <input
-                    type="text"
-                    placeholder="Search tutors by name"
-                    className="search-bar"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)} // Update search query state on change
-                />
-                <button className="search-button">Search</button>
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search tutors by name"
+                        className="search-bar"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <button className="search-button">Search</button>
+                </div>
             </header>
-
             <section className="tutor-list">
                 {filteredTutors.map((tutor) => {
-                    const reviews = tutorReviews[tutor.tutorId] || []; // Use tutorId
+                    const reviews = tutorReviews[tutor.tutorId] || [];
                     const averageRating = calculateAverageRating(reviews);
 
                     return (
@@ -94,18 +93,18 @@ const Tutors = () => {
                             <h2>{tutor.name} {tutor.lastName}</h2>
                             <p>Email: {tutor.email}</p>
                             <p>Phone: {tutor.phoneNumber}</p>
-                            <p>Rating: <StarRating rating={averageRating} /></p> {/* Added StarRating component */}
-
+                            <p>Subject: {(tutor.assignedSubjects || []).map(subject => subject.subjectName).join(', ') || 'N/A'}</p>
+                            <p>Rating: <StarRating rating={averageRating} /></p>
                             <button onClick={() => handleBookingClick(tutor)}>Book Now</button>
                         </div>
                     );
                 })}
             </section>
-
             <BookingModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 tutor={selectedTutor}
+                studentId={studentId} // Pass studentId to the BookingModal
             />
         </div>
     );
