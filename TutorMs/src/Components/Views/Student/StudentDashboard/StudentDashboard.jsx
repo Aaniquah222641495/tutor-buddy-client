@@ -208,10 +208,11 @@ const Dashboard = () => {
                             <li key={session.bookingId}>
                                 <p><strong>Session ID:</strong> {session.bookingId}</p>
                                 <p><strong>Date:</strong> {session.date || 'N/A'}</p>
-                                <p><strong>Time:</strong> {session.time || 'N/A'}</p>
-                                <p><strong>Subject:</strong> {session.subject || 'N/A'}</p>
-                                <p><strong>Tutor:</strong> {session.tutorName || 'N/A'}</p>
-                                <p><strong>Location:</strong> {session.location || 'N/A'}</p>
+                                <p><strong>Start time:</strong> {session.startTime || 'N/A'}</p>
+                                <p><strong>Subject:</strong> {session.subjectId || 'N/A'}</p>
+                                <p><strong>Topic:</strong> {session.topic || 'N/A'}</p>
+                                <p><strong>Tutor:</strong> {session.tutorId || 'N/A'}</p>
+                                <p><strong>Location:</strong> {session.locationId || 'N/A'}</p>
                                 <button onClick={() => handleCancelBooking(session.bookingId)}>Cancel Booking</button>
                             </li>
                         ))}
