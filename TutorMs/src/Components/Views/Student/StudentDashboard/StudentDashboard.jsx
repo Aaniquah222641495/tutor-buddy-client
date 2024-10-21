@@ -7,6 +7,7 @@ import StarRating from '../ViewTutors/StarRating';
 import EditProfileModal from '../StudentDashboard/EditProfileModel';
 import { StudentApi, TutorApi, ReviewApi, BookingApi } from 'student_tutor_booking_management_system';
 
+
 const Dashboard = () => {
     const [studentData, setStudentData] = useState(null);
     const [tutorsData, setTutorsData] = useState([]);
@@ -153,7 +154,7 @@ const Dashboard = () => {
                 <section className="profile-section">
                     <div className="profile-card">
                         <div className="profile-image">
-                        <img src={studentData?.profileImage || defaultProfilePic} alt="User" /> {/* Use default profile image */}
+                            <img src="https://via.placeholder.com/150" alt="User" />
                         </div>
                         <div className="profile-details">
                             {studentData ? (
