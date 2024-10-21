@@ -19,7 +19,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
     "react-time-picker": "^7.0.0",
-    "student_tutor_booking_management_system": "file:src/web/javascript-client-generated"
+    "student_tutor_booking_management_system": "file:src/web/javascript-client-generated(2)"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
