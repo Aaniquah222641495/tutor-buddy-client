@@ -15,7 +15,7 @@ const BookingModal = ({ isOpen, onClose, tutor, studentId }) => {
   const [selectedSubject, setSelectedSubject] = useState('');
 
   useEffect(() => {
-    if (isOpen && studentId) {
+    if (isOpen) {
       const fetchStudentData = async () => {
         try {
           const storedStudentData = sessionStorage.getItem('student');
@@ -59,7 +59,7 @@ const BookingModal = ({ isOpen, onClose, tutor, studentId }) => {
     e.preventDefault();
     const bookingApi = new BookingApi();
     const bookingData = {
-      studentId: studentId,
+      studentId: studentData.studentId,
       tutorId: tutor.tutorId,
       subjectId: selectedSubject,  // Send selected subjectId, not subjectName
       locationId: location,
@@ -72,20 +72,20 @@ const BookingModal = ({ isOpen, onClose, tutor, studentId }) => {
 
     console.log('Booking Data:', bookingData); // Log the data being sent
 
-    try {
-      const response = await bookingApi.createBooking(bookingData);
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error response from server:', errorData);
-        alert(`Failed to create booking: ${errorData.message}`);
-        return;
+      bookingApi.createBooking(bookingData, (error, data, response) => {
+        if (error) {
+          const errorData = response.json;
+          console.error('Error response from server:', errorData);
+          alert(`Failed to create booking: ${errorData.message}`);
+        }
+        else{
+          alert('Booking created successfully');
+          onClose();
+        }
+
       }
-      alert('Booking created successfully');
-      onClose();
-    } catch (error) {
-      console.error('Error creating booking:', error);
-      alert('Failed to create booking. Please try again.');
-    }
+      );
+
   };
 
   // Function to handle time input with seconds
