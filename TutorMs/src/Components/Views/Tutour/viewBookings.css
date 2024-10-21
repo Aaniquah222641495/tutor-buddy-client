@@ -70,12 +70,15 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 /* Profile Picture */
+/* Profile Picture */
 .tutor-profile-picture {
-  position: relative;
-  text-align: center;
+  display: flex; /* Change to flex */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center align children */
   margin-bottom: 20px;
 }
 
@@ -86,6 +89,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ddd;
+  margin-bottom: 10px; /* Add margin below the image */
 }
 
 .tutor-circle {
@@ -93,29 +97,36 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1.1rem;
   color: #aaa;
 }
 
 /* Edit Image Button */
 .tutor-edit-image-button {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  padding: 8px 16px;
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9em;
 }
 
 .tutor-edit-image-button:hover {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
+/* Line under the button */
+.tutor-line {
+  width: 80%; /* Adjust the width as needed */
+  height: 2px; /* Thickness of the line */
+  background-color: #ddd; /* Color of the line */
+  margin-top: 10px; /* Space above the line */
+}
+
+/* Centered Profile Info */
+.tutor-profile-info {
+  text-align: center; /* Center text */
+}
 .tutor-profile-info h2 {
   margin-bottom: 10px;
 }
