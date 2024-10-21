@@ -1,47 +1,51 @@
-.view-students {
+.view-students-container {
   padding: 20px;
   font-family: Arial, sans-serif;
 }
 
-.view-students h1 {
+.view-students-container h1 {
   color: #002F81;
   margin-bottom: 20px;
 }
 
-.student-table {
+.student-list-table {
   width: 100%;
   border-collapse: collapse;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.student-table th,
-.student-table td {
+.student-list-table th,
+.student-list-table td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.student-table th {
+.student-list-table th {
   background-color: #002F81;
   color: white;
   font-weight: bold;
 }
 
-.student-table tr:nth-child(even) {
+.student-list-table tr:nth-child(even) {
   background-color: #f8f8f8;
 }
 
-.student-table tr:hover {
+.student-list-table tr {
+  transition: background-color 0.3s ease;
+}
+
+.student-list-table tr:hover {
   background-color: #e8e8e8;
 }
 
 @media screen and (max-width: 600px) {
-  .student-table {
+  .student-list-table {
     font-size: 14px;
   }
 
-  .student-table th,
-  .student-table td {
+  .student-list-table th,
+  .student-list-table td {
     padding: 8px 10px;
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StudentApi } from 'student_tutor_booking_management_system';
 import TutorNavbar from '../../Common/Navbar/TutorNavbar';
-import './Students.css'; // You'll need to create this CSS file
+import './Students.css'; // Ensure this path matches your project structure
 
 function ViewStudents() {
   const [students, setStudents] = useState([]);
@@ -34,10 +34,10 @@ function ViewStudents() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="view-students">
+    <div className="view-students-container">
       <TutorNavbar />
       <h1>Student List</h1>
-      <table className="student-table">
+      <table className="student-list-table">
         <thead>
           <tr>
             <th>Name</th>
