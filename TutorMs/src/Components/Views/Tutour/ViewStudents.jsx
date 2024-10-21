@@ -36,7 +36,7 @@ function ViewStudents() {
   return (
     <div className="view-students-container">
       <TutorNavbar />
-      <h1>Student List</h1>
+      <h1> My Students </h1>
       <table className="student-list-table">
         <thead>
           <tr>

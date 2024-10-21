@@ -4,8 +4,9 @@
 }
 
 .view-students-container h1 {
-  color: #002F81;
+  color: #000000;
   margin-bottom: 20px;
+  margin-top: 30px;
 }
 
 .student-list-table {
