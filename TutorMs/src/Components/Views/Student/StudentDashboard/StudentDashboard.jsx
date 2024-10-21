@@ -153,7 +153,7 @@ const Dashboard = () => {
                 <section className="profile-section">
                     <div className="profile-card">
                         <div className="profile-image">
-                            <img src="https://via.placeholder.com/150" alt="User" />
+                        <img src={studentData?.profileImage || defaultProfilePic} alt="User" /> {/* Use default profile image */}
                         </div>
                         <div className="profile-details">
                             {studentData ? (

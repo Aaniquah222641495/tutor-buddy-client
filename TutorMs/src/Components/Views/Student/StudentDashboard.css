@@ -448,7 +448,7 @@ button:hover {
 }
 
 /* Sessions Section */
-.sessions-section .sessions-list {
+.sessions-section .sessions-list {                                              
     background-color: white;
     border: 1px solid #002F81;
     border-radius: 10px;
