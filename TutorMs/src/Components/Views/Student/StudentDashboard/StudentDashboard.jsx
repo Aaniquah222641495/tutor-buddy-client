@@ -206,7 +206,7 @@ const Dashboard = () => {
                     <ul>
                         {sessionsData.map(session => (
                             <li key={session.bookingId}>
-                                <p><strong>Session ID:</strong> {session.bookingId}</p>
+                                <h3>Session ID: {session.bookingId}</h3>
                                 <p><strong>Date:</strong> {session.bookingDate.toLocaleDateString("it-IT") || 'N/A'}</p>
                                 <p><strong>Start time:</strong> {session.startTime || 'N/A'}</p>
                                 <p><strong>Subject:</strong> {session.subjectId || 'N/A'}</p>
