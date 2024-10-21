@@ -202,7 +202,7 @@ const Dashboard = () => {
 
             <section className="sessions-section">
                 <div className="sessions-list">
-                    <h3>Upcoming Sessions</h3>
+                    <h1>Upcoming Sessions</h1>
                     <ul>
                         {sessionsData.map(session => (
                             <li key={session.bookingId}>

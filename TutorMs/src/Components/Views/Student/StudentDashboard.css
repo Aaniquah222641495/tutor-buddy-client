@@ -455,7 +455,14 @@ button:hover {
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+.sessions-section h3{
+    margin-bottom: 20px;
+  
+}
 
+.sessions-section h1{
+    margin-bottom: 20px;
+}
 .sessions-section .sessions-list ul {
     list-style-type: none;
     padding: 0;
@@ -464,6 +471,8 @@ button:hover {
     gap: 20px; 
     justify-content: space-between;
 }
+
+
 
 .sessions-section .sessions-list li {
     flex: 1 1 30%; 
