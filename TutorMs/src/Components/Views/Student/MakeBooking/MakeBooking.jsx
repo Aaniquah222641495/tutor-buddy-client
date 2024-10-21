@@ -59,11 +59,11 @@ const BookingModal = ({ isOpen, onClose, tutor, studentId }) => {
     e.preventDefault();
     const bookingApi = new BookingApi();
     const bookingData = {
-      studentId: studentData.studentId,
+      studentId: studentId,
       tutorId: tutor.tutorId,
       subjectId: selectedSubject,  // Send selected subjectId, not subjectName
       locationId: location,
-      preferredDate: date,
+      bookingDate: new Date(date).toISOString(),
       startTime,
       endTime,
       topic,
