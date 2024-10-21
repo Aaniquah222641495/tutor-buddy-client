@@ -138,7 +138,9 @@ function ViewBookings() {
               <td>{booking.studentId}</td>
               <td>{booking.topic}</td>
               <td>{booking.locationId}</td>
-              <td>{new Date(booking.bookingDate).toLocaleDateString()}</td>
+
+              <td>{booking.bookingDate.toLocaleDateString("it-IT")}</td>
+
               <td>{booking.startTime} - {booking.endTime}</td>
               <td>
                 <button onClick={() => openModal(booking)}>Edit</button>

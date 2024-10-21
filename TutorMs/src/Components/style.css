@@ -9,7 +9,7 @@
 .backgroundImage {
     flex: 1; /* Takes up the left side */
     background-image: url('../assets/background.jpg'); /* Replace with your image path */
-    background-size: contain; /* Cover the area */
+    background-size: fill; /* Cover the area */
     background-position: center; /* Center the image */
     margin-bottom: 200px;
 }

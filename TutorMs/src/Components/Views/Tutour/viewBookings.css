@@ -64,7 +64,13 @@ body {
   width: 70%;
 }
 
-.profile, .upcoming-bookings {
+
+
+
+.tutor-upcoming-bookings,
+.tutor-availability,
+.tutor-view-bookings {
+
   background: #fff;
   margin: 20px 0;
   padding: 20px;
