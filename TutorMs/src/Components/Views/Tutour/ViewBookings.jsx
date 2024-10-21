@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { BookingApi } from 'student_tutor_booking_management_system';
 
@@ -130,11 +131,11 @@ function ViewBookings() {
               <td>{booking.studentId}</td>
               <td>{booking.topic}</td>
               <td>{booking.locationId}</td>
-              <td>{String(booking.date)}</td>
+              <td>{booking.bookingDate}</td>
               <td>{booking.startTime} - {booking.endTime}</td>
               <td>
                 <button onClick={() => openModal(booking)}>Edit</button>
-                <button onClick={() => handleDeleteBooking(booking.id)}>Delete</button>
+                <button onClick={() => handleDeleteBooking(booking.bookingId)}>Delete</button>
               </td>
             </tr>
           ))}

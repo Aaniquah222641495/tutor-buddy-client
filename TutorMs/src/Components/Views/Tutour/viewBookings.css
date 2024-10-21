@@ -56,7 +56,7 @@ section {
   width: 70%;
 }
 
-.profile, .sessions-overview, .upcoming-bookings, .availability, .view-bookings {
+.profile, .upcoming-bookings, .view-bookings {
   background: #fff;
   margin: 20px 0;
   padding: 20px;
