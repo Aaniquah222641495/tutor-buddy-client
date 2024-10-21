@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { BookingApi } from 'student_tutor_booking_management_system';
 
@@ -47,6 +46,20 @@ function ViewBookings() {
     setBookingData(editedBookingData);
     closeModal();
   };
+  const filterFutureBookings = (bookings) => {
+    const currentDate = new Date();
+    return bookings.filter(booking => {
+      const bookingDate = new Date(booking.bookingDate);
+      return bookingDate >= currentDate;
+    });
+  };
+
+  useEffect(() => {
+    if (bookings.length > 0) {
+      const futureBookings = filterFutureBookings(bookings);
+      setBookings(futureBookings);
+    }
+  }, [bookings]);
 
   useEffect(() => {
     const tutorData = localStorage.getItem('tutor');
@@ -125,7 +138,7 @@ function ViewBookings() {
               <td>{booking.studentId}</td>
               <td>{booking.topic}</td>
               <td>{booking.locationId}</td>
-              <td>{booking.bookingDate}</td>
+              <td>{new Date(booking.bookingDate).toLocaleDateString()}</td>
               <td>{booking.startTime} - {booking.endTime}</td>
               <td>
                 <button onClick={() => openModal(booking)}>Edit</button>
