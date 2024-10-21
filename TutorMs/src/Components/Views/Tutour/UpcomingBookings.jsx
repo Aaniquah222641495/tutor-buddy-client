@@ -23,6 +23,24 @@ function UpcomingBookings() {
     if (!tutorId) return [];
     return allBookings.filter(booking => booking.tutorId === tutorId);
   };
+  const filterCurrentDateBookings = (bookings) => {
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set time to start of day for accurate comparison
+    
+    return bookings.filter(booking => {
+      const bookingDate = new Date(booking.bookingDate);
+      bookingDate.setHours(0, 0, 0, 0); // Set time to start of day for accurate comparison
+      
+      return bookingDate.getTime() === currentDate.getTime();
+    });
+  };
+
+  useEffect(() => {
+    if (bookings.length > 0) {
+      const currentDateBookings = filterCurrentDateBookings(bookings);
+      setBookings(currentDateBookings);
+    }
+  }, [bookings]);
 
 
   useEffect(() => {
@@ -72,7 +90,7 @@ function UpcomingBookings() {
       
     }
     
-    return format(date, 'yyyyMM/dd'); // Customize the format as needed
+    return format(date, 'dd/MM/yyyy'); // Customize the format as needed
   };
 
   if (loading) {
