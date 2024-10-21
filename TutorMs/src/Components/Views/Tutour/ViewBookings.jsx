@@ -120,7 +120,7 @@ function ViewBookings() {
 
   return (
     <div className="tutor-view-bookings">
-      <h3>View Bookings</h3>
+      <h3> Bookings</h3>
       <table className="tutor-bookings-table">
         <thead>
           <tr>

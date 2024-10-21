@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import StarRating from '../ViewTutors/StarRating';
 import EditProfileModal from '../StudentDashboard/EditProfileModel';
 import { StudentApi, TutorApi, ReviewApi, BookingApi } from 'student_tutor_booking_management_system';
+import student from '../../../../assets/student.png';
 
 
 const Dashboard = () => {
@@ -146,7 +147,7 @@ const Dashboard = () => {
         <div className="dashboard">
             <StudentNavbar />
 
-            <header className="dashboard-header">
+            <header className="student-dashboard-header">
                 <h1>Student Dashboard</h1>
             </header>
 
@@ -154,7 +155,7 @@ const Dashboard = () => {
                 <section className="profile-section">
                     <div className="profile-card">
                         <div className="profile-image">
-                            <img src="https://via.placeholder.com/150" alt="User" />
+                        <img src={studentData?.profileImage || student} alt="User" /> {/* Use default profile image */}
                         </div>
                         <div className="profile-details">
                             {studentData ? (

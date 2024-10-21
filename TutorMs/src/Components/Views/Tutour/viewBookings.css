@@ -19,6 +19,19 @@ body {
   width: 100%;
 }
 
+.tutor-view-bookings h3{
+  background-color: #002f81;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    display: grid;
+    grid-column-gap: 70%;
+    width: 100%;
+    justify-content: center;
+}
+
+
 .tutor-header .tutor-logo {
   font-size: 1.8em;
   font-weight: bold;
@@ -67,8 +80,8 @@ body {
 
 
 
-
-.tutor-upcoming-bookings,
+.tutor-profile,
+.upcoming-bookings,
 .tutor-availability,
 .tutor-view-bookings {
 
@@ -88,8 +101,8 @@ body {
 
 .tutor-profile-image,
 .tutor-circle {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ddd;
@@ -165,6 +178,32 @@ body {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.upcoming-bookings h3{
+  
+    background-color: #002f81;
+      color: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      display: grid;
+      grid-column-gap: 70%;
+      width: 100%;
+      justify-content: center;
+  }
+  
+.view-students-container h1{
+  background-color: #002f81;
+  color: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  display: grid;
+  grid-column-gap: 70%;
+  width: 100%;
+  justify-content: center;
+  
+}
+
 
 .tutor-th,
 .tutor-td {
@@ -175,7 +214,7 @@ body {
 .tutor-th {
   background-color: #f8f9fa;
   font-weight: bold;
-  color: #495057;
+  color: #ffffff;
 }
 
 .tutor-td {

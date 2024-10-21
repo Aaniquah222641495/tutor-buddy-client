@@ -12,8 +12,15 @@
 }
 
 .tutors-header h1 {
-    font-size: 2em; 
-    color: #333; 
+    background-color: #002f81;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    display: grid;
+    grid-column-gap: 70%;
+    width: 100%;
+    justify-content: center;
 }
 
 .search-container {
