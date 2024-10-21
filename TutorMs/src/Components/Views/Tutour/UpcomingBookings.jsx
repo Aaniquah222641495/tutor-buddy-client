@@ -1,10 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { BookingApi } from 'student_tutor_booking_management_system';
+import { format } from 'date-fns';
 
 function UpcomingBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [tutorId, setTutorId] = useState(null);
+
+  useEffect(() => {
+    const tutorData = localStorage.getItem('tutor');
+    if (tutorData) {
+      const tutor = JSON.parse(tutorData);
+      setTutorId(tutor.tutorId);
+    } else {
+      console.error("No tutor data found in localStorage");
+      setError('Unable to retrieve tutor information');
+    }
+  }, []);
+
+  const filterBookingsForTutor = (allBookings) => {
+    if (!tutorId) return [];
+    return allBookings.filter(booking => booking.tutorId === tutorId);
+  };
+
 
   useEffect(() => {
     const fetchBookings = () => {
@@ -16,18 +35,21 @@ function UpcomingBookings() {
         } else {
           console.log('Fetched data:', data);
           if (Array.isArray(data)) {
-            setBookings(data);  // Ensure data is an array before setting it
+            const filteredBookings = filterBookingsForTutor(data);
+            setBookings(filteredBookings);
           } else {
             console.error('Data is not an array:', data);
             setError('Unexpected data format');
           }
         }
-        setLoading(false); // Set loading to false after the fetch completes
+        setLoading(false);
       });
     };
 
-    fetchBookings();
-  }, []);
+    if (tutorId) {
+      fetchBookings();
+    }
+  }, [tutorId]);
 
   const handleDeleteBooking = (id) => {
     const bookingApi = new BookingApi();
@@ -36,9 +58,21 @@ function UpcomingBookings() {
         console.error('Error deleting booking:', error);
       } else {
         console.log('Booking deleted successfully.');
-        setBookings(bookings.filter((booking) => booking.id !== id));
+        setBookings(bookings.filter((booking) => booking.bookingId !== id));
       }
     });
+  };
+
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    console.log(dateString);
+    if (isNaN(date)) {
+      return 'Invalid Date';
+      
+    }
+    
+    return format(date, 'yyyyMM/dd'); // Customize the format as needed
   };
 
   if (loading) {
@@ -54,12 +88,13 @@ function UpcomingBookings() {
       <h3>Upcoming Bookings</h3>
       {bookings.length > 0 ? (
         bookings.map((booking) => (
-          <div key={booking.id} className="booking-card">
-            <p><strong>Date:</strong> {booking.date}</p>
-            <p><strong>Time:</strong> {booking.time}</p>
-            <p><strong>Tutor:</strong> {booking.tutor}</p>
-            <p><strong>Location:</strong> {booking.location}</p>
-            <button onClick={() => handleDeleteBooking(booking.id)}>Cancel Booking</button>
+          <div key={booking.bookingId} className="booking-card">
+            <p><strong>Date:</strong> {formatDate(booking.bookingDate)}</p>
+            <p><strong>Time:</strong> {booking.startTime} - {booking.endTime}</p>
+            <p><strong>Student:</strong> {booking.studentId}</p>
+            <p><strong>Location:</strong> {booking.locationId}</p>
+            <p><strong>Subject:</strong> {booking.topic}</p>
+            <button onClick={() => handleDeleteBooking(booking.bookingId)}>Cancel Booking</button>
           </div>
         ))
       ) : (
@@ -70,5 +105,3 @@ function UpcomingBookings() {
 }
 
 export default UpcomingBookings;
-
-

@@ -11,6 +11,7 @@ import ManageVenues from './Components/Views/Admin/ManageVenues/ManageVenues';
 import ManageAdmins from './Components/Views/Admin/ManageAdmins/ManageAdmins';
 import AdminLayout from './Components/Views/Admin/AdminLayout';
 import TutorDashboard from './Components/Views/Tutour/TutorDashboard';
+import ViewStudents from './Components/Views/Tutour/ViewStudents';
 import ManageSubjects from './Components/Views/Admin/ManageSubjects/ManageSubjects';
 import StudentDashboard from './Components/Views/Student/StudentDashboard/StudentDashboard';
 import ViewSubjects from './Components/Views/Student/ViewSubjects/ViewSubjects';
@@ -34,6 +35,7 @@ const App = () => {
                 </Routes>
                 <Routes>
                     <Route path='/tutorDashboard' element={<TutorDashboard/>} />
+                    <Route path='/viewStudents' element={<ViewStudents/>} />
                 </Routes>
 
                 <Routes>

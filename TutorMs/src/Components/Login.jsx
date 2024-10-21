@@ -52,7 +52,8 @@ const Login = () => {
                         }
                         else{
                             //Store admin information in local storage
-                            sessionStorage.setItem('admin', JSON.stringify(data));
+                            localStorage.setItem('admin', JSON.stringify ({name: data.name
+                            }));
                             navigate('/adminDashboard');
                             console.log(response + " " + data.name);
                         }
@@ -64,19 +65,18 @@ const Login = () => {
                             console.log(response + " " + data);
 
                         } else {
-                            sessionStorage.setItem('tutor', JSON.stringify(data));
+                            localStorage.setItem('tutor', JSON.stringify(data));
                             navigate('/tutorDashboard');
                             console.log(response + " " + data);
                         }
                     }
                 );
             } else if (role === 'student') {
-                studentApi.authenticateStudent(email, password, (error, data, response) =>{
+                studentApi.authenticateTutor(email, password, (error, data, response) =>{
                         if (error) {
                             console.log(response + " " + data);
 
                         } else {
-                            sessionStorage.setItem('student', JSON.stringify(data));
                             navigate('/studentDashboard');
                             console.log(response + " " + data);
                         }
@@ -137,7 +137,7 @@ const Login = () => {
                     </div>
 
                     <div className='form-group'>
-                        <button type="submit" className='btn btn-primary w-100'>Login</button>
+                        <button type="submit" className='btn btn-success w-100'>Login</button>
                     </div>
                 </form>
             </div>
