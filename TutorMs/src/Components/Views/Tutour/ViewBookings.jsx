@@ -10,46 +10,40 @@ function ViewBookings() {
   const [editedBookingData, setEditedBookingData] = useState({});
   const [bookingData, setBookingData] = useState({});
 
-  // 1. openModal Function
   const openModal = (booking) => {
-    console.log("Opening modal with booking:", booking); // Debug log
-    // Ensure bookingId is passed with the editedBookingData
+    console.log("Opening modal with booking:", booking);
     setEditedBookingData({ ...booking });
     setIsModalOpen(true);
     console.log("Modal opened, isModalOpen:", true);
   };
 
-  // 2. closeModal Function
   const closeModal = () => {
     setIsModalOpen(false);
     console.log("Modal closed, isModalOpen:", false);
   };
 
-  // 3. handleInputChange Function (No changes)
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditedBookingData({ ...editedBookingData, [name]: value });
   };
 
-  // 4. handleSubmit Function
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Submitting data:", editedBookingData);
 
     const bookingApi = new BookingApi();
 
-    // Make sure we pass the correct bookingId for updating
     bookingApi.updateBooking(editedBookingData, editedBookingData.bookingId)
       .then(response => {
         console.log("Booking updated successfully", response);
-        setBookingData(editedBookingData); // Update the state with new data
+        setBookingData(editedBookingData);
         closeModal();
       })
       .catch(error => {
         console.error("Error updating booking", error);
       });
 
-    setBookingData(editedBookingData); // Update bookingData in local state
+    setBookingData(editedBookingData);
     closeModal();
   };
 
@@ -111,9 +105,9 @@ function ViewBookings() {
   }
 
   return (
-    <div className="view-bookings">
+    <div className="tutor-view-bookings">
       <h3>View Bookings</h3>
-      <table>
+      <table className="tutor-bookings-table">
         <thead>
           <tr>
             <th>Student</th>
@@ -141,9 +135,8 @@ function ViewBookings() {
         </tbody>
       </table>
 
-      {/* Modal rendering */}
       {isModalOpen && (
-        <div className="modal" style={{
+        <div className="tutor-modal" style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -155,7 +148,7 @@ function ViewBookings() {
           alignItems: 'center',
           zIndex: 1000
         }}>
-          <div className="modal-content" style={{
+          <div className="tutor-modal-content" style={{
             backgroundColor: 'white',
             padding: '20px',
             borderRadius: '5px',
