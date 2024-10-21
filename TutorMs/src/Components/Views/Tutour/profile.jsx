@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { TutorApi } from 'student_tutor_booking_management_system'; // Adjust the import path as needed
+import defaultProfilePic from "../../../assets/defaultProfilePic.png"; // Replace with the path to your default image
 
 function Profile() {
-  const [profileImage, setProfileImage] = useState(null);
- 
+  const [profileImage, setProfileImage] = useState(defaultProfilePic); // Set default profile picture
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedProfileData, setEditedProfileData] = useState({});
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    try {
+      const tutorData = localStorage.getItem('tutor');
+      if (tutorData) {
+        const tutor = JSON.parse(tutorData);
+        console.log("Stored tutor data:", tutor);
+        setProfileData(tutor);
+      } else {
+        console.error("No tutor data found in sessionStorage");
+      }
+    } catch (error) {
+      console.error("Error fetching student data", error);
+    }
+  }, []);
 
   const openModal = () => {
     setEditedProfileData({ ...profileData });
@@ -24,11 +40,8 @@ function Profile() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add this console log
     console.log("Submitting data:", editedProfileData);
 
-    // Here you would typically send the editedProfileData to your API
-    // For example:
     const tutorApi = new TutorApi();
     tutorApi.updateTutor(editedProfileData, profileData.tutorId)
       .then(response => {
@@ -40,7 +53,6 @@ function Profile() {
         console.error("Error updating profile", error);
       });
 
-    // Currently, you're just updating local state
     setProfileData(editedProfileData);
     closeModal();
   };
@@ -56,54 +68,36 @@ function Profile() {
     }
   };
 
-  const [profileData, setProfileData] = useState(null);
-
-  useEffect(() => {
-    try {
-      const tutorData = localStorage.getItem('tutor');
-                if (tutorData) {
-                    const tutor = JSON.parse(tutorData);
-                    console.log("Stored tutor data:", tutor);
-                    setProfileData(tutor);
-                } else {
-                    console.error("No tutor data found in sessionStorage");
-                }
-            } catch (error) {
-                console.error("Error fetching student data", error);
-            }
-
-  
-  }, []);
-
-  console.log("Current isModalOpen state:", isModalOpen); // Add this line
+  console.log("Current isModalOpen state:", isModalOpen);
 
   return (
-    <div className="profile">
-      <div className="profile-picture">
+    <div className="tutor-profile">
+      <div className="tutor-profile-picture">
         {profileImage ? (
-          <img 
-            src={profileImage} 
-            alt="Profile" 
-            className="profile-image" 
+          <img
+            src={profileImage}
+            alt="Profile"
+            className="tutor-profile-image"
           />
         ) : (
-          <div className="circle">No Image</div>
+          <div className="tutor-circle">No Image</div>
         )}
-        <input 
-          type="file" 
-          accept="image/*" 
-          onChange={handleImageChange} 
-          id="imageUpload" 
-          style={{ display: 'none' }} 
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          id="tutor-imageUpload"
+          style={{ display: 'none' }}
         />
-        <button 
-          className="edit-image-button" 
-          onClick={() => document.getElementById('imageUpload').click()}
+        <button
+          className="tutor-edit-image-button"
+          onClick={() => document.getElementById('tutor-imageUpload').click()}
         >
           Edit Image
         </button>
+        <div className="tutor-line"></div> {/* Add line under button */}
       </div>
-      <div className="profile-info">
+      <div className="tutor-profile-info">
         {profileData ? (
           <>
             <h2>{`${profileData.name} ${profileData.lastName}`}</h2>
@@ -114,14 +108,10 @@ function Profile() {
         ) : (
           <p>Loading profile data...</p>
         )}
-      {/* <h2>Name</h2>
-        <p>Email: example@example.com</p>
-        <p>Phone: 123-456-7890</p>
-        <button>Edit Profile</button> */}
       </div>
 
       {isModalOpen && (
-        <div className="modal" style={{
+        <div className="tutor-modal" style={{
           position: 'fixed',
           top: 0,
           left: 0,
@@ -133,7 +123,7 @@ function Profile() {
           alignItems: 'center',
           zIndex: 1000
         }}>
-          <div className="modal-content" style={{
+          <div className="tutor-modal-content" style={{
             backgroundColor: 'white',
             padding: '20px',
             borderRadius: '5px',
@@ -181,6 +171,3 @@ function Profile() {
 }
 
 export default Profile;
-
-
-

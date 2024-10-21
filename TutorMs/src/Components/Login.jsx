@@ -52,8 +52,7 @@ const Login = () => {
                         }
                         else{
                             //Store admin information in local storage
-                            localStorage.setItem('admin', JSON.stringify ({name: data.name
-                            }));
+                            sessionStorage.setItem('admin', JSON.stringify(data));
                             navigate('/adminDashboard');
                             console.log(response + " " + data.name);
                         }
@@ -72,11 +71,12 @@ const Login = () => {
                     }
                 );
             } else if (role === 'student') {
-                studentApi.authenticateTutor(email, password, (error, data, response) =>{
+                studentApi.authenticateStudent(email, password, (error, data, response) =>{
                         if (error) {
                             console.log(response + " " + data);
 
                         } else {
+                            sessionStorage.setItem('student', JSON.stringify(data));
                             navigate('/studentDashboard');
                             console.log(response + " " + data);
                         }
@@ -90,59 +90,59 @@ const Login = () => {
 
     return (
         <div className='loginContainer'>
-        <div className='backgroundImage'></div>
-        <div className='loginPage'>
-            <div className='loginForm'>
-            <img src={CPUTlogo} alt='Login Icon' className='loginIcon'/>
-                <h2 className='text-center'>Login </h2>
-                <form onSubmit={handleLogin}>
-                    <div className='form-group'>
-                        <label htmlFor="email"><strong>Email:</strong></label>
-                        <input
-                            type='email'
-                            name="email"
-                            autoComplete='off'
-                            placeholder='Enter Email'
-                            value={email}
-                            onChange={handleEmailChange}
-                            className='form-control'
-                        />
-                    </div>
+            <div className='backgroundImage'></div>
+            <div className='loginPage'>
+                <div className='loginForm'>
+                    <img src={CPUTlogo} alt='Login Icon' className='loginIcon'/>
+                    <h2 className='text-center'>Login </h2>
+                    <form onSubmit={handleLogin}>
+                        <div className='form-group'>
+                            <label htmlFor="email"><strong>Email:</strong></label>
+                            <input
+                                type='email'
+                                name="email"
+                                autoComplete='off'
+                                placeholder='Enter Email'
+                                value={email}
+                                onChange={handleEmailChange}
+                                className='form-control'
+                            />
+                        </div>
 
-                    <div className='form-group'>
-                        <label htmlFor="password"><strong>Password:</strong></label>
-                        <input
-                            type='password'
-                            name="password"
-                            placeholder='Enter Password'
-                            value={password}
-                            onChange={handlePasswordChange}
-                            className='form-control'
-                        />
-                    </div>
+                        <div className='form-group'>
+                            <label htmlFor="password"><strong>Password:</strong></label>
+                            <input
+                                type='password'
+                                name="password"
+                                placeholder='Enter Password'
+                                value={password}
+                                onChange={handlePasswordChange}
+                                className='form-control'
+                            />
+                        </div>
 
-                    <div className='form-group'>
-                        <label htmlFor="role"><strong>Role:</strong></label>
-                        <select
-                            name='role'
-                            value={role}
-                            onChange={handleRoleChange}
-                            className='form-control'
-                        >
-                            <option value="" disabled>Select Role</option>
-                            <option value="admin">Admin</option>
-                            <option value="tutor">Tutor</option>
-                            <option value="student">Student</option>
-                        </select>
-                    </div>
+                        <div className='form-group'>
+                            <label htmlFor="role"><strong>Role:</strong></label>
+                            <select
+                                name='role'
+                                value={role}
+                                onChange={handleRoleChange}
+                                className='form-control'
+                            >
+                                <option value="" disabled>Select Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="tutor">Tutor</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
 
-                    <div className='form-group'>
-                        <button type="submit" className='btn btn-success w-100'>Login</button>
-                    </div>
-                </form>
+                        <div className='form-group'>
+                            <button type="submit" className='btn btn-primary w-100'>Login</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-     </div>
     );
 };
 

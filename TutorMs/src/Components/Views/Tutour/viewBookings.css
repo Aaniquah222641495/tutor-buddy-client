@@ -1,58 +1,62 @@
-*body {
-  font-family: Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
   background-color: #f4f4f4;
 }
 
-header {
+.tutor-header {
   background-color: #002F81;
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;  
+  width: 100%;
 }
 
-header .logo {
+.tutor-header .tutor-logo {
   font-size: 1.8em;
   font-weight: bold;
 }
 
-header nav {
+.tutor-header nav {
   display: flex;
-  gap: 20px;  
+  gap: 20px;
 }
 
-header nav a {
+.tutor-header nav a {
   color: #fff;
   text-decoration: none;
   font-size: 1.1em;
-  padding: 8px 15px;  
+  padding: 8px 15px;
 }
 
-header nav a:hover {
+.tutor-header nav a:hover {
   text-decoration: underline;
 }
 
-.dashboard {
+.tutor-dashboard {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-main {
+.tutor-dashboard-main {
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
   width: 100%;
 }
 
-aside {
+.tutor-dashboard-aside {
   width: 25%;
 }
 
-section {
+.tutor-dashboard-section {
   width: 70%;
 }
 
@@ -62,56 +66,68 @@ section {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 /* Profile Picture */
-.profile-picture {
-  position: relative; /* Position relative to allow absolute positioning of the edit button */
-  text-align: center;
+/* Profile Picture */
+.tutor-profile-picture {
+  display: flex; /* Change to flex */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center align children */
   margin-bottom: 20px;
 }
 
-.profile-image, .circle {
+.tutor-profile-image,
+.tutor-circle {
   width: 150px;
   height: 150px;
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image is fully contained within the circle */
-  border: 2px solid #ddd; /* Optional: adds a border around the image */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  margin-bottom: 10px; /* Add margin below the image */
 }
 
-.circle {
+.tutor-circle {
   background-color: #ddd;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1.1rem;
   color: #aaa;
 }
 
 /* Edit Image Button */
-.edit-image-button {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
+.tutor-edit-image-button {
+  padding: 8px 16px;
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9em;
 }
 
-.edit-image-button:hover {
+.tutor-edit-image-button:hover {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-.profile-info h2 {
+/* Line under the button */
+.tutor-line {
+  width: 80%; /* Adjust the width as needed */
+  height: 2px; /* Thickness of the line */
+  background-color: #ddd; /* Color of the line */
+  margin-top: 40px; /* Space above the line */
+}
+
+/* Centered Profile Info */
+.tutor-profile-info {
+  text-align: center; /* Center text */
+}
+.tutor-profile-info h2 {
   margin-bottom: 10px;
 }
 
-button {
+.tutor-button {
   background-color: #002F81;
   color: white;
   padding: 10px;
@@ -121,22 +137,24 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.tutor-button:hover {
   background-color: #0056b3;
 }
 
-table {
+.tutor-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-table, th, td {
+.tutor-table,
+.tutor-th,
+.tutor-td {
   border: 1px solid #ddd;
 }
 
-th, td {
+.tutor-th,
+.tutor-td {
   padding: 10px;
   text-align: left;
 }
-  
