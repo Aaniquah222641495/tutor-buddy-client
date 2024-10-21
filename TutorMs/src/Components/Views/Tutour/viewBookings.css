@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +7,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f4f4f4; /* Background color of the body */
 }
 
 .tutor-header {
@@ -39,16 +40,20 @@ body {
   text-decoration: underline;
 }
 
+/* Main content area */
 .tutor-dashboard {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fff; /* Ensuring white background */
+  padding: 20px;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .tutor-dashboard-main {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
   width: 100%;
 }
 
@@ -61,23 +66,23 @@ body {
 }
 
 
+
+
 .tutor-upcoming-bookings,
 .tutor-availability,
 .tutor-view-bookings {
+
   background: #fff;
   margin: 20px 0;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
 }
 
-/* Profile Picture */
-/* Profile Picture */
 .tutor-profile-picture {
-  display: flex; /* Change to flex */
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center align children */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -88,7 +93,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ddd;
-  margin-bottom: 10px; /* Add margin below the image */
+  margin-bottom: 10px;
 }
 
 .tutor-circle {
@@ -100,7 +105,6 @@ body {
   color: #aaa;
 }
 
-/* Edit Image Button */
 .tutor-edit-image-button {
   padding: 8px 16px;
   background-color: #007bff;
@@ -114,18 +118,17 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-/* Line under the button */
 .tutor-line {
-  width: 80%; /* Adjust the width as needed */
-  height: 2px; /* Thickness of the line */
-  background-color: #ddd; /* Color of the line */
-  margin-top: 40px; /* Space above the line */
+  width: 80%;
+  height: 2px;
+  background-color: #ddd;
+  margin-top: 40px;
 }
 
-/* Centered Profile Info */
 .tutor-profile-info {
-  text-align: center; /* Center text */
+  text-align: center;
 }
+
 .tutor-profile-info h2 {
   margin-bottom: 10px;
 }
@@ -144,20 +147,50 @@ body {
   background-color: #0056b3;
 }
 
-.tutor-table {
+.view-bookings {
+  background: #fff;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  border-collapse: collapse;
+}
+
+.tutor-bookings-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0;
   margin-top: 20px;
-}
-
-.tutor-table,
-.tutor-th,
-.tutor-td {
-  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .tutor-th,
 .tutor-td {
-  padding: 10px;
+  padding: 12px 15px;
   text-align: left;
+}
+
+.tutor-th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #495057;
+}
+
+.tutor-td {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.tutor-th:not(:first-child),
+.tutor-td:not(:first-child) {
+  border-left: 1px solid #e9ecef;
+}
+
+.tutor-table tr:hover {
+  background-color: #f1f3f5;
+}
+
+.tutor-button {
+  margin-top: 15px;
 }
