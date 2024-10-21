@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { TutorApi } from 'student_tutor_booking_management_system'; // Adjust the import path as needed
+import defaultProfilePic from "../../../assets/defaultProfilePic.png"; // Replace with the path to your default image
 
 function Profile() {
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(defaultProfilePic); // Set default profile picture
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedProfileData, setEditedProfileData] = useState({});
   const [profileData, setProfileData] = useState(null);
@@ -94,6 +95,7 @@ function Profile() {
         >
           Edit Image
         </button>
+        <div className="tutor-line"></div> {/* Add line under button */}
       </div>
       <div className="tutor-profile-info">
         {profileData ? (
